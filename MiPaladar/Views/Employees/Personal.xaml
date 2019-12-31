@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="MiPaladar.Views.Personal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"             
+             xmlns:views="clr-namespace:MiPaladar.Views"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="480" d:DesignWidth="640" >
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <CollectionViewSource x:Key="cvsEmployees" Source="{Binding Employees}">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Name"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="47"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel LastChildFill="False" >
+            <TextBlock Text="Buscar" FontStyle="Italic"/>
+            
+            <TextBox Width="100"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <CheckBox IsChecked="{Binding ShowOnlyActiveEmployees}" DockPanel.Dock="Left">
+                Mostrar sólo activos
+            </CheckBox>
+            
+        </DockPanel>
+        
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Nuevo" Command="{Binding AddCommand}" 
+                    ToolTip="Crear nuevo empleado"
+                    Visibility="{Binding AppVM.LoggedInUser.Role.CanCreateEmployees,Converter={StaticResource btvConverter}}"/>
+
+            <Button Grid.Column="1" Content="Eliminar"
+                    Command="{Binding DeleteCommand}" ToolTip="Crear nuevo empleado"
+                    Visibility="{Binding AppVM.LoggedInUser.Role.CanRemoveEmployees,Converter={StaticResource btvConverter}}"/>
+        </StackPanel>
+        
+        <!--<ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemsSource="{Binding Source={StaticResource cvsEmployees}}">
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Border Margin="3" Background="LightBlue">
+                            <Image Height="100" >
+
+                            </Image>
+                        </Border>
+
+                        <TextBlock Text="{Binding Name}" Grid.Row="1"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsActive}">Activo</CheckBox>
+                            <CheckBox IsChecked="{Binding CanSell}">Vende</CheckBox>
+                            <CheckBox IsChecked="{Binding CanPurchase}">Compra</CheckBox>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>-->
+
+        
+
+        <DataGrid Grid.Row="1" Name="employeesDG"
+                  IsReadOnly="True" AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedEmployee}"
+                  ItemsSource="{Binding Source={StaticResource cvsEmployees}}" SelectionMode="Single">
+
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ExpandItemCommand}"/>
+            </DataGrid.InputBindings>
+
+            <DataGrid.Columns>
+                
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Rol" Binding="{Binding Role.Name}" Width="*"/>
+                <DataGridCheckBoxColumn Header="Activo" Binding="{Binding IsActive}"/>
+                <DataGridCheckBoxColumn Header="Vende" Binding="{Binding CanSell}"/>
+                <DataGridCheckBoxColumn Header="Compra" Binding="{Binding CanPurchase}"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--<Border Grid.Row="1" Grid.Column="1" Margin="0,0,5,5">
+            <views:EmployeeView DataContext="{Binding SelectedEmployeeViewModel}"/>
+
+        </Border>-->
+
+        <!--Visibility="{Binding EmployeeDetailsVisible,Converter={StaticResource btvConverter}}"-->
+
+        <!--<Border Grid.Row="1" Grid.Column="1" Margin="0,0,5,5"
+                BorderBrush="{StaticResource myBackgroundBrush}" BorderThickness="2"
+                Background="White"
+                Visibility="{Binding NoSearchResults,Converter={StaticResource btvConverter}}">
+            <TextBlock Text="La búsqueda no produjo ningún resultado" 
+                       FontSize="20" FontWeight="DemiBold" 
+                       TextWrapping="Wrap" TextAlignment="Center"/>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" Margin="0,0,5,5"
+                BorderBrush="{StaticResource myBackgroundBrush}" BorderThickness="2"
+                Background="White"
+                Visibility="{Binding ThereAreNoEmployees,Converter={StaticResource btvConverter}}" >
+            <TextBlock FontSize="20" FontWeight="DemiBold" 
+                       TextWrapping="Wrap" TextAlignment="Center">
+                Haga click en 
+                <Hyperlink Command="{Binding AddCommand}">Nuevo</Hyperlink> 
+                para crear un nuevo empleado
+            </TextBlock>
+        </Border>-->
+
+        <!--<Border Background="#80000000"
+                Visibility="{Binding ShowingRolesAndPermissions, Converter={StaticResource btvConverter}}"
+                Grid.ColumnSpan="2" Grid.RowSpan="2" d:IsHidden="True">
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Margin="20" Grid.Row="1" Grid.Column="1">
+                    <views:EmployeeRoles DataContext="{Binding SelectedEmployeeViewModel}"
+                                         Background="White"/>                    
+
+                    <Button VerticalAlignment="Top" HorizontalAlignment="Right" 
+                            Grid.Column="1" Margin="-15,-15"                     
+                            Width="30" Height="30"                        
+                            Command="{Binding CloseDialogCommand}"
+                            Style="{StaticResource redCloseButton}"/>
+                </Grid>
+
+            </Grid>
+        </Border>-->
+
+
+    </Grid>
+</UserControl>
+
+    

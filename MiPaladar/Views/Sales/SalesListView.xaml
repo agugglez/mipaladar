@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="MiPaladar.Views.SalesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             
+             xmlns:views="clr-namespace:MiPaladar.Views"
+             
+             d:DesignHeight="480" d:DesignWidth="640">
+
+    <UserControl.Resources>
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>                
+                <!--<ResourceDictionary Source="../resources/ValeViewResources.xaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+            
+            <!--<Style TargetType="TabItem">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>-->
+
+            <!--<conv:OpenCloseConverter x:Key="openCloseConv"/>-->
+
+        </ResourceDictionary>
+        
+    </UserControl.Resources>
+    
+    <!--<UserControl.InputBindings>
+        <KeyBinding Command="{Binding ToggleSelectTableVisibility}" Key="F1"/>
+    </UserControl.InputBindings>-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="47"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+            <DatePicker SelectedDate="{Binding FromDate}" KeyUp="DatePicker_KeyUp"/>
+
+            <TextBlock Text="-"/>
+
+            <DatePicker SelectedDate="{Binding ToDate}" KeyUp="DatePicker_KeyUp"/>
+
+        </StackPanel>
+
+        <!--<Line Stretch="Fill" HorizontalAlignment="Right" X1="1" Y2="1" Stroke="Black" StrokeThickness="2" />-->
+
+        <DataGrid Grid.Row="1" Grid.Column="1"
+                          AutoGenerateColumns="False" IsReadOnly="True"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding Vales}" SelectedItem="{Binding SelectedOrder}">
+
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ExpandSelectedCommand}"/>
+            </DataGrid.InputBindings>
+
+            <DataGrid.Columns>
+
+                <!--<DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="2,0">
+                                    <Hyperlink Command="{Binding ShowCommand}" >
+                                        Ver
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+
+                <!--<DataGridTextColumn Header="Vale" Binding="{Binding Number}" Width=".5*"/>-->
+
+                <DataGridTextColumn Header="Fecha" Width="*"
+                                    Binding="{Binding Date, StringFormat=ddd d MMM}" />
+
+                <!--<DataGridTextColumn Header="Fecha Creación" Width="1.5*"
+                                    Binding="{Binding DateCreated, StringFormat=ddd d MMM\, h:mm tt}" />-->
+
+                <!--<DataGridTextColumn Header="Turno" Binding="{Binding WorkSession.Shift.Name}" Width="*"/>-->
+                <!--<DataGridTextColumn Header="Area" Binding="{Binding Table.PriceList.Name}" Width="*"/>-->
+                <!--<DataGridTextColumn Header="Mesa" SortMemberPath="Number" Width="*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource tableFormatter}">
+                            <Binding Path="Table.IsBar"/>
+                            <Binding Path="Table.Number"/>
+                            <Binding Path="Table.Description"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>-->
+                <!--<DataGridTextColumn Header="Descripción" Binding="{Binding Description}" />-->
+                <DataGridTextColumn Header="Turno" Binding="{Binding Shift.Name}" Width="*"/>
+                
+                <DataGridTextColumn Header="Dependiente" Binding="{Binding Employee.Name}" Width="*"/>
+
+                <DataGridTextColumn Header="Personas" Binding="{Binding Persons}" Width="*"/>
+                
+                <DataGridTextColumn Header="Importe" Width="*"
+                                            Binding="{Binding Total, StringFormat=c}" >
+                    <!--<DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource
+                                    FindAncestor, AncestorType={x:Type DataGridRow}},
+                                    Path=DataContext.Paid}" Value="False">
+                                    <Setter Property="Foreground" Value="Gold"/>                                  
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>-->
+                </DataGridTextColumn>
+
+                <!--<DataGridTemplateColumn Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Border Margin="2" Background="DarkGray" CornerRadius="2"
+                                        Visibility="{Binding Paid,Converter={StaticResource btvConverter}}">
+                                    <TextBlock Text="Pagado" HorizontalAlignment="Center"
+                                               Foreground="White" Margin="2,1" FontWeight="DemiBold"/>
+                                </Border>
+                                <Border Margin="2" Background="DarkOrange" CornerRadius="2"
+                                        Visibility="{Binding UnPaid,Converter={StaticResource btvConverter}}">
+                                    <TextBlock Text="Por pagar" HorizontalAlignment="Center"
+                                               Foreground="White" Margin="1" FontWeight="DemiBold"/>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal">
+
+            <Button Content="Nueva Venta"
+                    Command="{Binding NewSaleCommand}">
+                <!--<TextBlock TextAlignment="Center">Nuevo<LineBreak/>Vale</TextBlock>-->
+            </Button>
+
+            <!--<Button Content="Eliminar Venta" Width="auto"
+                    Command="{Binding RemoveCommand}">
+            </Button>-->
+
+            <Button Command="{Binding ShowLoadReportDialogCommand}"
+                    Content="Cargar PLU" 
+                    ToolTip="Cargar archivo de reporte de ventas (.csv)">
+            </Button>
+
+            <Button Command="{Binding Load101Command}"
+                    Content="Cargar 101" 
+                    ToolTip="Cargar reporte 101">
+            </Button>
+
+            <!--<Button Command="{Binding LoadFromRegisterCommand}"
+                    Content="Halar Ventas"
+                    ToolTip="Halar ventas de Caja Registradora">
+            </Button>-->
+
+        </StackPanel>             
+
+    </Grid>   
+    
+</UserControl>

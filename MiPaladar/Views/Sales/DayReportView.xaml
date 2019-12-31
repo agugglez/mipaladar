@@ -1,0 +1,112 @@
+﻿<Window x:Class="MiPaladar.Views.DayReportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Resumen del Día" Height="325" Width="300">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+        
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Margin="0" Grid.ColumnSpan="2"
+                   Text="{Binding Date,StringFormat=CIERRE {0:dddd d}}"/>
+
+        <TextBlock Margin="0" HorizontalAlignment="Right" Grid.Column="1"
+                   Text="{Binding User.Name}"/>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
+                    Orientation="Horizontal">
+            <!--<TextBlock Text="{Binding TotalMesas,StringFormat={}{0} Mesas\,}"/>-->
+            <TextBlock Text="{Binding TotalClients,StringFormat={}{0} Clientes\,}"
+                       Margin="0,0,5,5"/>
+            <TextBlock Margin="0,0,0,5">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} Mesas [{1}-{2}]">
+                        <Binding Path="TotalMesas"/>
+                        <Binding Path="MinVale"/>
+                        <Binding Path="MaxVale"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+
+        <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,5">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} Mesas ({1}-{2}), {3} Clientes">
+                        <Binding Path="TotalMesas"/>
+                        <Binding Path="MinVale"/>
+                        <Binding Path="MaxVale"/>
+                        <Binding Path="TotalClients"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+        </TextBlock>-->
+
+        <!--<TextBlock Grid.Row="2" Text="Ventas Brutas" TextAlignment="Right"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding RawTotal, StringFormat=c}"/>-->
+
+        <TextBlock Grid.Row="2" Text="Ventas" TextAlignment="Right"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SalesTotal,StringFormat=c}"/>
+
+        <TextBlock Grid.Row="3" Text="-"/>
+        <TextBlock Grid.Row="3" Text="Recargo" TextAlignment="Right"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding TaxesTotal,StringFormat=c}"/>
+
+        
+
+        <Line Stretch="Fill" VerticalAlignment="Bottom" X1="1" Y2="0"
+              Grid.ColumnSpan="2" Grid.Row="3" StrokeDashArray="2,1"
+              Stroke="Black" StrokeThickness="1" />
+
+        <TextBlock Grid.Row="4" Text="" TextAlignment="Right"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SMT,StringFormat=c}"/>               
+
+        <Line Stretch="Fill" VerticalAlignment="Bottom" X1="1" Y2="0"
+              Grid.ColumnSpan="2" Grid.Row="5" StrokeDashArray="2,1"
+              Stroke="Black" StrokeThickness="1" />               
+
+        <TextBlock Grid.Row="5" Text="+"/>
+        <TextBlock Grid.Row="5" Text="Fondo" TextAlignment="Right"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Fondo,StringFormat=c}"/>
+
+        <TextBlock Grid.Row="6" Text="A Entregar" TextAlignment="Right"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Entregar,StringFormat=c}"/>        
+
+        <TextBlock Grid.Row="7" Text="Propina" TextAlignment="Right"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding Tips,StringFormat=c}"/>
+
+        <TextBlock Grid.Row="8" Text="Descuento" TextAlignment="Right"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding DiscountsTotal,StringFormat=c}"/>
+
+        <!--<Button Grid.Row="8" Grid.Column="1" Content="Salir" HorizontalAlignment="Right"
+                IsCancel="True"/>-->
+
+        <Button Grid.Row="11" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+                Content="Imprimir" 
+                Command="{Binding PrintCommand}"/>
+
+    </Grid>
+</Window>

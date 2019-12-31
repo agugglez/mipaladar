@@ -1,0 +1,191 @@
+﻿<Window x:Class="MiPaladar.Views.DayAveragesReportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:stuff="clr-namespace:MiPaladar.Stuff"
+        xmlns:conv="clr-namespace:MiPaladar.Converters"
+        
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        
+        Title="Promedios Diarios" UseLayoutRounding="True"
+        
+        Cursor="{Binding Busy, Converter={conv:CursorExtensionConverter}}">
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <CollectionViewSource x:Key="cvsReportItems" Source="{Binding FilteredItems}">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Product.Name" />
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
+            <CollectionViewSource x:Key="cvsCategories" Source="{Binding Categories}">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Name" />
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
+            <stuff:DeferredBinder x:Key="textBinder" 
+                                  Target="{Binding SearchText, Mode=OneWayToSource}" />
+
+        </ResourceDictionary>
+
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Promedios Diarios" FontSize="16" FontWeight="Bold" Foreground="Gray"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                
+                <!--<TextBlock Text="Calculando..."
+                           Visibility="{Binding Busy,Converter={StaticResource btvConverter}}"/>-->
+
+                <Button Content="Calcular" Command="{Binding DayAverageReportCommand}"
+                        Margin="5,5,30,5"/>
+
+
+                <DatePicker SelectedDate="{Binding FromDate}"/>
+
+                <TextBlock Text="-" />
+
+                <DatePicker SelectedDate="{Binding ToDate}"/>
+
+                <Button Content="{StaticResource ExcelImage}" 
+                        Command="{Binding ExportToExcelCommand}"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                        ToolTip="Exportar a Excel" Margin="5"/>
+
+            </StackPanel>
+        </Grid>
+
+        <DataGrid Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False"
+                  ItemsSource="{Binding Source={StaticResource cvsReportItems}}">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Producto" Binding="{Binding Product.Name}"/>              
+
+                <DataGridTextColumn Header="Lunes" SortMemberPath="Quantities[1]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[1]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Martes" SortMemberPath="Quantities[2]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[2]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Miércoles" SortMemberPath="Quantities[3]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[3]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Jueves" SortMemberPath="Quantities[4]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[4]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Viernes" SortMemberPath="Quantities[5]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[5]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Sábado" SortMemberPath="Quantities[6]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[6]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Domingo" SortMemberPath="Quantities[0]">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="Quantities[0]"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Lunes-Jueves" SortMemberPath="MondayToThursday">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="MondayToThursday"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Viernes-Domingo" SortMemberPath="FridayToSunday">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0:0.##}{1}">
+                            <Binding Path="FridayToSunday"/>
+                            <Binding Path="UnitMeasure.Caption"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <!--search by name-->
+            <TextBlock Text="Nombre" FontStyle="Italic"/>
+            <TextBox MinWidth="100"
+                     Text="{Binding Source={StaticResource textBinder}, Path=Source, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--Filter by Category-->
+            <CheckBox IsChecked="{Binding FilteringByCategory}">Filtrar por Categoría</CheckBox>
+
+            <ComboBox IsEnabled="{Binding FilteringByCategory}" DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedCategory}"
+                      ItemsSource="{Binding Source={StaticResource cvsCategories}}"/>
+        </StackPanel>
+
+        <CheckBox IsChecked="{Binding SearchInIngredients}"
+                  Grid.Row="2" HorizontalAlignment="Right">
+            Buscar en ingredientes
+        </CheckBox>
+
+    </Grid>
+
+    
+</Window>

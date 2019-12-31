@@ -1,0 +1,59 @@
+﻿<Window x:Class="MiPaladar.Views.Totales"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="550">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml" />                
+                <ResourceDictionary Source="/resources/TotalesResources.xaml" />                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    
+    <DockPanel LastChildFill="True">        
+
+        <Border Grid.Column="0" 
+                Style="{StaticResource MainBorderStyle}"
+                Width="Auto">
+            <HeaderedContentControl 
+                DockPanel.Dock="Left" 
+                Content="{Binding Commands}"
+                ContentTemplate="{StaticResource CommandsTemplate}"
+                Header="Totales por"            
+                Style="{StaticResource MainHCCStyle}">
+            </HeaderedContentControl>
+        </Border>
+
+        <GroupBox Header="Fecha" DockPanel.Dock="Top" Padding="5" Margin="5,0">
+            <StackPanel Orientation="Horizontal" >
+                <!--1st row-->
+                <TextBlock Text="Desde" Grid.Column="0"/>
+                <DatePicker Name="dpFrom" Margin="5,0" 
+                        SelectedDate="{Binding FromDate}"/>
+                <!--SelectedDate="{Binding Source={x:Static Application.Current},Path=Accounter.FromDate}"-->
+                <TextBlock Text="Hasta" Grid.Column="2"/>
+                <DatePicker Name="dpTo" 
+                        Grid.Column="3" Margin="5,0"
+                        SelectedDate="{Binding ToDate}"/>
+                <!--SelectedDate="{Binding Source={x:Static Application.Current},Path=Accounter.ToDate}"-->
+                <Button Content="Refrescar" Grid.Column="4"
+                    Command="{Binding UpdateTotalsCommand}"/>
+            </StackPanel>
+        </GroupBox>       
+
+        
+        <ContentControl Margin="5" Content="{Binding SelectedWorkspace}">
+            
+        </ContentControl>
+
+
+
+    </DockPanel>
+    
+</Window>

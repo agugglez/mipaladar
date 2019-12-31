@@ -1,0 +1,59 @@
+﻿<local:SampleProduct xmlns:viewmodels="clr-namespace:MiPaladar.ViewModels"
+                    xmlns:local="clr-namespace:MiPaladar.SampleData" 
+                    xmlns:ent="clr-namespace:MiPaladar.Entities;assembly=DataLayer"
+                    xmlns:classes="clr-namespace:MiPaladar.Classes"
+                             
+                    IsRecipe="True" IsStorable="True" IsPurchasable="True" NotInMenu="True" 
+                    IsProduced="False" IsEntrant="True" HasDifferentFormats="False"
+                    Name="Sample Product Name" SalePrice="3.5" PriceRate="1.75">
+    
+    <local:SampleProduct.ProductionArea>
+        <ent:ProductionArea Name="Area de Producción"/>
+    </local:SampleProduct.ProductionArea>
+
+    <local:SampleProduct.RelatedCategories>
+        <viewmodels:ProductIndexViewModel IsMain="True">
+            <viewmodels:ProductIndexViewModel.Category>
+                <ent:Category Name="Plato Fuerte"/>
+            </viewmodels:ProductIndexViewModel.Category>
+        </viewmodels:ProductIndexViewModel>
+        <viewmodels:ProductIndexViewModel >
+            <viewmodels:ProductIndexViewModel.Category>
+                <ent:Category Name="Pescado"/>
+            </viewmodels:ProductIndexViewModel.Category>
+        </viewmodels:ProductIndexViewModel>
+        <viewmodels:ProductIndexViewModel >
+            <viewmodels:ProductIndexViewModel.Category>
+                <ent:Category Name="Sample Category"/>
+            </viewmodels:ProductIndexViewModel.Category>
+        </viewmodels:ProductIndexViewModel>
+    </local:SampleProduct.RelatedCategories>
+
+    <local:SampleProduct.Ingredients>
+        <viewmodels:IngredientViewModel Quantity="1">
+            <viewmodels:IngredientViewModel.Product>
+                <ent:Product Name="Filete de pescado" />
+            </viewmodels:IngredientViewModel.Product>
+            <viewmodels:IngredientViewModel.UnitMeasure>
+                <ent:UnitMeasure Caption="u"/>
+            </viewmodels:IngredientViewModel.UnitMeasure>
+        </viewmodels:IngredientViewModel>
+        <viewmodels:IngredientViewModel Quantity="0.5">
+            <viewmodels:IngredientViewModel.Product>
+                <ent:Product Name="copa de vino" />
+            </viewmodels:IngredientViewModel.Product>
+            <viewmodels:IngredientViewModel.UnitMeasure>
+                <ent:UnitMeasure Caption="u"/>
+            </viewmodels:IngredientViewModel.UnitMeasure>
+        </viewmodels:IngredientViewModel>
+        <viewmodels:IngredientViewModel Quantity="20" >
+            <viewmodels:IngredientViewModel.Product>
+                <ent:Product Name="papas asadas" />
+            </viewmodels:IngredientViewModel.Product>
+            <viewmodels:IngredientViewModel.UnitMeasure>
+                <ent:UnitMeasure Caption="g"/>
+            </viewmodels:IngredientViewModel.UnitMeasure>
+        </viewmodels:IngredientViewModel>
+    </local:SampleProduct.Ingredients>
+
+</local:SampleProduct>

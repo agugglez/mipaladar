@@ -1,0 +1,235 @@
+﻿<Window   x:Class="MiPaladar.Views.SalesChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             
+             xmlns:views="clr-namespace:MiPaladar.Views"
+             xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:conv="clr-namespace:MiPaladar.Converters"
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             
+             mc:Ignorable="d" Title="Gráfico de Ventas"
+             d:DesignHeight="600" d:DesignWidth="800"
+        
+             Cursor="{Binding Busy, Converter={conv:CursorExtensionConverter}}">
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>            
+        </ResourceDictionary>
+
+    </Window.Resources>
+    
+    <Grid>  
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition/>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <!--<Grid Margin="5,5,5,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Orientation="Horizontal">
+                
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Fecha"/>
+
+                    <DatePicker
+                                SelectedDate="{Binding FromDate}"/>
+
+                    <TextBlock Text="->" />
+                    <DatePicker SelectedDate="{Binding ToDate}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10,5">
+                    <Button Content="Buscar" Width="50"
+                            VerticalAlignment="Center"
+                            Command="{Binding FindCommand}"/>
+                </StackPanel>
+                
+            </StackPanel>
+
+            <Button Content="{StaticResource ExcelImage}" Command="{Binding ExportToExcelCommand}"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                    ToolTip="Exportar a Excel" HorizontalAlignment="Right" Margin="5"/>
+            
+        </Grid>-->
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right" VerticalAlignment="Top">
+            <RadioButton IsChecked="True" Name="days">7 días</RadioButton>
+            <RadioButton Name="weeks">4 semanas</RadioButton>
+            <RadioButton Name="months">6 meses</RadioButton>
+            <RadioButton Name="average">Promedios diarios</RadioButton>
+        </StackPanel>
+
+        <Grid  Grid.Row="1">
+
+            <chartingToolkit:Chart BorderBrush="Transparent" BorderThickness="0"
+                                   Visibility="{Binding IsChecked,ElementName=days,Converter={StaticResource btvConverter}}">
+                <!--<chartingToolkit:Chart.TitleStyle>
+                    <Style TargetType="datavis:Title">
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                </chartingToolkit:Chart.TitleStyle>-->
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y1}" 
+                                            IndependentValueBinding="{Binding Path=X}" 
+                                            ItemsSource="{Binding SevenDaysData}" Title="Ventas"/>
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y2}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding SevenDaysData}" Title="Costos"/>
+            </chartingToolkit:Chart>
+
+            <chartingToolkit:Chart Grid.Row="1" BorderBrush="Transparent" BorderThickness="0"
+                                   Visibility="{Binding IsChecked,ElementName=weeks,Converter={StaticResource btvConverter}}">
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y1}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding FourWeeksData}" Title="Ventas"/>
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y2}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding FourWeeksData}" Title="Costos"/>
+            </chartingToolkit:Chart>
+
+            <chartingToolkit:Chart BorderBrush="Transparent" BorderThickness="0"
+                                   Visibility="{Binding IsChecked,ElementName=months,Converter={StaticResource btvConverter}}">
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y1}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding SixMonthsData}" Title="Ventas"/>
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y2}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding SixMonthsData}" Title="Costos"/>
+            </chartingToolkit:Chart>
+
+            <chartingToolkit:Chart BorderBrush="Transparent" BorderThickness="0"
+                                   Visibility="{Binding IsChecked,ElementName=average,Converter={StaticResource btvConverter}}">
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y1}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding DayAverageData}" Title="Ventas"/>
+
+                <chartingToolkit:ColumnSeries DependentValueBinding="{Binding Path=Y2}" 
+                                          IndependentValueBinding="{Binding Path=X}" 
+                                          ItemsSource="{Binding DayAverageData}" Title="Costos"/>
+            </chartingToolkit:Chart>
+            
+
+            <!--<DataGrid ItemsSource="{Binding ChartItems}" Name="dgOrders" Grid.Column="1"
+                      AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Fecha" Binding="{Binding Date,StringFormat=ddd\, d MMMM}"
+                                    Visibility="{Binding  (FrameworkElement.DataContext).DateColumnVisible,
+                    RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+
+                    <DataGridTextColumn Header="Semana" SortMemberPath="Date"
+                                    Binding="{Binding WeekString}"
+                                    Visibility="{Binding  (FrameworkElement.DataContext).WeekStringColumnVisible,
+                    RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+
+                    <DataGridTextColumn Header="Mes" SortMemberPath="Date"
+                                        Binding="{Binding Date,StringFormat=MMMM/yy}"
+                                        Visibility="{Binding  (FrameworkElement.DataContext).MonthColumnVisible,
+                        RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+
+                    <DataGridTextColumn Header="Ventas" Binding="{Binding TotalSale, StringFormat=c0}"/>
+
+                    <DataGridTextColumn Header="Costos" Binding="{Binding TotalCost, StringFormat=c0}"/>
+
+                    <DataGridTextColumn Header="# vales" Binding="{Binding Count}"
+                                Visibility="{Binding  (FrameworkElement.DataContext).OrderCountColumnVisible,
+                    RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+                    <DataGridTextColumn Header="Clientes" Binding="{Binding Clients}"
+                                    Visibility="{Binding  (FrameworkElement.DataContext).ClientCountColumnVisible,
+                    RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+
+
+                    <DataGridTextColumn Header="Total/Clientes" Binding="{Binding SalesByClient,StringFormat=c}"
+                                    Visibility="{Binding  (FrameworkElement.DataContext).PriceByClientColumnVisible,
+                    RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource btvConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>-->
+
+        </Grid>
+
+
+        <!--<TextBlock Grid.Row="2" HorizontalAlignment="Right"
+                   Text="{Binding ElementName=dgOrders,Path=ActualWidth}"/>-->
+
+        <!--<Line Grid.Row="2" Stretch="Fill"
+              Stroke="Gray" StrokeThickness="4" 
+              X2="1" 
+              VerticalAlignment="Top" Margin="0,4"/>-->  
+        
+        <Grid Grid.Row="2">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <!--<StackPanel Orientation="Horizontal" Margin="5,0">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </StackPanel.Resources>
+                
+                <Border Width="{Binding ElementName=dgOrders,Path=Columns[0].ActualWidth}"
+                        Visibility="{Binding ElementName=dgOrders,Path=Columns[0].Visibility}"/>
+                <Border Width="{Binding ElementName=dgOrders,Path=Columns[1].ActualWidth}"
+                        Visibility="{Binding ElementName=dgOrders,Path=Columns[1].Visibility}"/>                
+
+                <TextBlock Text="{Binding Path=TotalImport, StringFormat=c}"
+                           Width="{Binding ElementName=dgOrders,Path=Columns[2].ActualWidth}"
+                           Visibility="{Binding ElementName=dgOrders,Path=Columns[2].Visibility}"/>
+
+                <TextBlock Text="{Binding TotalOrders}"
+                           Width="{Binding ElementName=dgOrders,Path=Columns[3].ActualWidth}"
+                           Visibility="{Binding ElementName=dgOrders,Path=Columns[3].Visibility}"/>
+
+                <TextBlock Text="{Binding TotalClients}"
+                           Width="{Binding ElementName=dgOrders,Path=Columns[4].ActualWidth}"
+                           Visibility="{Binding ElementName=dgOrders,Path=Columns[4].Visibility}"/>                                
+                
+                <TextBlock Width="{Binding ElementName=dgOrders,Path=Columns[5].ActualWidth}"
+                           Visibility="{Binding ElementName=dgOrders,Path=Columns[5].Visibility}"/>
+
+                <TextBlock Text="{Binding Path=TotalDiscount, StringFormat=c}"
+                           Width="{Binding ElementName=dgOrders,Path=Columns[6].ActualWidth}"
+                           Visibility="{Binding ElementName=dgOrders,Path=Columns[6].Visibility}"/>
+
+            </StackPanel>-->
+
+            <!--<StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBlock >
+                        Totalizar por
+                </TextBlock>
+                
+                <RadioButton GroupName="rbGroup" IsChecked="{Binding GroupingByDate}">Día</RadioButton>
+                <RadioButton GroupName="rbGroup" IsChecked="{Binding GroupingByWeek}">Semana</RadioButton>
+                <RadioButton GroupName="rbGroup" IsChecked="{Binding GroupingByMonth}">Mes</RadioButton>
+            </StackPanel>-->
+        </Grid>
+
+
+        
+    </Grid>
+</Window>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>RelayCommand Snippet</Title>
+    <Author>Augusto González</Author>
+    <Shortcut>relaycommand</Shortcut>
+    <Description>Adds a basic skeleton for a RelayCommand</Description>
+    <SnippetTypes>
+      <SnippetType>SurroundsWith</SnippetType>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>name</ID>
+        <Default>My</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="Csharp">
+      <![CDATA[
+      
+      #region $name$ Command
+
+      RelayCommand relayCommand;
+      public ICommand $name$Command
+      {
+          get
+          {
+              if (relayCommand == null)
+                  relayCommand = new RelayCommand(x => $name$Execute(), x => $name$CanExecute);
+              return relayCommand;
+          }
+      }
+
+      bool $name$CanExecute 
+      {
+          get 
+          {
+              //Command CanExecute
+              return true;
+          }
+      }
+
+      void $name$Execute()
+      {
+          //Command Execute
+      }
+
+      #endregion
+      ]]>
+    </Code>
+  </Snippet>
+</CodeSnippet>

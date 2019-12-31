@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="MiPaladar.Views.InventoryAreasList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="480" d:DesignWidth="640">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Nuevo" Command="{Binding NewCommand}"/>
+            <!--<Button Content="Editar" Command="{Binding EditCommand}"/>-->
+            <Button Content="Eliminar" Command="{Binding RemoveCommand}"/>
+        </StackPanel>
+        
+        <!--<Button HorizontalAlignment="Right" 
+                Content="Marcar Piso" ToolTip="Marcar el área seleccionada como piso"
+                Command="{Binding MarkAsFloorCommand}"/>-->
+
+        <!--<Border Grid.Row="1" Margin="5,0" BorderBrush="LightGray" BorderThickness="1">
+            <Border.Visibility>
+                <MultiBinding Converter="{StaticResource logicExptvConverter}"
+                              ConverterParameter="v1ov2">
+                    <Binding Path="Creating"/>
+                    <Binding Path="Editing"/>
+                </MultiBinding>
+            </Border.Visibility>
+
+            <StackPanel Orientation="Horizontal">               
+
+                <TextBlock Text="Nombre"/>
+                <TextBox Width="125" Text="{Binding NameValue,UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Aceptar" Command="{Binding OkCommand}"/>
+                <Button Content="Cancelar" Command="{Binding CancelCommand}"/>
+
+            </StackPanel>
+
+        </Border>-->     
+        
+        <DataGrid Grid.Row="2" CanUserAddRows="False" CanUserDeleteRows="False"
+                 ItemsSource="{Binding InventoryAreas}"
+                 SelectedItem="{Binding SelectedInventoryArea}">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Name}" Width="*"/>
+                
+                <DataGridCheckBoxColumn Header="Piso" Binding="{Binding IsFloor}"/>
+
+                <!--<DataGridTemplateColumn Header="Piso" CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton IsChecked="{Binding IsFloor,Mode=TwoWay}" GroupName="isFloorGroup"
+                                         Margin="1"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>-->
+            </DataGrid.Columns>
+            
+        </DataGrid>
+        
+    </Grid>
+</UserControl>
