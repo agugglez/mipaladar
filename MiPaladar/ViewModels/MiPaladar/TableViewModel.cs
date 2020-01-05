@@ -1,279 +1,279 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
 
-using MiPaladar.Entities;
-using MiPaladar.Services;
+//using MiPaladar.Entities;
+//using MiPaladar.Services;
 
-using System.Collections.ObjectModel;
-using System.Windows.Input;
+//using System.Collections.ObjectModel;
+//using System.Windows.Input;
 
-namespace MiPaladar.ViewModels 
-{
-    public class TableViewModel : ViewModelBase
-    {
-        MainWindowViewModel appvm;
+//namespace MiPaladar.ViewModels 
+//{
+//    public class TableViewModel : ViewModelBase
+//    {
+//        MainWindowViewModel appvm;
 
-        Table table;
+//        Table table;
 
-        Action<Table> onAssociationChanged;
-        Action<Table> onCreated;
-        Action<Table> onRemoved;
+//        Action<Table> onAssociationChanged;
+//        Action<Table> onCreated;
+//        Action<Table> onRemoved;
 
-        public TableViewModel(MainWindowViewModel appvm, Action<Table> onCreated, 
-            Action<Table> onRemoved, Action<Table> onAssociationChanged)
-        {
-            this.appvm = appvm;
-            this.onCreated = onCreated;
-            this.onRemoved = onRemoved;                
-            this.onAssociationChanged = onAssociationChanged;
+//        public TableViewModel(MainWindowViewModel appvm, Action<Table> onCreated, 
+//            Action<Table> onRemoved, Action<Table> onAssociationChanged)
+//        {
+//            this.appvm = appvm;
+//            this.onCreated = onCreated;
+//            this.onRemoved = onRemoved;                
+//            this.onAssociationChanged = onAssociationChanged;
 
-            creating = true;
-            changeOcurred = true;
-        }
-        public TableViewModel(MainWindowViewModel appvm, Table table, Action<Table> onRemoved, Action<Table> onAssociationChanged)
-        {
-            this.appvm = appvm;
-            this.onRemoved = onRemoved;
-            this.onAssociationChanged = onAssociationChanged;
+//            creating = true;
+//            changeOcurred = true;
+//        }
+//        public TableViewModel(MainWindowViewModel appvm, Table table, Action<Table> onRemoved, Action<Table> onAssociationChanged)
+//        {
+//            this.appvm = appvm;
+//            this.onRemoved = onRemoved;
+//            this.onAssociationChanged = onAssociationChanged;
 
-            this.table = table;
+//            this.table = table;
 
-            number = table.Number;
-            description = table.Description;
-            capacity = table.Capacity;
-            area = table.PriceList;
-            isBar = table.IsBar;
-        }
+//            number = table.Number;
+//            description = table.Description;
+//            capacity = table.Capacity;
+//            area = table.PriceList;
+//            isBar = table.IsBar;
+//        }
 
-        public Table WrappedTable { get { return table; } }
+//        public Table WrappedTable { get { return table; } }
 
-        #region Properties
+//        #region Properties
 
-        int number;
-        public int Number 
-        {
-            get { return number; }
-            set
-            {
-                if (number != value) 
-                {
-                    number = value;
-                    OnPropertyChanged("Number");
+//        int number;
+//        public int Number 
+//        {
+//            get { return number; }
+//            set
+//            {
+//                if (number != value) 
+//                {
+//                    number = value;
+//                    OnPropertyChanged("Number");
 
-                    ChangeOcurred = true;
-                }                
-            }
-        }
+//                    ChangeOcurred = true;
+//                }                
+//            }
+//        }
 
-        string description;
-        public string Description 
-        {
-            get { return description; }
-            set 
-            {
-                if (description != value) 
-                {
-                    description = value;
-                    OnPropertyChanged("Description");
+//        string description;
+//        public string Description 
+//        {
+//            get { return description; }
+//            set 
+//            {
+//                if (description != value) 
+//                {
+//                    description = value;
+//                    OnPropertyChanged("Description");
 
-                    ChangeOcurred = true;
-                }                
-            }
-        }
+//                    ChangeOcurred = true;
+//                }                
+//            }
+//        }
 
-        int capacity;
-        public int Capacity 
-        {
-            get { return capacity; }
-            set
-            {
-                if (capacity != value) 
-                {
-                    capacity = value;
-                    OnPropertyChanged("Capacity");
+//        int capacity;
+//        public int Capacity 
+//        {
+//            get { return capacity; }
+//            set
+//            {
+//                if (capacity != value) 
+//                {
+//                    capacity = value;
+//                    OnPropertyChanged("Capacity");
 
-                    ChangeOcurred = true;
-                }                
-            }
-        }
+//                    ChangeOcurred = true;
+//                }                
+//            }
+//        }
 
-        PriceList area;
-        public PriceList Area 
-        {
-            get { return area; }
-            set
-            {
-                if (area != value) 
-                {
-                    area = value;
-                    OnPropertyChanged("Area");
+//        PriceList area;
+//        public PriceList Area 
+//        {
+//            get { return area; }
+//            set
+//            {
+//                if (area != value) 
+//                {
+//                    area = value;
+//                    OnPropertyChanged("Area");
 
-                    ChangeOcurred = true;
-                }                
-            }
-        }
+//                    ChangeOcurred = true;
+//                }                
+//            }
+//        }
 
-        bool isBar;
-        public bool IsBar 
-        {
-            get { return isBar; }
-            set
-            {
-                if (isBar != value) 
-                {
-                    isBar = value;
-                    OnPropertyChanged("IsBar");
+//        bool isBar;
+//        public bool IsBar 
+//        {
+//            get { return isBar; }
+//            set
+//            {
+//                if (isBar != value) 
+//                {
+//                    isBar = value;
+//                    OnPropertyChanged("IsBar");
 
-                    ChangeOcurred = true;
-                }                
-            }
-        }
+//                    ChangeOcurred = true;
+//                }                
+//            }
+//        }
 
-        #endregion
+//        #endregion
 
-        public ObservableCollection<PriceList> Areas 
-        {
-            get { return appvm.PriceListsOC; }
-        }
+//        public ObservableCollection<PriceList> Areas 
+//        {
+//            get { return appvm.PriceListsOC; }
+//        }
 
-        bool creating;
+//        bool creating;
 
-        bool changeOcurred;
-        public bool ChangeOcurred 
-        {
-            get { return changeOcurred; }
-            set
-            {
-                changeOcurred = value;
-                OnPropertyChanged("ChangeOcurred");
-            }
-        }
+//        bool changeOcurred;
+//        public bool ChangeOcurred 
+//        {
+//            get { return changeOcurred; }
+//            set
+//            {
+//                changeOcurred = value;
+//                OnPropertyChanged("ChangeOcurred");
+//            }
+//        }
 
-        #region Delete Command
+//        #region Delete Command
 
-        RelayCommand deleteCommand;
-        public ICommand DeleteCommand 
-        {
-            get
-            {
-                if (deleteCommand == null)
-                    deleteCommand = new RelayCommand(x => Delete());
-                return deleteCommand; 
-            }
-        }
+//        RelayCommand deleteCommand;
+//        public ICommand DeleteCommand 
+//        {
+//            get
+//            {
+//                if (deleteCommand == null)
+//                    deleteCommand = new RelayCommand(x => Delete());
+//                return deleteCommand; 
+//            }
+//        }
 
-        bool CanDelete { get { return !creating; } }
+//        bool CanDelete { get { return !creating; } }
 
-        void Delete() 
-        {
-            var msgBox = base.GetService<IMessageBoxService>();
+//        void Delete() 
+//        {
+//            var msgBox = base.GetService<IMessageBoxService>();
 
-            string message = "¿Está seguro que desea eliminar esta mesa ?";
-            if (msgBox.ShowYesNoDialog(message) == true)
-            {
-                appvm.TablesOC.Remove(table);
+//            string message = "¿Está seguro que desea eliminar esta mesa ?";
+//            if (msgBox.ShowYesNoDialog(message) == true)
+//            {
+//                appvm.TablesOC.Remove(table);
 
-                if (onRemoved != null) onRemoved(table);
+//                if (onRemoved != null) onRemoved(table);
 
-                appvm.Context.Tables.DeleteObject(table);
-                appvm.SaveChanges();
+//                appvm.Context.Tables.DeleteObject(table);
+//                appvm.SaveChanges();
 
-                var windowManager = base.GetService<IWindowManager>();
-                windowManager.Close(this);
+//                var windowManager = base.GetService<IWindowManager>();
+//                windowManager.Close(this);
 
-            }
-        }
+//            }
+//        }
 
-        #endregion
+//        #endregion
 
-        #region Save Command
+//        #region Save Command
 
-        RelayCommand saveCommand;
-        public ICommand SaveCommand 
-        {
-            get
-            {
-                if (saveCommand == null)
-                    saveCommand = new RelayCommand(x => Save());
-                return saveCommand;
-            }
-        }
+//        RelayCommand saveCommand;
+//        public ICommand SaveCommand 
+//        {
+//            get
+//            {
+//                if (saveCommand == null)
+//                    saveCommand = new RelayCommand(x => Save());
+//                return saveCommand;
+//            }
+//        }
 
-        void Save()
-        {
-            if (creating) 
-            {
-                //create the new table
-                table = new Table();
+//        void Save()
+//        {
+//            if (creating) 
+//            {
+//                //create the new table
+//                table = new Table();
 
-                //add to database
-                appvm.Context.Tables.AddObject(table);
-                appvm.TablesOC.Add(table);              
-            }
+//                //add to database
+//                appvm.Context.Tables.AddObject(table);
+//                appvm.TablesOC.Add(table);              
+//            }
 
-            //save changes
-            table.Number = number;
-            table.Description = description;
-            table.Capacity = capacity;
-            table.PriceList = area;
-            table.IsBar = isBar;
+//            //save changes
+//            table.Number = number;
+//            table.Description = description;
+//            table.Capacity = capacity;
+//            table.PriceList = area;
+//            table.IsBar = isBar;
 
-            appvm.SaveChanges();
+//            appvm.SaveChanges();
 
-            if (creating)
-            {
-                creating = false;
+//            if (creating)
+//            {
+//                creating = false;
 
-                if (onCreated != null) onCreated(table);
-            }
-            else if (onAssociationChanged != null) onAssociationChanged(table);
+//                if (onCreated != null) onCreated(table);
+//            }
+//            else if (onAssociationChanged != null) onAssociationChanged(table);
 
-            //reset
-            ChangeOcurred = false;
-        }
+//            //reset
+//            ChangeOcurred = false;
+//        }
 
-        #endregion
+//        #endregion
 
-        #region Cancel Command
+//        #region Cancel Command
 
-        RelayCommand cancelCommand;
-        public ICommand CancelCommand
-        {
-            get
-            {
-                if (cancelCommand == null)
-                    cancelCommand = new RelayCommand(x => Cancel());
-                return cancelCommand;
-            }
-        }
+//        RelayCommand cancelCommand;
+//        public ICommand CancelCommand
+//        {
+//            get
+//            {
+//                if (cancelCommand == null)
+//                    cancelCommand = new RelayCommand(x => Cancel());
+//                return cancelCommand;
+//            }
+//        }
 
-        void Cancel()
-        {
-            //new table
-            if (creating)
-            {
-                var windowManager = base.GetService<IWindowManager>();
-                windowManager.Close(this);
-            }
-            //editing table
-            else
-            {
-                //restore originals
-                Number = table.Number;
-                Description = table.Description;
-                Capacity = table.Capacity;
-                Area = table.PriceList;
-                IsBar = table.IsBar;
+//        void Cancel()
+//        {
+//            //new table
+//            if (creating)
+//            {
+//                var windowManager = base.GetService<IWindowManager>();
+//                windowManager.Close(this);
+//            }
+//            //editing table
+//            else
+//            {
+//                //restore originals
+//                Number = table.Number;
+//                Description = table.Description;
+//                Capacity = table.Capacity;
+//                Area = table.PriceList;
+//                IsBar = table.IsBar;
 
-                //reset
-                ChangeOcurred = false;
-            }
-        }
+//                //reset
+//                ChangeOcurred = false;
+//            }
+//        }
 
-        #endregion
+//        #endregion
 
         
-    }
-}
+//    }
+//}

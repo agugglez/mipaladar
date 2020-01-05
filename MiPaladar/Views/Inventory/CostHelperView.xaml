@@ -1,0 +1,80 @@
+﻿<Window x:Class="MiPaladar.Views.CostHelperView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:stuff="clr-namespace:MiPaladar.Stuff"
+        
+        Height="300" Width="300"
+        
+        Title="Calcular Costo">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml" />
+                <!--<ResourceDictionary Source="/resources/ProductResources.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Text="Cantidad"/>
+        
+        <DockPanel Grid.Column="1">
+
+            <ComboBox Grid.Row="2" Grid.Column="1" DockPanel.Dock="Right"
+                  ItemsSource="{Binding AllUMs}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding UMId}"/>
+            
+            <TextBox Text="{Binding Quantity}"
+                     stuff:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>            
+            
+        </DockPanel>
+        
+        <TextBlock Grid.Row="1" Text="Precio"/>
+
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Price,StringFormat=c}"
+                 stuff:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
+
+        <TextBlock Grid.Row="2" Text="Calcular precio en:"/>
+        
+        <ComboBox Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding AllUMs}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding ResultUMId}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CostResult,StringFormat=c}"/>
+
+        <Grid Grid.Row="4" Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Aceptar" Click="Button_Click_1" />
+            <Button Content="Cancelar" IsCancel="True" Grid.Column="1"/>
+            
+        </Grid>        
+        
+    </Grid>
+    
+</Window>

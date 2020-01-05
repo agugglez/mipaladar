@@ -3,15 +3,20 @@
                     xmlns:ent="clr-namespace:MiPaladar.Entities;assembly=DataLayer"
                     xmlns:classes="clr-namespace:MiPaladar.Classes"
                              
-                    IsRecipe="True" IsStorable="True" IsPurchasable="True" NotInMenu="True" 
-                    IsProduced="False" IsEntrant="True" HasDifferentFormats="False"
-                    Name="Sample Product Name" SalePrice="3.5" PriceRate="1.75">
+                    IsAssembly="True" IsInMenu="True" 
+                     Name="Sample Product Name" SalePrice="3.5" PriceRate="1.75"
+                     ComponentsCost="1.75" ArbitraryCost=".30" TotalCost="2.05"
+                     CostToPriceRatio="63" ProfitToPriceRatio="37" Profit="1.45">
     
-    <local:SampleProduct.ProductionArea>
+    <local:SampleProduct.UMFamily>
+        <ent:UMFamily Name="U"/>
+    </local:SampleProduct.UMFamily>
+    
+    <!--<local:SampleProduct.ProductionArea>
         <ent:ProductionArea Name="Area de Producción"/>
-    </local:SampleProduct.ProductionArea>
+    </local:SampleProduct.ProductionArea>-->
 
-    <local:SampleProduct.RelatedCategories>
+    <!--<local:SampleProduct.Tags>
         <viewmodels:ProductIndexViewModel IsMain="True">
             <viewmodels:ProductIndexViewModel.Category>
                 <ent:Category Name="Plato Fuerte"/>
@@ -27,32 +32,21 @@
                 <ent:Category Name="Sample Category"/>
             </viewmodels:ProductIndexViewModel.Category>
         </viewmodels:ProductIndexViewModel>
-    </local:SampleProduct.RelatedCategories>
+    </local:SampleProduct.Tags>-->
 
     <local:SampleProduct.Ingredients>
-        <viewmodels:IngredientViewModel Quantity="1">
-            <viewmodels:IngredientViewModel.Product>
-                <ent:Product Name="Filete de pescado" />
-            </viewmodels:IngredientViewModel.Product>
-            <viewmodels:IngredientViewModel.UnitMeasure>
-                <ent:UnitMeasure Caption="u"/>
-            </viewmodels:IngredientViewModel.UnitMeasure>
+        <viewmodels:IngredientViewModel Quantity="1" ItemCost="1.5"
+                                        ProductName="Filete de pescado"
+                                        UnitMeasureId="1">            
         </viewmodels:IngredientViewModel>
-        <viewmodels:IngredientViewModel Quantity="0.5">
-            <viewmodels:IngredientViewModel.Product>
-                <ent:Product Name="copa de vino" />
-            </viewmodels:IngredientViewModel.Product>
-            <viewmodels:IngredientViewModel.UnitMeasure>
-                <ent:UnitMeasure Caption="u"/>
-            </viewmodels:IngredientViewModel.UnitMeasure>
+        <viewmodels:IngredientViewModel Quantity="0.5"
+                                        ProductName="copa de vino"
+                                        UnitMeasureId="1">            
         </viewmodels:IngredientViewModel>
-        <viewmodels:IngredientViewModel Quantity="20" >
-            <viewmodels:IngredientViewModel.Product>
-                <ent:Product Name="papas asadas" />
-            </viewmodels:IngredientViewModel.Product>
-            <viewmodels:IngredientViewModel.UnitMeasure>
-                <ent:UnitMeasure Caption="g"/>
-            </viewmodels:IngredientViewModel.UnitMeasure>
+        
+        <viewmodels:IngredientViewModel Quantity="20" 
+                                        ProductName="papas asadas"
+                                        UnitMeasureId="2">
         </viewmodels:IngredientViewModel>
     </local:SampleProduct.Ingredients>
 

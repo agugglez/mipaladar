@@ -6,6 +6,7 @@ using System.Text;
 using MiPaladar.Entities;
 using MiPaladar.Services;
 using MiPaladar.Extensions;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 

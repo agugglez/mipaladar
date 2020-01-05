@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using MiPaladar.Entities;
+using MiPaladar.MVVM;
 
 namespace MiPaladar.ViewModels
 {

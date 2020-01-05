@@ -9,50 +9,21 @@
           <EntitySet Name="Categories" EntityType="RestaurantDBModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Employees" EntityType="RestaurantDBModel.Store.Employees" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ingredients" EntityType="RestaurantDBModel.Store.Ingredients" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Inventories" EntityType="RestaurantDBModel.Store.Inventories" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="InventoryItems" EntityType="RestaurantDBModel.Store.InventoryItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="InventoryTraces" EntityType="RestaurantDBModel.Store.InventoryTraces" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LineItems" EntityType="RestaurantDBModel.Store.LineItems" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="LineItems_AdjustmentItem" EntityType="RestaurantDBModel.Store.LineItems_AdjustmentItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="LineItems_ProductionItem" EntityType="RestaurantDBModel.Store.LineItems_ProductionItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="LineItems_PurchaseLineItem" EntityType="RestaurantDBModel.Store.LineItems_PurchaseLineItem" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="LineItems_SaleLineItem" EntityType="RestaurantDBModel.Store.LineItems_SaleLineItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="LineItems_TransferItem" EntityType="RestaurantDBModel.Store.LineItems_TransferItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Misc" EntityType="RestaurantDBModel.Store.Misc" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Miscs" EntityType="RestaurantDBModel.Store.Miscs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders" EntityType="RestaurantDBModel.Store.Orders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders_Adjustment" EntityType="RestaurantDBModel.Store.Orders_Adjustment" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders_Production" EntityType="RestaurantDBModel.Store.Orders_Production" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders_Purchase" EntityType="RestaurantDBModel.Store.Orders_Purchase" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders_Sale" EntityType="RestaurantDBModel.Store.Orders_Sale" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders_Transfer" EntityType="RestaurantDBModel.Store.Orders_Transfer" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PriceLists" EntityType="RestaurantDBModel.Store.PriceLists" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductIndexes" EntityType="RestaurantDBModel.Store.ProductIndexes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductionAreas" EntityType="RestaurantDBModel.Store.ProductionAreas" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="RestaurantDBModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductTag" EntityType="RestaurantDBModel.Store.ProductTag" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="RestaurantDBModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Shifts" EntityType="RestaurantDBModel.Store.Shifts" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Tables" EntityType="RestaurantDBModel.Store.Tables" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="RestaurantDBModel.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UMFamilies" EntityType="RestaurantDBModel.Store.UMFamilies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnitMeasures" EntityType="RestaurantDBModel.Store.UnitMeasures" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="CategoryProductIndex" Association="RestaurantDBModel.Store.CategoryProductIndex">
+          <AssociationSet Name="FK_CategoryParentCategory" Association="RestaurantDBModel.Store.FK_CategoryParentCategory">
             <End Role="Categories" EntitySet="Categories" />
-            <End Role="ProductIndexes" EntitySet="ProductIndexes" />
-          </AssociationSet>
-          <AssociationSet Name="CurrentExistenceProduct" Association="RestaurantDBModel.Store.CurrentExistenceProduct">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="InventoryItems" EntitySet="InventoryItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Adjustment_inherits_Order" Association="RestaurantDBModel.Store.FK_Adjustment_inherits_Order">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Orders_Adjustment" EntitySet="Orders_Adjustment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdjustmentInventory" Association="RestaurantDBModel.Store.FK_AdjustmentInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="Orders_Adjustment" EntitySet="Orders_Adjustment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdjustmentItem_inherits_LineItem" Association="RestaurantDBModel.Store.FK_AdjustmentItem_inherits_LineItem">
-            <End Role="LineItems" EntitySet="LineItems" />
-            <End Role="LineItems_AdjustmentItem" EntitySet="LineItems_AdjustmentItem" />
+            <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_EmployeesRole" Association="RestaurantDBModel.Store.FK_EmployeesRole">
             <End Role="Roles" EntitySet="Roles" />
@@ -62,49 +33,25 @@
             <End Role="UnitMeasures" EntitySet="UnitMeasures" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK_InventoryInventoryItem" Association="RestaurantDBModel.Store.FK_InventoryInventoryItem">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="InventoryItems" EntitySet="InventoryItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InventoryTraceInventory" Association="RestaurantDBModel.Store.FK_InventoryTraceInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="InventoryTraces" EntitySet="InventoryTraces" />
-          </AssociationSet>
           <AssociationSet Name="FK_Orders_Employees" Association="RestaurantDBModel.Store.FK_Orders_Employees">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Production_inherits_Order" Association="RestaurantDBModel.Store.FK_Production_inherits_Order">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Orders_Production" EntitySet="Orders_Production" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductionInventory" Association="RestaurantDBModel.Store.FK_ProductionInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="Orders_Production" EntitySet="Orders_Production" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductionItem_inherits_LineItem" Association="RestaurantDBModel.Store.FK_ProductionItem_inherits_LineItem">
-            <End Role="LineItems" EntitySet="LineItems" />
-            <End Role="LineItems_ProductionItem" EntitySet="LineItems_ProductionItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_ProductionAreas" Association="RestaurantDBModel.Store.FK_Products_ProductionAreas">
-            <End Role="ProductionAreas" EntitySet="ProductionAreas" />
+          <AssociationSet Name="FK_ProductCategory" Association="RestaurantDBModel.Store.FK_ProductCategory">
+            <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductsMinimumStockUnitMeasure" Association="RestaurantDBModel.Store.FK_ProductsMinimumStockUnitMeasure">
+          <AssociationSet Name="FK_ProductRecipeUnitMeasure" Association="RestaurantDBModel.Store.FK_ProductRecipeUnitMeasure">
             <End Role="UnitMeasures" EntitySet="UnitMeasures" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Purchase_inherits_Order" Association="RestaurantDBModel.Store.FK_Purchase_inherits_Order">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Orders_Purchase" EntitySet="Orders_Purchase" />
+          <AssociationSet Name="FK_ProductTag_Product" Association="RestaurantDBModel.Store.FK_ProductTag_Product">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductTag" EntitySet="ProductTag" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseInventory" Association="RestaurantDBModel.Store.FK_PurchaseInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="Orders_Purchase" EntitySet="Orders_Purchase" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseLineItem_inherits_LineItem" Association="RestaurantDBModel.Store.FK_PurchaseLineItem_inherits_LineItem">
-            <End Role="LineItems" EntitySet="LineItems" />
-            <End Role="LineItems_PurchaseLineItem" EntitySet="LineItems_PurchaseLineItem" />
+          <AssociationSet Name="FK_ProductTag_Tag" Association="RestaurantDBModel.Store.FK_ProductTag_Tag">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ProductTag" EntitySet="ProductTag" />
           </AssociationSet>
           <AssociationSet Name="FK_Sale_inherits_Order" Association="RestaurantDBModel.Store.FK_Sale_inherits_Order">
             <End Role="Orders" EntitySet="Orders" />
@@ -114,29 +61,13 @@
             <End Role="LineItems" EntitySet="LineItems" />
             <End Role="LineItems_SaleLineItem" EntitySet="LineItems_SaleLineItem" />
           </AssociationSet>
+          <AssociationSet Name="FK_SaleLineItemSale" Association="RestaurantDBModel.Store.FK_SaleLineItemSale">
+            <End Role="Orders_Sale" EntitySet="Orders_Sale" />
+            <End Role="LineItems_SaleLineItem" EntitySet="LineItems_SaleLineItem" />
+          </AssociationSet>
           <AssociationSet Name="FK_ShiftSale" Association="RestaurantDBModel.Store.FK_ShiftSale">
             <End Role="Shifts" EntitySet="Shifts" />
             <End Role="Orders_Sale" EntitySet="Orders_Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tables_PriceLists" Association="RestaurantDBModel.Store.FK_Tables_PriceLists">
-            <End Role="PriceLists" EntitySet="PriceLists" />
-            <End Role="Tables" EntitySet="Tables" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Transfer_inherits_Order" Association="RestaurantDBModel.Store.FK_Transfer_inherits_Order">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Orders_Transfer" EntitySet="Orders_Transfer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransferFromInventory" Association="RestaurantDBModel.Store.FK_TransferFromInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="Orders_Transfer" EntitySet="Orders_Transfer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransferItem_inherits_LineItem" Association="RestaurantDBModel.Store.FK_TransferItem_inherits_LineItem">
-            <End Role="LineItems" EntitySet="LineItems" />
-            <End Role="LineItems_TransferItem" EntitySet="LineItems_TransferItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TransferToInventory" Association="RestaurantDBModel.Store.FK_TransferToInventory">
-            <End Role="Inventories" EntitySet="Inventories" />
-            <End Role="Orders_Transfer" EntitySet="Orders_Transfer" />
           </AssociationSet>
           <AssociationSet Name="FK_UMFamilyProduct" Association="RestaurantDBModel.Store.FK_UMFamilyProduct">
             <End Role="UMFamilies" EntitySet="UMFamilies" />
@@ -158,10 +89,6 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="LineItems" EntitySet="LineItems" />
           </AssociationSet>
-          <AssociationSet Name="ProductExistence" Association="RestaurantDBModel.Store.ProductExistence">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="InventoryTraces" EntitySet="InventoryTraces" />
-          </AssociationSet>
           <AssociationSet Name="ProductIngredient" Association="RestaurantDBModel.Store.ProductIngredient">
             <End Role="Products" EntitySet="Products" />
             <End Role="Ingredients" EntitySet="Ingredients" />
@@ -174,14 +101,6 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="LineItems" EntitySet="LineItems" />
           </AssociationSet>
-          <AssociationSet Name="ProductProductIndex" Association="RestaurantDBModel.Store.ProductProductIndex">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ProductIndexes" EntitySet="ProductIndexes" />
-          </AssociationSet>
-          <AssociationSet Name="TableSale" Association="RestaurantDBModel.Store.TableSale">
-            <End Role="Tables" EntitySet="Tables" />
-            <End Role="Orders_Sale" EntitySet="Orders_Sale" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Categories">
           <Key>
@@ -189,6 +108,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ParentCategory_Id" Type="int" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -197,7 +117,6 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CanPurchase" Type="bit" Nullable="false" />
           <Property Name="CanSell" Type="bit" Nullable="false" />
           <Property Name="ImageFileName" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" />
@@ -213,35 +132,6 @@
           <Property Name="BaseProductId" Type="int" Nullable="false" />
           <Property Name="UnitMeasureId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Inventories">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="IsFloor" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="InventoryItems">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Quantity" Type="float" Nullable="false" />
-          <Property Name="MinimumQuantity" Type="float" Nullable="false" />
-          <Property Name="Product_Id" Type="int" Nullable="false" />
-          <Property Name="InventoryId" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="InventoryTraces">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Quantity" Type="float" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="InventoryId" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="LineItems">
           <Key>
             <PropertyRef Name="Id" />
@@ -252,27 +142,6 @@
           <Property Name="Order_Id" Type="int" Nullable="false" />
           <Property Name="UnitMeasure_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="LineItems_AdjustmentItem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="LineItems_ProductionItem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="LineItems_PurchaseLineItem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="LineItems_SaleLineItem">
           <Key>
             <PropertyRef Name="Id" />
@@ -281,25 +150,18 @@
           <Property Name="Printed" Type="bit" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Cost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Sale_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="LineItems_TransferItem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="Misc">
+        <EntityType Name="Miscs">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CompanyImage" Type="nvarchar(max)" />
-          <Property Name="DefaultTax" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="StartingShiftAmount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ReportsFolder" Type="nvarchar(max)" />
           <Property Name="RegisterIP" Type="nvarchar(max)" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -310,28 +172,6 @@
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Employee_Id" Type="int" />
           <Property Name="Memo" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="Orders_Adjustment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Inventory_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Orders_Production">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Inventory_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Orders_Purchase">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Inventory_Id" Type="int" />
-          <Property Name="Total" Type="decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="Orders_Sale">
           <Key>
@@ -344,7 +184,6 @@
           <Property Name="Cash" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Prints" Type="int" Nullable="false" />
           <Property Name="Persons" Type="int" Nullable="false" />
-          <Property Name="Table_Id" Type="int" />
           <Property Name="Paid" Type="bit" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Total" Type="decimal" Nullable="false" Precision="19" Scale="4" />
@@ -356,37 +195,8 @@
           <Property Name="Tips" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="TotalCost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ShiftId" Type="int" />
-        </EntityType>
-        <EntityType Name="Orders_Transfer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="InventoryFrom_Id" Type="int" Nullable="false" />
-          <Property Name="InventoryTo_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PriceLists">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProductIndexes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="IsMain" Type="bit" Nullable="false" />
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProductionAreas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Voids" Type="int" Nullable="false" />
+          <Property Name="VoidsAfterReceipt" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -394,23 +204,30 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="IsRecipe" Type="bit" Nullable="false" />
-          <Property Name="IsStorable" Type="bit" Nullable="false" />
-          <Property Name="NotInMenu" Type="bit" Nullable="false" />
           <Property Name="SalePrice" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="UMFamilyId" Type="int" Nullable="false" />
           <Property Name="CostPrice" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="CostQuantity" Type="float" Nullable="false" />
           <Property Name="CostUMId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="PrintString" Type="nvarchar(max)" />
           <Property Name="ImageFileName" Type="nvarchar(max)" />
-          <Property Name="IsProduced" Type="bit" Nullable="false" />
-          <Property Name="IsEntrant" Type="bit" Nullable="false" />
-          <Property Name="ProductionAreaId" Type="int" />
-          <Property Name="MinimumStock" Type="float" Nullable="false" />
-          <Property Name="MinimumStockUMId" Type="int" Nullable="false" />
+          <Property Name="ArbitraryCost" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="ProductType" Type="int" Nullable="false" />
+          <Property Name="RecipeQuantity" Type="float" Nullable="false" />
+          <Property Name="RecipeUnitMeasure_Id" Type="int" Nullable="false" />
+          <Property Name="EdiblePart" Type="float" Nullable="false" />
+          <Property Name="ProductionProcess" Type="nvarchar(max)" />
+          <Property Name="DoneByUser" Type="bit" Nullable="false" />
+          <Property Name="PrintString" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProductTag">
+          <Key>
+            <PropertyRef Name="Products_Id" />
+            <PropertyRef Name="Tags_Id" />
+          </Key>
+          <Property Name="Products_Id" Type="int" Nullable="false" />
+          <Property Name="Tags_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -421,10 +238,6 @@
           <Property Name="CanLogin" Type="bit" Nullable="false" />
           <Property Name="CanSeeSales" Type="bit" Nullable="false" />
           <Property Name="CanRemoveSales" Type="bit" Nullable="false" />
-          <Property Name="CanSeeOldSales" Type="bit" Nullable="false" />
-          <Property Name="CanSeePurchases" Type="bit" Nullable="false" />
-          <Property Name="CanRemovePurchases" Type="bit" Nullable="false" />
-          <Property Name="CanSeeOldPurchases" Type="bit" Nullable="false" />
           <Property Name="CanSeeInventory" Type="bit" Nullable="false" />
           <Property Name="CanCreateProducts" Type="bit" Nullable="false" />
           <Property Name="CanEditProducts" Type="bit" Nullable="false" />
@@ -433,12 +246,10 @@
           <Property Name="CanCreateEmployees" Type="bit" Nullable="false" />
           <Property Name="CanEditEmployees" Type="bit" Nullable="false" />
           <Property Name="CanRemoveEmployees" Type="bit" Nullable="false" />
-          <Property Name="CanSeeMiPaladar" Type="bit" Nullable="false" />
           <Property Name="CanExportImport" Type="bit" Nullable="false" />
-          <Property Name="CanSeeSalesReport" Type="bit" Nullable="false" />
-          <Property Name="CanSeeSalesByItemReport" Type="bit" Nullable="false" />
           <Property Name="CanSeeReports" Type="bit" Nullable="false" />
           <Property Name="CanSeeRoles" Type="bit" Nullable="false" />
+          <Property Name="CanSeeDashboard" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Shifts">
           <Key>
@@ -447,16 +258,12 @@
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tables">
+        <EntityType Name="Tags">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Number" Type="int" Nullable="false" />
-          <Property Name="Capacity" Type="int" Nullable="false" />
-          <Property Name="AreaId" Type="int" />
-          <Property Name="IsBar" Type="bit" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="UMFamilies">
           <Key>
@@ -476,67 +283,15 @@
           <Property Name="ToBaseConversion" Type="float" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="CategoryProductIndex">
-          <End Role="Categories" Type="RestaurantDBModel.Store.Categories" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ProductIndexes" Type="RestaurantDBModel.Store.ProductIndexes" Multiplicity="*" />
+        <Association Name="FK_CategoryParentCategory">
+          <End Role="Categories" Type="RestaurantDBModel.Store.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="RestaurantDBModel.Store.Categories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductIndexes">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CurrentExistenceProduct">
-          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InventoryItems" Type="RestaurantDBModel.Store.InventoryItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryItems">
-              <PropertyRef Name="Product_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Adjustment_inherits_Order">
-          <End Role="Orders" Type="RestaurantDBModel.Store.Orders" Multiplicity="1" />
-          <End Role="Orders_Adjustment" Type="RestaurantDBModel.Store.Orders_Adjustment" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Adjustment">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdjustmentInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1" />
-          <End Role="Orders_Adjustment" Type="RestaurantDBModel.Store.Orders_Adjustment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Adjustment">
-              <PropertyRef Name="Inventory_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdjustmentItem_inherits_LineItem">
-          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1" />
-          <End Role="LineItems_AdjustmentItem" Type="RestaurantDBModel.Store.LineItems_AdjustmentItem" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="LineItems">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LineItems_AdjustmentItem">
-              <PropertyRef Name="Id" />
+            <Dependent Role="Categories1">
+              <PropertyRef Name="ParentCategory_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -564,34 +319,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_InventoryInventoryItem">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InventoryItems" Type="RestaurantDBModel.Store.InventoryItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryItems">
-              <PropertyRef Name="InventoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InventoryTraceInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InventoryTraces" Type="RestaurantDBModel.Store.InventoryTraces" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryTraces">
-              <PropertyRef Name="InventoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_Employees">
           <End Role="Employees" Type="RestaurantDBModel.Store.Employees" Multiplicity="0..1" />
           <End Role="Orders" Type="RestaurantDBModel.Store.Orders" Multiplicity="*" />
@@ -604,55 +331,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Production_inherits_Order">
-          <End Role="Orders" Type="RestaurantDBModel.Store.Orders" Multiplicity="1" />
-          <End Role="Orders_Production" Type="RestaurantDBModel.Store.Orders_Production" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Production">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductionInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1" />
-          <End Role="Orders_Production" Type="RestaurantDBModel.Store.Orders_Production" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Production">
-              <PropertyRef Name="Inventory_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductionItem_inherits_LineItem">
-          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1" />
-          <End Role="LineItems_ProductionItem" Type="RestaurantDBModel.Store.LineItems_ProductionItem" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="LineItems">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LineItems_ProductionItem">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_ProductionAreas">
-          <End Role="ProductionAreas" Type="RestaurantDBModel.Store.ProductionAreas" Multiplicity="0..1" />
+        <Association Name="FK_ProductCategory">
+          <End Role="Categories" Type="RestaurantDBModel.Store.Categories" Multiplicity="0..1" />
           <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProductionAreas">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="ProductionAreaId" />
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductsMinimumStockUnitMeasure">
+        <Association Name="FK_ProductRecipeUnitMeasure">
           <End Role="UnitMeasures" Type="RestaurantDBModel.Store.UnitMeasures" Multiplicity="1" />
           <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -660,43 +351,35 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="MinimumStockUMId" />
+              <PropertyRef Name="RecipeUnitMeasure_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Purchase_inherits_Order">
-          <End Role="Orders" Type="RestaurantDBModel.Store.Orders" Multiplicity="1" />
-          <End Role="Orders_Purchase" Type="RestaurantDBModel.Store.Orders_Purchase" Multiplicity="0..1" />
+        <Association Name="FK_ProductTag_Product">
+          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductTag" Type="RestaurantDBModel.Store.ProductTag" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Orders">
+            <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Orders_Purchase">
-              <PropertyRef Name="Id" />
+            <Dependent Role="ProductTag">
+              <PropertyRef Name="Products_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="0..1" />
-          <End Role="Orders_Purchase" Type="RestaurantDBModel.Store.Orders_Purchase" Multiplicity="*" />
+        <Association Name="FK_ProductTag_Tag">
+          <End Role="Tags" Type="RestaurantDBModel.Store.Tags" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProductTag" Type="RestaurantDBModel.Store.ProductTag" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Inventories">
+            <Principal Role="Tags">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Orders_Purchase">
-              <PropertyRef Name="Inventory_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseLineItem_inherits_LineItem">
-          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1" />
-          <End Role="LineItems_PurchaseLineItem" Type="RestaurantDBModel.Store.LineItems_PurchaseLineItem" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="LineItems">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LineItems_PurchaseLineItem">
-              <PropertyRef Name="Id" />
+            <Dependent Role="ProductTag">
+              <PropertyRef Name="Tags_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -713,7 +396,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SaleLineItem_inherits_LineItem">
-          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1" />
+          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LineItems_SaleLineItem" Type="RestaurantDBModel.Store.LineItems_SaleLineItem" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="LineItems">
@@ -721,6 +406,18 @@
             </Principal>
             <Dependent Role="LineItems_SaleLineItem">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaleLineItemSale">
+          <End Role="Orders_Sale" Type="RestaurantDBModel.Store.Orders_Sale" Multiplicity="1" />
+          <End Role="LineItems_SaleLineItem" Type="RestaurantDBModel.Store.LineItems_SaleLineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders_Sale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LineItems_SaleLineItem">
+              <PropertyRef Name="Sale_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -733,66 +430,6 @@
             </Principal>
             <Dependent Role="Orders_Sale">
               <PropertyRef Name="ShiftId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tables_PriceLists">
-          <End Role="PriceLists" Type="RestaurantDBModel.Store.PriceLists" Multiplicity="0..1" />
-          <End Role="Tables" Type="RestaurantDBModel.Store.Tables" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PriceLists">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tables">
-              <PropertyRef Name="AreaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Transfer_inherits_Order">
-          <End Role="Orders" Type="RestaurantDBModel.Store.Orders" Multiplicity="1" />
-          <End Role="Orders_Transfer" Type="RestaurantDBModel.Store.Orders_Transfer" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Transfer">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TransferFromInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1" />
-          <End Role="Orders_Transfer" Type="RestaurantDBModel.Store.Orders_Transfer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Transfer">
-              <PropertyRef Name="InventoryFrom_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TransferItem_inherits_LineItem">
-          <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="1" />
-          <End Role="LineItems_TransferItem" Type="RestaurantDBModel.Store.LineItems_TransferItem" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="LineItems">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="LineItems_TransferItem">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TransferToInventory">
-          <End Role="Inventories" Type="RestaurantDBModel.Store.Inventories" Multiplicity="1" />
-          <End Role="Orders_Transfer" Type="RestaurantDBModel.Store.Orders_Transfer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Transfer">
-              <PropertyRef Name="InventoryTo_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -856,20 +493,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductExistence">
-          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InventoryTraces" Type="RestaurantDBModel.Store.InventoryTraces" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryTraces">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ProductIngredient">
           <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1" />
           <End Role="Ingredients" Type="RestaurantDBModel.Store.Ingredients" Multiplicity="*" />
@@ -897,7 +520,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ProductLineItem">
-          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1" />
+          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LineItems" Type="RestaurantDBModel.Store.LineItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -908,33 +533,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductProductIndex">
-          <End Role="Products" Type="RestaurantDBModel.Store.Products" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ProductIndexes" Type="RestaurantDBModel.Store.ProductIndexes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductIndexes">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="TableSale">
-          <End Role="Tables" Type="RestaurantDBModel.Store.Tables" Multiplicity="0..1" />
-          <End Role="Orders_Sale" Type="RestaurantDBModel.Store.Orders_Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tables">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Orders_Sale">
-              <PropertyRef Name="Table_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="delete_stuff" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -943,18 +541,9 @@
           <EntitySet Name="Products" EntityType="RestaurantDBModel.Product" />
           <EntitySet Name="LineItems" EntityType="RestaurantDBModel.LineItem" />
           <EntitySet Name="Categories" EntityType="RestaurantDBModel.Category" />
-          <EntitySet Name="PriceLists" EntityType="RestaurantDBModel.PriceList" />
           <EntitySet Name="Ingredients" EntityType="RestaurantDBModel.Ingredient" />
           <EntitySet Name="Employees" EntityType="RestaurantDBModel.Employee" />
-          <EntitySet Name="Tables" EntityType="RestaurantDBModel.Table" />
-          <EntitySet Name="ProductIndexes" EntityType="RestaurantDBModel.ProductIndex" />
-          <EntitySet Name="InventoryItems" EntityType="RestaurantDBModel.InventoryItem" />
-          <EntitySet Name="InventoryTraces" EntityType="RestaurantDBModel.InventoryTrace" />
           <EntitySet Name="Orders" EntityType="RestaurantDBModel.Order" />
-          <AssociationSet Name="CategoryProductIndex" Association="RestaurantDBModel.CategoryProductIndex">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="ProductIndex" EntitySet="ProductIndexes" />
-          </AssociationSet>
           <AssociationSet Name="ProductIngredient" Association="RestaurantDBModel.ProductIngredient">
             <End Role="Product" EntitySet="Products" />
             <End Role="Ingredient" EntitySet="Ingredients" />
@@ -962,27 +551,6 @@
           <AssociationSet Name="ProductIngredient1" Association="RestaurantDBModel.ProductIngredient1">
             <End Role="Product" EntitySet="Products" />
             <End Role="Ingredient" EntitySet="Ingredients" />
-          </AssociationSet>
-          <AssociationSet Name="ProductProductIndex" Association="RestaurantDBModel.ProductProductIndex">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="ProductIndex" EntitySet="ProductIndexes" />
-          </AssociationSet>
-          <AssociationSet Name="CurrentExistenceProduct" Association="RestaurantDBModel.CurrentExistenceProduct">
-            <End EntitySet="InventoryItems" Role="CurrentExistence" />
-            <End EntitySet="Products" Role="Product" />
-          </AssociationSet>
-          <AssociationSet Name="ProductExistence" Association="RestaurantDBModel.ProductExistence">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Existence" EntitySet="InventoryTraces" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tables_PriceLists" Association="RestaurantDBModel.FK_Tables_PriceLists">
-            <End Role="PriceList" EntitySet="PriceLists" />
-            <End Role="Table" EntitySet="Tables" />
-          </AssociationSet>
-          <EntitySet Name="ProductionAreas" EntityType="RestaurantDBModel.ProductionArea" />
-          <AssociationSet Name="FK_Products_ProductionAreas" Association="RestaurantDBModel.FK_Products_ProductionAreas">
-            <End Role="ProductionArea" EntitySet="ProductionAreas" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="UMFamilies" EntityType="RestaurantDBModel.UMFamily" />
           <EntitySet Name="UnitMeasures" EntityType="RestaurantDBModel.UnitMeasure" />
@@ -998,71 +566,22 @@
             <End Role="UMFamily" EntitySet="UMFamilies" />
             <End Role="UnitMeasure" EntitySet="UnitMeasures" />
           </AssociationSet>
-          <EntitySet Name="Inventories" EntityType="RestaurantDBModel.Inventory" />
-          <AssociationSet Name="InventoryInventoryItem" Association="RestaurantDBModel.InventoryInventoryItem">
-            <End Role="Inventory" EntitySet="Inventories" />
-            <End Role="InventoryItem" EntitySet="InventoryItems" />
-          </AssociationSet>
-          <AssociationSet Name="InventoryTraceInventory" Association="RestaurantDBModel.InventoryTraceInventory">
-            <End Role="InventoryTrace" EntitySet="InventoryTraces" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
-          <AssociationSet Name="TransferFromInventory" Association="RestaurantDBModel.TransferFromInventory">
-            <End Role="Transfer" EntitySet="Orders" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
-          <AssociationSet Name="TransferToInventory" Association="RestaurantDBModel.TransferToInventory">
-            <End Role="Transfer" EntitySet="Orders" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
-          <AssociationSet Name="AdjustmentInventory" Association="RestaurantDBModel.AdjustmentInventory">
-            <End Role="Adjustment" EntitySet="Orders" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
-          <AssociationSet Name="PurchaseInventory" Association="RestaurantDBModel.PurchaseInventory">
-            <End Role="Purchase" EntitySet="Orders" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
-          <AssociationSet Name="ProductionInventory" Association="RestaurantDBModel.ProductionInventory">
-            <End Role="Production" EntitySet="Orders" />
-            <End Role="Inventory" EntitySet="Inventories" />
-          </AssociationSet>
           <AssociationSet Name="FK_UnitMeasureProductCost" Association="RestaurantDBModel.FK_UnitMeasureProductCost">
             <End Role="UnitMeasure" EntitySet="UnitMeasures" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="LineItemProduct" Association="RestaurantDBModel.LineItemProduct">
-            <End Role="LineItem" EntitySet="LineItems" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="LineItemUnitMeasure" Association="RestaurantDBModel.LineItemUnitMeasure">
             <End Role="LineItem" EntitySet="LineItems" />
             <End Role="UnitMeasure" EntitySet="UnitMeasures" />
           </AssociationSet>
-          <AssociationSet Name="SaleTable" Association="RestaurantDBModel.SaleTable">
-            <End Role="Sale" EntitySet="Orders" />
-            <End Role="Table" EntitySet="Tables" />
-          </AssociationSet>
-          <AssociationSet Name="OrderEmployee" Association="RestaurantDBModel.OrderEmployee">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="LineItemOrder" Association="RestaurantDBModel.LineItemOrder">
             <End Role="LineItem" EntitySet="LineItems" />
             <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_ProductionAreas1" Association="RestaurantDBModel.FK_Products_ProductionAreas1">
-            <End Role="ProductionArea" EntitySet="ProductionAreas" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Roles" EntityType="RestaurantDBModel.Role" />
           <AssociationSet Name="FK_EmployeesRole" Association="RestaurantDBModel.FK_EmployeesRole">
             <End Role="Role" EntitySet="Roles" />
             <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductsMinimumStockUnitMeasure" Association="RestaurantDBModel.FK_ProductsMinimumStockUnitMeasure">
-            <End Role="UnitMeasure" EntitySet="UnitMeasures" />
-            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Shifts" EntityType="RestaurantDBModel.Shift" />
           <AssociationSet Name="FK_ShiftSale" Association="RestaurantDBModel.FK_ShiftSale">
@@ -1070,7 +589,35 @@
             <End Role="Sale" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="Miscs" EntityType="RestaurantDBModel.Misc" />
-          <FunctionImport Name="DeleteStuff" />
+          <EntitySet Name="Tags" EntityType="RestaurantDBModel.Tag" />
+          <AssociationSet Name="ProductTag" Association="RestaurantDBModel.ProductTag">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="SaleLineItemSale" Association="RestaurantDBModel.SaleLineItemSale">
+            <End Role="SaleLineItem" EntitySet="LineItems" />
+            <End Role="Sale" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="ProductCategory" Association="RestaurantDBModel.ProductCategory">
+            <End EntitySet="Products" Role="Product" />
+            <End EntitySet="Categories" Role="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoryParentCategory" Association="RestaurantDBModel.FK_CategoryParentCategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Category1" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipeUnitMeasure" Association="RestaurantDBModel.FK_ProductRecipeUnitMeasure">
+            <End Role="UnitMeasure" EntitySet="UnitMeasures" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ProductLineItem1" Association="RestaurantDBModel.ProductLineItem1">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="LineItem" EntitySet="LineItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Employees" Association="RestaurantDBModel.FK_Orders_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Product">
           <Key>
@@ -1078,32 +625,29 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Name" Type="String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Boolean" Name="IsRecipe" Nullable="false" />
-          <Property Type="Boolean" Name="IsStorable" Nullable="false" />
-          <Property Type="Boolean" Name="NotInMenu" Nullable="false" />
           <NavigationProperty Name="Outgredients" Relationship="RestaurantDBModel.ProductIngredient" FromRole="Product" ToRole="Ingredient" />
           <NavigationProperty Name="Ingredients" Relationship="RestaurantDBModel.ProductIngredient1" FromRole="Product" ToRole="Ingredient" />
-          <NavigationProperty Name="RelatedCategories" Relationship="RestaurantDBModel.ProductProductIndex" FromRole="Product" ToRole="ProductIndex" />
-          <NavigationProperty Name="CurrentExistence" Relationship="RestaurantDBModel.CurrentExistenceProduct" FromRole="Product" ToRole="CurrentExistence" />
-          <NavigationProperty Name="Existences" Relationship="RestaurantDBModel.ProductExistence" FromRole="Product" ToRole="Existence" />
           <Property Type="Decimal" Name="SalePrice" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Int32" Name="ProductionAreaId" />
-          <NavigationProperty Name="ProductionArea" Relationship="RestaurantDBModel.FK_Products_ProductionAreas" FromRole="Product" ToRole="ProductionArea" />
-          <Property Type="Boolean" Name="IsProduced" Nullable="false" />
-          <Property Type="Boolean" Name="IsEntrant" Nullable="false" />
           <Property Type="Int32" Name="UMFamilyId" Nullable="false" />
           <NavigationProperty Name="UMFamily" Relationship="RestaurantDBModel.FK_UMFamilyProduct" FromRole="Product" ToRole="UMFamily" />
-          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PrintString" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ImageFileName" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Decimal" Name="CostPrice" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Double" Name="CostQuantity" Nullable="false" />
           <Property Type="Int32" Name="CostUMId" Nullable="false" />
           <NavigationProperty Name="CostUnitMeasure" Relationship="RestaurantDBModel.FK_UnitMeasureProductCost" FromRole="Product" ToRole="UnitMeasure" />
-          <Property Type="Double" Name="MinimumStock" Nullable="false" />
-          <Property Type="Int32" Name="MinimumStockUMId" Nullable="false" />
-          <NavigationProperty Name="MinimumStockUM" Relationship="RestaurantDBModel.FK_ProductsMinimumStockUnitMeasure" FromRole="Product" ToRole="UnitMeasure" />
           <Property Type="Int32" Name="Code" Nullable="false" />
+          <Property Type="Decimal" Name="ArbitraryCost" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Tags" Relationship="RestaurantDBModel.ProductTag" FromRole="Product" ToRole="Tag" />
+          <Property Type="RestaurantDBModel.ProductType" Name="ProductType" Nullable="false" />
+          <Property Type="Double" Name="RecipeQuantity" Nullable="false" />
+          <Property Type="Double" Name="EdiblePart" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="RestaurantDBModel.ProductCategory" FromRole="Product" ToRole="Category" />
+          <Property xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" Name="CategoryId" Nullable="true" Type="Int32" />
+          <Property Type="String" Name="ProductionProcess" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="RecipeUnitMeasure_Id" Nullable="false" />
+          <NavigationProperty Name="RecipeUnitMeasure" Relationship="RestaurantDBModel.FK_ProductRecipeUnitMeasure" FromRole="Product" ToRole="UnitMeasure" />
+          <Property Type="Boolean" Name="DoneByUser" Nullable="false" />
+          <Property Type="String" Name="PrintString" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LineItem">
           <Key>
@@ -1111,9 +655,10 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Double" Name="Quantity" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="RestaurantDBModel.LineItemProduct" FromRole="LineItem" ToRole="Product" />
           <NavigationProperty Name="UnitMeasure" Relationship="RestaurantDBModel.LineItemUnitMeasure" FromRole="LineItem" ToRole="UnitMeasure" />
           <NavigationProperty Name="Order" Relationship="RestaurantDBModel.LineItemOrder" FromRole="LineItem" ToRole="Order" />
+          <Property Type="Int32" Name="Product_Id" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="RestaurantDBModel.ProductLineItem1" FromRole="LineItem" ToRole="Product" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -1121,15 +666,10 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="RelatedProducts" Relationship="RestaurantDBModel.CategoryProductIndex" FromRole="Category" ToRole="ProductIndex" />
-        </EntityType>
-        <EntityType Name="PriceList">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Tables" Relationship="RestaurantDBModel.FK_Tables_PriceLists" FromRole="PriceList" ToRole="Table" />
+          <NavigationProperty Name="Products" Relationship="RestaurantDBModel.ProductCategory" FromRole="Category" ToRole="Product" />
+          <Property Type="Int32" Name="ParentCategory_Id" />
+          <NavigationProperty Name="ChildrenCategories" Relationship="RestaurantDBModel.FK_CategoryParentCategory" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="ParentCategory" Relationship="RestaurantDBModel.FK_CategoryParentCategory" FromRole="Category1" ToRole="Category" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -1151,7 +691,6 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
-          <Property Type="Boolean" Name="CanPurchase" Nullable="false" />
           <Property Type="Boolean" Name="CanSell" Nullable="false" />
           <Property Type="String" Name="ImageFileName" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Password" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1171,64 +710,15 @@
           <Property Type="Decimal" Name="SubTotal" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="Total" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Boolean" Name="Closed" Nullable="false" />
-          <NavigationProperty Name="Table" Relationship="RestaurantDBModel.SaleTable" FromRole="Sale" ToRole="Table" />
           <Property Type="Decimal" Name="Tax" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Boolean" Name="TaxInPercent" Nullable="false" />
           <Property Type="Decimal" Name="Tips" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="TotalCost" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Int32" Name="ShiftId" />
           <NavigationProperty Name="Shift" Relationship="RestaurantDBModel.FK_ShiftSale" FromRole="Sale" ToRole="Shift" />
-        </EntityType>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Int32" Name="Number" Nullable="false" />
-          <Property Type="Int32" Name="Capacity" Nullable="false" />
-          <Property Type="Int32" Name="AreaId" />
-          <NavigationProperty Name="PriceList" Relationship="RestaurantDBModel.FK_Tables_PriceLists" FromRole="Table" ToRole="PriceList" />
-          <Property Type="Boolean" Name="IsBar" Nullable="false" />
-          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Purchase" BaseType="RestaurantDBModel.Order">
-          <NavigationProperty Name="Inventory" Relationship="RestaurantDBModel.PurchaseInventory" FromRole="Purchase" ToRole="Inventory" />
-          <Property Type="Decimal" Name="Total" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="ProductIndex">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Boolean" Name="IsMain" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="RestaurantDBModel.CategoryProductIndex" FromRole="ProductIndex" ToRole="Category" />
-          <Property Type="Int32" Name="CategoryId" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="RestaurantDBModel.ProductProductIndex" FromRole="ProductIndex" ToRole="Product" />
-          <Property Type="Int32" Name="ProductId" Nullable="false" />
-        </EntityType>
-        <EntityType Name="InventoryItem">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="RestaurantDBModel.CurrentExistenceProduct" FromRole="CurrentExistence" ToRole="Product" />
-          <Property Type="Double" Name="MinimumQuantity" Nullable="false" />
-          <NavigationProperty Name="Inventory" Relationship="RestaurantDBModel.InventoryInventoryItem" FromRole="InventoryItem" ToRole="Inventory" />
-          <Property Type="Int32" Name="InventoryId" Nullable="false" />
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="InventoryTrace">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
-          <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="RestaurantDBModel.ProductExistence" FromRole="Existence" ToRole="Product" />
-          <Property Type="Int32" Name="ProductId" Nullable="false" />
-          <NavigationProperty Name="Inventory" Relationship="RestaurantDBModel.InventoryTraceInventory" FromRole="InventoryTrace" ToRole="Inventory" />
-          <Property Type="Int32" Name="InventoryId" Nullable="false" />
+          <Property Type="Int32" Name="Voids" Nullable="false" />
+          <Property Type="Int32" Name="VoidsAfterReceipt" Nullable="false" />
+          <NavigationProperty Name="SaleLineItems" Relationship="RestaurantDBModel.SaleLineItemSale" FromRole="Sale" ToRole="SaleLineItem" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1238,23 +728,10 @@
           <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="String" Name="Memo" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employee" Relationship="RestaurantDBModel.OrderEmployee" FromRole="Order" ToRole="Employee" />
           <NavigationProperty Name="LineItems" Relationship="RestaurantDBModel.LineItemOrder" FromRole="Order" ToRole="LineItem" />
+          <Property Type="Int32" Name="Employee_Id" />
+          <NavigationProperty Name="Employee" Relationship="RestaurantDBModel.FK_Orders_Employees" FromRole="Order" ToRole="Employee" />
         </EntityType>
-        <Association Name="CategoryProductIndex">
-          <End Type="RestaurantDBModel.Category" Role="Category" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="RestaurantDBModel.ProductIndex" Role="ProductIndex" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductIndex">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ProductIngredient">
           <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="1">
           </End>
@@ -1283,72 +760,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductProductIndex">
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="RestaurantDBModel.ProductIndex" Role="ProductIndex" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductIndex">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CurrentExistenceProduct">
-          <End Type="RestaurantDBModel.InventoryItem" Multiplicity="*" Role="CurrentExistence" />
-          <End Type="RestaurantDBModel.Product" Multiplicity="1" Role="Product">
-            <OnDelete Action="Cascade" />
-          </End>
-        </Association>
-        <Association Name="ProductExistence">
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="RestaurantDBModel.InventoryTrace" Role="Existence" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Existence">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tables_PriceLists">
-          <End Type="RestaurantDBModel.PriceList" Role="PriceList" Multiplicity="0..1" />
-          <End Type="RestaurantDBModel.Table" Role="Table" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PriceList">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Table">
-              <PropertyRef Name="AreaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ProductionArea">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="RestaurantDBModel.FK_Products_ProductionAreas" FromRole="ProductionArea" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_Products_ProductionAreas">
-          <End Type="RestaurantDBModel.ProductionArea" Role="ProductionArea" Multiplicity="0..1" />
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductionArea">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ProductionAreaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="UMFamily">
           <Key>
             <PropertyRef Name="Id" />
@@ -1369,6 +780,7 @@
           <Property Type="Boolean" Name="IsFamilyBase" Nullable="false" />
           <Property Type="Double" Name="ToBaseConversion" Nullable="false" />
           <Property Type="String" Name="Name" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <NavigationProperty Name="Products" Relationship="RestaurantDBModel.FK_ProductRecipeUnitMeasure" FromRole="UnitMeasure" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Ingredients_UnitMeasures">
           <End Type="RestaurantDBModel.UnitMeasure" Role="UnitMeasure" Multiplicity="1" />
@@ -1406,92 +818,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Inventory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="InventoryItems" Relationship="RestaurantDBModel.InventoryInventoryItem" FromRole="Inventory" ToRole="InventoryItem" />
-          <NavigationProperty Name="InventoryTraces" Relationship="RestaurantDBModel.InventoryTraceInventory" FromRole="Inventory" ToRole="InventoryTrace" />
-          <NavigationProperty Name="TransfersFrom" Relationship="RestaurantDBModel.TransferFromInventory" FromRole="Inventory" ToRole="Transfer" />
-          <NavigationProperty Name="TransfersTo" Relationship="RestaurantDBModel.TransferToInventory" FromRole="Inventory" ToRole="Transfer" />
-          <NavigationProperty Name="Adjustments" Relationship="RestaurantDBModel.AdjustmentInventory" FromRole="Inventory" ToRole="Adjustment" />
-          <NavigationProperty Name="Purchases" Relationship="RestaurantDBModel.PurchaseInventory" FromRole="Inventory" ToRole="Purchase" />
-          <NavigationProperty Name="Productions" Relationship="RestaurantDBModel.ProductionInventory" FromRole="Inventory" ToRole="Production" />
-          <Property Type="Boolean" Name="IsFloor" Nullable="false" />
-        </EntityType>
-        <Association Name="InventoryInventoryItem">
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="RestaurantDBModel.InventoryItem" Role="InventoryItem" Multiplicity="*">
-          </End>
-          <ReferentialConstraint>
-            <Principal Role="Inventory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryItem">
-              <PropertyRef Name="InventoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="InventoryTraceInventory">
-          <End Type="RestaurantDBModel.InventoryTrace" Role="InventoryTrace" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <ReferentialConstraint>
-            <Principal Role="Inventory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryTrace">
-              <PropertyRef Name="InventoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Adjustment" BaseType="RestaurantDBModel.Order">
-          <NavigationProperty Name="Inventory" Relationship="RestaurantDBModel.AdjustmentInventory" FromRole="Adjustment" ToRole="Inventory" />
-        </EntityType>
-        <EntityType Name="AdjustmentItem" BaseType="RestaurantDBModel.LineItem">
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="Transfer" BaseType="RestaurantDBModel.Order">
-          <NavigationProperty Name="InventoryFrom" Relationship="RestaurantDBModel.TransferFromInventory" FromRole="Transfer" ToRole="Inventory" />
-          <NavigationProperty Name="InventoryTo" Relationship="RestaurantDBModel.TransferToInventory" FromRole="Transfer" ToRole="Inventory" />
-        </EntityType>
-        <Association Name="TransferFromInventory">
-          <End Type="RestaurantDBModel.Transfer" Role="Transfer" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1">
-          </End>
-        </Association>
-        <Association Name="TransferToInventory">
-          <End Type="RestaurantDBModel.Transfer" Role="Transfer" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1">
-          </End>
-        </Association>
-        <EntityType Name="TransferItem" BaseType="RestaurantDBModel.LineItem">
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <Association Name="AdjustmentInventory">
-          <End Type="RestaurantDBModel.Adjustment" Role="Adjustment" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1" />
-        </Association>
-        <Association Name="PurchaseInventory">
-          <End Type="RestaurantDBModel.Purchase" Role="Purchase" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="0..1" />
-        </Association>
-        <EntityType Name="Production" BaseType="RestaurantDBModel.Order">
-          <NavigationProperty Name="Inventory" Relationship="RestaurantDBModel.ProductionInventory" FromRole="Production" ToRole="Inventory" />
-        </EntityType>
-        <Association Name="ProductionInventory">
-          <End Type="RestaurantDBModel.Production" Role="Production" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Inventory" Role="Inventory" Multiplicity="1">
-          </End>
-        </Association>
-        <EntityType Name="ProductionItem" BaseType="RestaurantDBModel.LineItem">
-          <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
         <Association Name="FK_UnitMeasureProductCost">
           <End Type="RestaurantDBModel.UnitMeasure" Role="UnitMeasure" Multiplicity="1" />
           <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" />
@@ -1508,42 +834,17 @@
           <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
           <Property Type="Boolean" Name="Printed" Nullable="false" />
           <Property Type="Decimal" Name="Cost" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Sale" Relationship="RestaurantDBModel.SaleLineItemSale" FromRole="SaleLineItem" ToRole="Sale" />
         </EntityType>
-        <EntityType Name="PurchaseLineItem" BaseType="RestaurantDBModel.LineItem">
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-        </EntityType>
-        <Association Name="LineItemProduct">
-          <End Type="RestaurantDBModel.LineItem" Role="LineItem" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="1">
-          </End>
-        </Association>
         <Association Name="LineItemUnitMeasure">
           <End Type="RestaurantDBModel.LineItem" Role="LineItem" Multiplicity="*" />
           <End Type="RestaurantDBModel.UnitMeasure" Role="UnitMeasure" Multiplicity="1" />
         </Association>
-        <Association Name="SaleTable">
-          <End Type="RestaurantDBModel.Sale" Role="Sale" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Table" Role="Table" Multiplicity="0..1" />
-        </Association>
-        <Association Name="OrderEmployee">
-          <End Type="RestaurantDBModel.Order" Role="Order" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Employee" Role="Employee" Multiplicity="0..1" />
-        </Association>
         <Association Name="LineItemOrder">
           <End Type="RestaurantDBModel.LineItem" Role="LineItem" Multiplicity="*" />
-          <End Type="RestaurantDBModel.Order" Role="Order" Multiplicity="1" />
-        </Association>
-        <Association Name="FK_Products_ProductionAreas1">
-          <End Type="RestaurantDBModel.ProductionArea" Role="ProductionArea" Multiplicity="0..1" />
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductionArea">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="ProductionAreaId" />
-            </Dependent>
-          </ReferentialConstraint>
+          <End Type="RestaurantDBModel.Order" Role="Order" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
         </Association>
         <EntityType Name="Role">
           <Key>
@@ -1554,10 +855,6 @@
           <Property Type="Boolean" Name="CanLogin" Nullable="false" />
           <Property Type="Boolean" Name="CanSeeSales" Nullable="false" />
           <Property Type="Boolean" Name="CanRemoveSales" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeeOldSales" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeePurchases" Nullable="false" />
-          <Property Type="Boolean" Name="CanRemovePurchases" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeeOldPurchases" Nullable="false" />
           <Property Type="Boolean" Name="CanSeeInventory" Nullable="false" />
           <Property Type="Boolean" Name="CanCreateProducts" Nullable="false" />
           <Property Type="Boolean" Name="CanEditProducts" Nullable="false" />
@@ -1566,13 +863,11 @@
           <Property Type="Boolean" Name="CanCreateEmployees" Nullable="false" />
           <Property Type="Boolean" Name="CanEditEmployees" Nullable="false" />
           <Property Type="Boolean" Name="CanRemoveEmployees" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeeMiPaladar" Nullable="false" />
           <Property Type="Boolean" Name="CanExportImport" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeeSalesReport" Nullable="false" />
-          <Property Type="Boolean" Name="CanSeeSalesByItemReport" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="RestaurantDBModel.FK_EmployeesRole" FromRole="Role" ToRole="Employee" />
           <Property Type="Boolean" Name="CanSeeReports" Nullable="false" />
           <Property Type="Boolean" Name="CanSeeRoles" Nullable="false" />
+          <Property Type="Boolean" Name="CanSeeDashboard" Nullable="false" />
         </EntityType>
         <Association Name="FK_EmployeesRole">
           <End Type="RestaurantDBModel.Role" Role="Role" Multiplicity="1" />
@@ -1583,18 +878,6 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="Role_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductsMinimumStockUnitMeasure">
-          <End Type="RestaurantDBModel.UnitMeasure" Role="UnitMeasure" Multiplicity="1" />
-          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UnitMeasure">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="MinimumStockUMId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1625,11 +908,98 @@
           <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CompanyImage" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="DefaultTax" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="StartingShiftAmount" Nullable="false" Precision="19" Scale="4" />
           <Property Type="String" Name="ReportsFolder" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="RegisterIP" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Products" Relationship="RestaurantDBModel.ProductTag" FromRole="Tag" ToRole="Product" />
+        </EntityType>
+        <Association Name="ProductTag">
+          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" >
+          </End>
+          <End Type="RestaurantDBModel.Tag" Role="Tag" Multiplicity="*" >
+          </End>
+        </Association>
+        <EnumType Name="ProductType">
+          <Member Name="FinishedGoods" />
+          <Member Name="WorkInProcess" />
+          <Member Name="RawMaterials" />
+          <Member Name="CompraVenta" />
+        </EnumType>
+        <Association Name="SaleLineItemSale">
+          <End Type="RestaurantDBModel.SaleLineItem" Role="SaleLineItem" Multiplicity="*" />
+          <End Type="RestaurantDBModel.Sale" Role="Sale" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="ProductCategory">
+          <End Type="RestaurantDBModel.Product" Multiplicity="*" Role="Product" />
+          <End Type="RestaurantDBModel.Category" Multiplicity="0..1" Role="Category" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoryParentCategory">
+          <End Type="RestaurantDBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="RestaurantDBModel.Category" Role="Category1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category1">
+              <PropertyRef Name="ParentCategory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductRecipeUnitMeasure">
+          <End Type="RestaurantDBModel.UnitMeasure" Role="UnitMeasure" Multiplicity="1" />
+          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasure">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="RecipeUnitMeasure_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductLineItem1">
+          <End Type="RestaurantDBModel.Product" Role="Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="RestaurantDBModel.LineItem" Role="LineItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LineItem">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Employees">
+          <End Type="RestaurantDBModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="RestaurantDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1639,25 +1009,24 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Product)">
         <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="IsRecipe" ColumnName="IsRecipe" />
-          <ScalarProperty Name="IsStorable" ColumnName="IsStorable" />
-          <ScalarProperty Name="NotInMenu" ColumnName="NotInMenu" />
-          <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-          <ScalarProperty Name="ProductionAreaId" ColumnName="ProductionAreaId" />
-          <ScalarProperty Name="IsProduced" ColumnName="IsProduced" />
-          <ScalarProperty Name="IsEntrant" ColumnName="IsEntrant" />
-          <ScalarProperty Name="UMFamilyId" ColumnName="UMFamilyId" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="PrintString" ColumnName="PrintString" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+          <ScalarProperty Name="UMFamilyId" ColumnName="UMFamilyId" />
           <ScalarProperty Name="ImageFileName" ColumnName="ImageFileName" />
           <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
-          <ScalarProperty Name="CostQuantity" ColumnName="CostQuantity" />
           <ScalarProperty Name="CostUMId" ColumnName="CostUMId" />
-          <ScalarProperty Name="MinimumStock" ColumnName="MinimumStock" />
-          <ScalarProperty Name="MinimumStockUMId" ColumnName="MinimumStockUMId" />
           <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ArbitraryCost" ColumnName="ArbitraryCost" />
+          <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+          <ScalarProperty Name="RecipeQuantity" ColumnName="RecipeQuantity" />
+          <ScalarProperty Name="EdiblePart" ColumnName="EdiblePart" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="ProductionProcess" ColumnName="ProductionProcess" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RecipeUnitMeasure_Id" ColumnName="RecipeUnitMeasure_Id" />
+          <ScalarProperty Name="DoneByUser" ColumnName="DoneByUser" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1666,24 +1035,7 @@
         <MappingFragment StoreEntitySet="LineItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.AdjustmentItem)">
-        <MappingFragment StoreEntitySet="LineItems_AdjustmentItem">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.TransferItem)">
-        <MappingFragment StoreEntitySet="LineItems_TransferItem">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.ProductionItem)">
-        <MappingFragment StoreEntitySet="LineItems_ProductionItem">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.SaleLineItem)">
@@ -1694,26 +1046,13 @@
           <ScalarProperty Name="Cost" ColumnName="Cost" />
         </MappingFragment>
       </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.PurchaseLineItem)">
-        <MappingFragment StoreEntitySet="LineItems_PurchaseLineItem">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
-        </MappingFragment>
-      </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Category)">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="PriceLists">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.PriceList)">
-        <MappingFragment StoreEntitySet="PriceLists">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentCategory_Id" ColumnName="ParentCategory_Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1734,55 +1073,10 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="CanPurchase" ColumnName="CanPurchase" />
           <ScalarProperty Name="CanSell" ColumnName="CanSell" />
           <ScalarProperty Name="ImageFileName" ColumnName="ImageFileName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Tables">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Table)">
-        <MappingFragment StoreEntitySet="Tables">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Number" ColumnName="Number" />
-          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
-          <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-          <ScalarProperty Name="IsBar" ColumnName="IsBar" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductIndexes">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.ProductIndex)">
-        <MappingFragment StoreEntitySet="ProductIndexes">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="IsMain" ColumnName="IsMain" />
-          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InventoryItems">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.InventoryItem)">
-        <MappingFragment StoreEntitySet="InventoryItems">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="MinimumQuantity" ColumnName="MinimumQuantity" />
-          <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
-          <ScalarProperty Name="Cost" ColumnName="Cost" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InventoryTraces">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.InventoryTrace)">
-        <MappingFragment StoreEntitySet="InventoryTraces">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-          <ScalarProperty Name="InventoryId" ColumnName="InventoryId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1793,27 +1087,7 @@
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="Memo" ColumnName="Memo" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Transfer)">
-        <MappingFragment StoreEntitySet="Orders_Transfer">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Adjustment)">
-        <MappingFragment StoreEntitySet="Orders_Adjustment">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Purchase)">
-        <MappingFragment StoreEntitySet="Orders_Purchase">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Production)">
-        <MappingFragment StoreEntitySet="Orders_Production">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
         </MappingFragment>
       </EntityTypeMapping>
       <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Sale)">
@@ -1836,14 +1110,8 @@
           <ScalarProperty Name="Tips" ColumnName="Tips" />
           <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
           <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ProductionAreas">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.ProductionArea)">
-        <MappingFragment StoreEntitySet="ProductionAreas">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Voids" ColumnName="Voids" />
+          <ScalarProperty Name="VoidsAfterReceipt" ColumnName="VoidsAfterReceipt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1867,15 +1135,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Inventories">
-      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Inventory)">
-        <MappingFragment StoreEntitySet="Inventories">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="IsFloor" ColumnName="IsFloor" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Role)">
         <MappingFragment StoreEntitySet="Roles">
@@ -1884,10 +1143,6 @@
           <ScalarProperty Name="CanLogin" ColumnName="CanLogin" />
           <ScalarProperty Name="CanSeeSales" ColumnName="CanSeeSales" />
           <ScalarProperty Name="CanRemoveSales" ColumnName="CanRemoveSales" />
-          <ScalarProperty Name="CanSeeOldSales" ColumnName="CanSeeOldSales" />
-          <ScalarProperty Name="CanSeePurchases" ColumnName="CanSeePurchases" />
-          <ScalarProperty Name="CanRemovePurchases" ColumnName="CanRemovePurchases" />
-          <ScalarProperty Name="CanSeeOldPurchases" ColumnName="CanSeeOldPurchases" />
           <ScalarProperty Name="CanSeeInventory" ColumnName="CanSeeInventory" />
           <ScalarProperty Name="CanCreateProducts" ColumnName="CanCreateProducts" />
           <ScalarProperty Name="CanEditProducts" ColumnName="CanEditProducts" />
@@ -1896,12 +1151,10 @@
           <ScalarProperty Name="CanCreateEmployees" ColumnName="CanCreateEmployees" />
           <ScalarProperty Name="CanEditEmployees" ColumnName="CanEditEmployees" />
           <ScalarProperty Name="CanRemoveEmployees" ColumnName="CanRemoveEmployees" />
-          <ScalarProperty Name="CanSeeMiPaladar" ColumnName="CanSeeMiPaladar" />
           <ScalarProperty Name="CanExportImport" ColumnName="CanExportImport" />
-          <ScalarProperty Name="CanSeeSalesReport" ColumnName="CanSeeSalesReport" />
-          <ScalarProperty Name="CanSeeSalesByItemReport" ColumnName="CanSeeSalesByItemReport" />
           <ScalarProperty Name="CanSeeReports" ColumnName="CanSeeReports" />
           <ScalarProperty Name="CanSeeRoles" ColumnName="CanSeeRoles" />
+          <ScalarProperty Name="CanSeeDashboard" ColumnName="CanSeeDashboard" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1913,63 +1166,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="CurrentExistenceProduct" TypeName="RestaurantDBModel.CurrentExistenceProduct" StoreEntitySet="InventoryItems">
-      <EndProperty Name="Product">
-        <ScalarProperty Name="Id" ColumnName="Product_Id" />
-      </EndProperty>
-      <EndProperty Name="CurrentExistence">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="TransferFromInventory" TypeName="RestaurantDBModel.TransferFromInventory" StoreEntitySet="Orders_Transfer">
-      <EndProperty Name="Inventory">
-        <ScalarProperty Name="Id" ColumnName="InventoryFrom_Id" />
-      </EndProperty>
-      <EndProperty Name="Transfer">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="TransferToInventory" TypeName="RestaurantDBModel.TransferToInventory" StoreEntitySet="Orders_Transfer">
-      <EndProperty Name="Inventory">
-        <ScalarProperty Name="Id" ColumnName="InventoryTo_Id" />
-      </EndProperty>
-      <EndProperty Name="Transfer">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="AdjustmentInventory" TypeName="RestaurantDBModel.AdjustmentInventory" StoreEntitySet="Orders_Adjustment">
-      <EndProperty Name="Inventory">
-        <ScalarProperty Name="Id" ColumnName="Inventory_Id" />
-      </EndProperty>
-      <EndProperty Name="Adjustment">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="PurchaseInventory" TypeName="RestaurantDBModel.PurchaseInventory" StoreEntitySet="Orders_Purchase">
-      <EndProperty Name="Inventory">
-        <ScalarProperty Name="Id" ColumnName="Inventory_Id" />
-      </EndProperty>
-      <EndProperty Name="Purchase">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Inventory_Id" IsNull="false" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="ProductionInventory" TypeName="RestaurantDBModel.ProductionInventory" StoreEntitySet="Orders_Production">
-      <EndProperty Name="Inventory">
-        <ScalarProperty Name="Id" ColumnName="Inventory_Id" />
-      </EndProperty>
-      <EndProperty Name="Production">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="LineItemProduct" TypeName="RestaurantDBModel.LineItemProduct" StoreEntitySet="LineItems">
-      <EndProperty Name="Product">
-        <ScalarProperty Name="Id" ColumnName="Product_Id" />
-      </EndProperty>
-      <EndProperty Name="LineItem">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="Miscs">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Misc)">
+        <MappingFragment StoreEntitySet="Miscs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CompanyImage" ColumnName="CompanyImage" />
+          <ScalarProperty Name="ReportsFolder" ColumnName="ReportsFolder" />
+          <ScalarProperty Name="RegisterIP" ColumnName="RegisterIP" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Tag)">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="LineItemUnitMeasure" TypeName="RestaurantDBModel.LineItemUnitMeasure" StoreEntitySet="LineItems">
       <EndProperty Name="UnitMeasure">
         <ScalarProperty Name="Id" ColumnName="UnitMeasure_Id" />
@@ -1977,24 +1193,6 @@
       <EndProperty Name="LineItem">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="SaleTable" TypeName="RestaurantDBModel.SaleTable" StoreEntitySet="Orders_Sale">
-      <EndProperty Name="Table">
-        <ScalarProperty Name="Id" ColumnName="Table_Id" />
-      </EndProperty>
-      <EndProperty Name="Sale">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Table_Id" IsNull="false" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="OrderEmployee" TypeName="RestaurantDBModel.OrderEmployee" StoreEntitySet="Orders">
-      <EndProperty Name="Employee">
-        <ScalarProperty Name="Id" ColumnName="Employee_Id" />
-      </EndProperty>
-      <EndProperty Name="Order">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Employee_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="LineItemOrder" TypeName="RestaurantDBModel.LineItemOrder" StoreEntitySet="LineItems">
       <EndProperty Name="Order">
@@ -2004,20 +1202,22 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-          <EntitySetMapping Name="Miscs">
-            <EntityTypeMapping TypeName="RestaurantDBModel.Misc">
-              <MappingFragment StoreEntitySet="Misc">
-                <ScalarProperty Name="RegisterIP" ColumnName="RegisterIP" />
-                <ScalarProperty Name="ReportsFolder" ColumnName="ReportsFolder" />
-                <ScalarProperty Name="StartingShiftAmount" ColumnName="StartingShiftAmount" />
-                <ScalarProperty Name="DefaultTax" ColumnName="DefaultTax" />
-                <ScalarProperty Name="CompanyImage" ColumnName="CompanyImage" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteStuff" FunctionName="RestaurantDBModel.Store.delete_stuff" />
+    <AssociationSetMapping Name="ProductTag" TypeName="RestaurantDBModel.ProductTag" StoreEntitySet="ProductTag">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Products_Id" />
+      </EndProperty>
+      <EndProperty Name="Tag">
+        <ScalarProperty Name="Id" ColumnName="Tags_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SaleLineItemSale" TypeName="RestaurantDBModel.SaleLineItemSale" StoreEntitySet="LineItems_SaleLineItem">
+      <EndProperty Name="Sale">
+        <ScalarProperty Name="Id" ColumnName="Sale_Id" />
+      </EndProperty>
+      <EndProperty Name="SaleLineItem">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -2033,40 +1233,25 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="RestaurantModel" ZoomLevel="92">
+      <Diagram Name="RestaurantModel" ZoomLevel="100">
         <EntityTypeShape EntityType="RestaurantDBModel.Product" Width="1.875" PointX="5.375" PointY="2.75" Height="6.0186165364583335" IsExpanded="true" />
         <EntityTypeShape EntityType="RestaurantDBModel.LineItem" Width="1.5" PointX="10.75" PointY="9.375" Height="1.7879850260416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Category" Width="1.5" PointX="0.5" PointY="0.5" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.PriceList" Width="1.5" PointX="30" PointY="10.25" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Category" Width="1.75" PointX="0.5" PointY="0.5" Height="1.5956835937499996" IsExpanded="true" />
         <EntityTypeShape EntityType="RestaurantDBModel.Ingredient" Width="1.75" PointX="12.25" PointY="2.25" Height="2.5571907552083353" IsExpanded="true" />
         <EntityTypeShape EntityType="RestaurantDBModel.Employee" Width="1.5" PointX="21.125" PointY="2.875" Height="2.5571907552083317" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Sale" Width="1.5" PointX="25.25" PointY="10.25" Height="4.2879036458333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Table" Width="1.5" PointX="27.625" PointY="10.25" Height="2.5571907552083388" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Purchase" Width="1.625" PointX="23.125" PointY="10.25" Height="1.4033821614583317" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.ProductIndex" Width="1.5" PointX="3" PointY="0.5" Height="2.172587890625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.InventoryItem" Width="1.5" PointX="2.875" PointY="6.25" Height="2.3648893229166656" IsExpanded="true" />
-        <EntityTypeShape EntityType="RestaurantDBModel.InventoryTrace" Width="1.5" PointX="0.75" PointY="6.125" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Sale" Width="1.5" PointX="17.125" PointY="10.125" Height="4.2879036458333317" IsExpanded="true" />
         <EntityTypeShape EntityType="RestaurantDBModel.Order" Width="1.5" PointX="21" PointY="7.125" Height="2.1725878906249996" IsExpanded="true" />
-        <InheritanceConnector EntityType="RestaurantDBModel.Purchase" ManuallyRouted="false">
-          <ConnectorPoint PointX="21.75" PointY="9.297587890625" />
-          <ConnectorPoint PointX="21.75" PointY="9.875" />
-          <ConnectorPoint PointX="23.9375" PointY="9.875" />
-          <ConnectorPoint PointX="23.9375" PointY="10.25" />
-        </InheritanceConnector>
         <InheritanceConnector EntityType="RestaurantDBModel.Sale" ManuallyRouted="false">
           <ConnectorPoint PointX="21.75" PointY="9.297587890625" />
           <ConnectorPoint PointX="21.75" PointY="9.875" />
           <ConnectorPoint PointX="26" PointY="9.875" />
           <ConnectorPoint PointX="26" PointY="10.25" />
         </InheritanceConnector>
-        <AssociationConnector Association="RestaurantDBModel.CategoryProductIndex">
-          <ConnectorPoint PointX="2" PointY="1.2978417968749998" />
-          <ConnectorPoint PointX="3" PointY="1.2978417968749998" />
-        </AssociationConnector>
         <AssociationConnector Association="RestaurantDBModel.ProductIngredient">
           <ConnectorPoint PointX="7.25" PointY="4.6701871744791674" />
           <ConnectorPoint PointX="10.135416666666666" PointY="4.6701871744791665" />
@@ -2078,28 +1263,6 @@
           <ConnectorPoint PointX="10.135416666666666" PointY="2.7812499999999996" />
           <ConnectorPoint PointX="10.302083333333334" PointY="2.78125" />
           <ConnectorPoint PointX="12.25" PointY="2.78125" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.ProductProductIndex">
-          <ConnectorPoint PointX="5.375" PointY="4.4172159787404865" />
-          <ConnectorPoint PointX="4.46875" PointY="4.4172159787404865" />
-          <ConnectorPoint PointX="4.46875" PointY="2.672587890625" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.CurrentExistenceProduct">
-          <ConnectorPoint PointX="4.375" PointY="7.4324446614583337" />
-          <ConnectorPoint PointX="5.375" PointY="7.4324446614583337" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.ProductExistence" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.375" PointY="6.15625" />
-          <ConnectorPoint PointX="2.25" PointY="6.15625" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.FK_Tables_PriceLists">
-          <ConnectorPoint PointX="30" PointY="11.047841796875002" />
-          <ConnectorPoint PointX="29.125" PointY="11.047841796875002" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.ProductionArea" Width="1.5" PointX="8.375" PointY="2.875" Height="1.5956835937499996" IsExpanded="true" />
-        <AssociationConnector Association="RestaurantDBModel.FK_Products_ProductionAreas">
-          <ConnectorPoint PointX="8.375" PointY="3.988868989766261" />
-          <ConnectorPoint PointX="7.25" PointY="3.988868989766261" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RestaurantDBModel.UMFamily" Width="1.5" PointX="11.5" PointY="6" Height="1.7879850260416639" IsExpanded="true" />
         <EntityTypeShape EntityType="RestaurantDBModel.UnitMeasure" Width="1.75" PointX="8.75" PointY="5.5" Height="3.7109993489583335" IsExpanded="true" />
@@ -2123,65 +1286,6 @@
           <ConnectorPoint PointX="11.010416666666666" PointY="6.8939925130208319" />
           <ConnectorPoint PointX="10.5" PointY="6.8939925130208319" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.Inventory" Width="1.5" PointX="16.25" PointY="14.125" Height="2.9417936197916674" />
-        <AssociationConnector Association="RestaurantDBModel.InventoryInventoryItem">
-          <ConnectorPoint PointX="16.25" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="5.677083333333333" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="5.510416666666667" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="3.28125" PointY="15.490226258018582" />
-          <ConnectorPoint PointX="3.28125" PointY="8.6148893229166656" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.InventoryTraceInventory">
-          <ConnectorPoint PointX="1.5" PointY="8.4898893229166656" />
-          <ConnectorPoint PointX="1.5" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="3.1979166666666665" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="3.3645833333333335" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="5.510416666666667" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="5.677083333333333" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="14.917952425884298" />
-          <ConnectorPoint PointX="16.25" PointY="14.917952425884298" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.Adjustment" Width="1.5" PointX="21" PointY="10.375" Height="1.4033821614583335" />
-        <EntityTypeShape EntityType="RestaurantDBModel.AdjustmentItem" PointX="3.75" PointY="12.875" Width="1.5" Height="1.2110807291666657" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Transfer" Width="1.5" PointX="19" PointY="10.375" Height="1.5956835937500031" />
-        <AssociationConnector Association="RestaurantDBModel.TransferFromInventory">
-          <ConnectorPoint PointX="19.983397421875" PointY="11.778382161458334" />
-          <ConnectorPoint PointX="19.983397421875" PointY="15.236549145590676" />
-          <ConnectorPoint PointX="19.54377954427083" PointY="15.236549145590676" />
-          <ConnectorPoint PointX="19.377112877604166" PointY="15.236549145590676" />
-          <ConnectorPoint PointX="17.75" PointY="15.236549145590676" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.TransferToInventory">
-          <ConnectorPoint PointX="19.474485302734372" PointY="11.778382161458334" />
-          <ConnectorPoint PointX="19.474485302734372" PointY="16.377259073155454" />
-          <ConnectorPoint PointX="17.75" PointY="16.377259073155454" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.TransferItem" PointX="5.875" PointY="12.875" Width="1.5" Height="1.0187792968749996" />
-        <AssociationConnector Association="RestaurantDBModel.AdjustmentInventory">
-          <ConnectorPoint PointX="21.75" PointY="11.586080729166666" />
-          <ConnectorPoint PointX="21.75" PointY="14.649522072795344" />
-          <ConnectorPoint PointX="20.066730755208333" PointY="14.649522072795344" />
-          <ConnectorPoint PointX="19.900064088541669" PointY="14.649522072795344" />
-          <ConnectorPoint PointX="19.54377954427083" PointY="14.649522072795344" />
-          <ConnectorPoint PointX="19.377112877604166" PointY="14.649522072795344" />
-          <ConnectorPoint PointX="17.75" PointY="14.649522072795344" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.PurchaseInventory">
-          <ConnectorPoint PointX="24.28125" PointY="11.653382161458332" />
-          <ConnectorPoint PointX="24.28125" PointY="15.786829322975397" />
-          <ConnectorPoint PointX="19.557818636067704" PointY="15.786829322975397" />
-          <ConnectorPoint PointX="19.39115196940104" PointY="15.786829322975397" />
-          <ConnectorPoint PointX="17.75" PointY="15.786829322975397" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.Production" Width="1.75" PointX="16.75" PointY="10.375" Height="1.4033821614583353" />
-        <AssociationConnector Association="RestaurantDBModel.ProductionInventory">
-          <ConnectorPoint PointX="17.25" PointY="11.586080729166666" />
-          <ConnectorPoint PointX="17.25" PointY="14.125" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.ProductionItem" Width="1.5" PointX="8" PointY="12.875" Height="1.2110807291666657" />
         <AssociationConnector Association="RestaurantDBModel.FK_UnitMeasureProductCost">
           <ConnectorPoint PointX="8.75" PointY="6.7785953776041667" />
           <ConnectorPoint PointX="7.25" PointY="6.7785953776041667" />
@@ -2193,90 +1297,29 @@
           <ConnectorPoint PointX="11.125" PointY="12.375" />
           <ConnectorPoint PointX="11.125" PointY="12.75" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="RestaurantDBModel.PurchaseLineItem" Width="1.625" PointX="13.125" PointY="12.875" Height="1.2110807291666657" />
-        <InheritanceConnector EntityType="RestaurantDBModel.PurchaseLineItem" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.5" PointY="11.355286458333334" />
-          <ConnectorPoint PointX="11.5" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="13.9375" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="13.9375" PointY="12.875" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.ProductionItem" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.5" PointY="11.355286458333334" />
-          <ConnectorPoint PointX="11.5" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="8.75" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="8.75" PointY="12.875" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.TransferItem" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.5" PointY="11.355286458333334" />
-          <ConnectorPoint PointX="11.5" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="6.625" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="6.625" PointY="12.875" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.AdjustmentItem" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.5" PointY="11.355286458333334" />
-          <ConnectorPoint PointX="11.5" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="5.677083333333333" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="5.510416666666667" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="4.5" PointY="11.730286458333332" />
-          <ConnectorPoint PointX="4.5" PointY="12.875" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.Adjustment" ManuallyRouted="false">
-          <ConnectorPoint PointX="21.75" PointY="9.297587890625" />
-          <ConnectorPoint PointX="21.75" PointY="10.375" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.Transfer" ManuallyRouted="false">
-          <ConnectorPoint PointX="21.75" PointY="9.297587890625" />
-          <ConnectorPoint PointX="21.75" PointY="10" />
-          <ConnectorPoint PointX="19.75" PointY="10" />
-          <ConnectorPoint PointX="19.75" PointY="10.375" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="RestaurantDBModel.Production" ManuallyRouted="false">
-          <ConnectorPoint PointX="21.75" PointY="9.297587890625" />
-          <ConnectorPoint PointX="21.75" PointY="9.9999999999999982" />
-          <ConnectorPoint PointX="17.625" PointY="9.9999999999999982" />
-          <ConnectorPoint PointX="17.625" PointY="10.375" />
-        </InheritanceConnector>
-        <AssociationConnector Association="RestaurantDBModel.LineItemProduct">
-          <ConnectorPoint PointX="10.75" PointY="10.365143229166666" />
-          <ConnectorPoint PointX="10.020833333333334" PointY="10.365143229166666" />
-          <ConnectorPoint PointX="9.8541666666666661" PointY="10.365143229166666" />
-          <ConnectorPoint PointX="6.4531275" PointY="10.365143229166666" />
-          <ConnectorPoint PointX="6.4531275" PointY="8.7686165364583335" />
-        </AssociationConnector>
         <AssociationConnector Association="RestaurantDBModel.LineItemUnitMeasure">
           <ConnectorPoint PointX="10.958860644531249" PointY="9.375" />
           <ConnectorPoint PointX="10.958860644531249" PointY="5.71875" />
           <ConnectorPoint PointX="10.5" PointY="5.71875" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.SaleTable">
-          <ConnectorPoint PointX="26.75" PointY="11.432444661458334" />
-          <ConnectorPoint PointX="27.625" PointY="11.432444661458334" />
-        </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.OrderEmployee">
-          <ConnectorPoint PointX="22.25" PointY="7.125" />
-          <ConnectorPoint PointX="22.25" PointY="5.8071907552083317" />
         </AssociationConnector>
         <AssociationConnector Association="RestaurantDBModel.LineItemOrder">
           <ConnectorPoint PointX="11.2302262890625" PointY="9.375" />
           <ConnectorPoint PointX="11.2302262890625" PointY="8.8505916341145827" />
           <ConnectorPoint PointX="21" PointY="8.8505916341145827" />
         </AssociationConnector>
-        <AssociationConnector Association="RestaurantDBModel.FK_Products_ProductionAreas1">
-          <ConnectorPoint PointX="8.375" PointY="3.3694344948831305" />
-          <ConnectorPoint PointX="7.25" PointY="3.3694344948831305" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="RestaurantDBModel.Role" Width="2.25" PointX="16.875" PointY="1.75" />
         <AssociationConnector Association="RestaurantDBModel.FK_EmployeesRole" />
-        <AssociationConnector Association="RestaurantDBModel.FK_ProductsMinimumStockUnitMeasure" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Shift" Width="1.5" PointX="28.5" PointY="14" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Shift" Width="1.5" PointX="20.375" PointY="11.875" />
         <AssociationConnector Association="RestaurantDBModel.FK_ShiftSale" />
-        <EntityTypeShape EntityType="RestaurantDBModel.Misc" Width="1.5" PointX="14" PointY="9.375" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Misc" Width="1.75" PointX="14" PointY="9.375" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Tag" Width="1.5" PointX="0.875" PointY="6" />
+        <AssociationConnector Association="RestaurantDBModel.ProductTag" />
+        <AssociationConnector Association="RestaurantDBModel.SaleLineItemSale" />
+        <AssociationConnector Association="RestaurantDBModel.ProductCategory" />
+        <AssociationConnector Association="RestaurantDBModel.FK_CategoryParentCategory" />
+        <AssociationConnector Association="RestaurantDBModel.FK_ProductRecipeUnitMeasure" />
+        <AssociationConnector Association="RestaurantDBModel.ProductLineItem1" />
+        <AssociationConnector Association="RestaurantDBModel.FK_Orders_Employees" />
         </Diagram>
     </Diagrams>
   </Designer>

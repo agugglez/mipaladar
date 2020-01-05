@@ -2,6 +2,7 @@
 
 using MiPaladar.Entities;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 using System.ComponentModel;
@@ -24,10 +25,10 @@ namespace MiPaladar.ViewModels
             get { return "Crear nuevo Vale"; }
         }
 
-        public ObservableCollection<Table> Tables 
-        {
-            get { return appvm.TablesOC; }
-        }
+        //public ObservableCollection<Table> Tables 
+        //{
+        //    get { return appvm.TablesOC; }
+        //}
 
         //ICollectionView icvTables;
         //public ICollectionView IcvAvailableTables
@@ -55,16 +56,16 @@ namespace MiPaladar.ViewModels
             get { return appvm.CanSellEmployees; }
         }
 
-        Table selectedTable;
-        public Table SelectedTable
-        {
-            get { return selectedTable; }
-            set
-            {
-                selectedTable = value;
-                OnPropertyChanged("SelectedTable");
-            }
-        }
+        //Table selectedTable;
+        //public Table SelectedTable
+        //{
+        //    get { return selectedTable; }
+        //    set
+        //    {
+        //        selectedTable = value;
+        //        OnPropertyChanged("SelectedTable");
+        //    }
+        //}
 
         Employee selectedWaiter;
         public Employee SelectedWaiter
@@ -102,7 +103,7 @@ namespace MiPaladar.ViewModels
 
         bool CanNewSale
         {
-            get { return selectedTable != null && selectedWaiter != null && numberOfPersons > 0; }
+            get { return /*selectedTable != null &&*/ selectedWaiter != null && numberOfPersons > 0; }
         }
 
         void DoNewSale()

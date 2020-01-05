@@ -34,12 +34,12 @@ namespace MiPaladar.Views
 
         private void DatePicker_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                PurchasesListViewModel slvm = (PurchasesListViewModel)this.DataContext;
+            //if (e.Key == Key.Return)
+            //{
+            //    PurchasesListViewModel slvm = (PurchasesListViewModel)this.DataContext;
 
-                slvm.LoadCompras();
-            }
+            //    slvm.LoadCompras();
+            //}
         }
 
         //public void ChangeDate(DateTime date) 

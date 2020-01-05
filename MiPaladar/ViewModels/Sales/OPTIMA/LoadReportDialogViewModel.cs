@@ -2,10 +2,12 @@
 
 using MiPaladar.Entities;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Collections.Generic;
 
 namespace MiPaladar.ViewModels
 {
@@ -13,10 +15,20 @@ namespace MiPaladar.ViewModels
     {
         MainWindowViewModel appvm;
 
-        public LoadReportDialogViewModel(MainWindowViewModel appvm)
+        public LoadReportDialogViewModel(MainWindowViewModel appvm, string title)
         {
             this.appvm = appvm;
+            this.title = title;
             SelectedDate = DateTime.Today;
+        }
+
+        string title;
+        public override string DisplayName
+        {
+            get
+            {
+                return title;
+            }
         }
 
         //complete path to file
@@ -68,12 +80,12 @@ namespace MiPaladar.ViewModels
         public DateTime SelectedDate { get; set; }
 
         //shifts
-        //public ObservableCollection<Shift> Shifts 
-        //{
-        //    get { return new ObservableCollection<Shift>(appvm.Context.Shifts); }
-        //}
+        public List<Shift> Shifts
+        {
+            get { return base.GetNewUnitOfWork().ShiftRepository.Get(); }
+        }
 
-        //public Shift SelectedShift { get; set; }
+        public Shift SelectedShift { get; set; }
 
 
         RelayCommand loadCommand;
@@ -90,7 +102,7 @@ namespace MiPaladar.ViewModels
 
         bool CanLoad
         {
-            get { return FileName != null; }
+            get { return FileName != null && SelectedShift != null; }
         }
 
         void DoLoad()

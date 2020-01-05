@@ -6,6 +6,8 @@
              mc:Ignorable="d"
              
              xmlns:views="clr-namespace:MiPaladar.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:enums="clr-namespace:MiPaladar.Enums"
              
              d:DesignHeight="480" d:DesignWidth="640">
 
@@ -24,6 +26,13 @@
 
             <!--<conv:OpenCloseConverter x:Key="openCloseConv"/>-->
 
+            <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}"
+                          x:Key="dateOptions">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="enums:DateOption" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
         </ResourceDictionary>
         
     </UserControl.Resources>
@@ -34,11 +43,36 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="47"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal">
+            
+            <ComboBox HorizontalAlignment="Left" MinWidth="150"
+                  ItemsSource="{Binding Source={StaticResource dateOptions}}"
+                  SelectedItem="{Binding SelectedDateOption}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" MouseUp="TextBlock_MouseUp_1"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0:d} - {1:d}">
+                        <Binding Path="FromDate"/>
+                        <Binding Path="ToDate"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+
+        
+
+        <!--<StackPanel Orientation="Horizontal">
 
             <DatePicker SelectedDate="{Binding FromDate}" KeyUp="DatePicker_KeyUp"/>
 
@@ -46,7 +80,7 @@
 
             <DatePicker SelectedDate="{Binding ToDate}" KeyUp="DatePicker_KeyUp"/>
 
-        </StackPanel>
+        </StackPanel>-->
 
         <!--<Line Stretch="Fill" HorizontalAlignment="Right" X1="1" Y2="1" Stroke="Black" StrokeThickness="2" />-->
 
@@ -78,8 +112,18 @@
 
                 <!--<DataGridTextColumn Header="Vale" Binding="{Binding Number}" Width=".5*"/>-->
 
+                <!--<DataGridTextColumn Header="Id" Width="*" Binding="{Binding Id}" />-->
+
                 <DataGridTextColumn Header="Fecha" Width="*"
-                                    Binding="{Binding Date, StringFormat=ddd d MMM}" />
+                                    Binding="{Binding WorkDate, StringFormat=ddd d MMM}" />                
+
+                <DataGridTextColumn Header="Turno" Binding="{Binding Shift.Name}" Width="*"/>
+
+                <DataGridTextColumn Header="Hora" Width="*"
+                                    Binding="{Binding DateCreated, StringFormat=t}" />
+
+                <DataGridTextColumn Header="Factura #" Width="*"
+                                    Binding="{Binding Number}" />                
 
                 <!--<DataGridTextColumn Header="Fecha Creación" Width="1.5*"
                                     Binding="{Binding DateCreated, StringFormat=ddd d MMM\, h:mm tt}" />-->
@@ -95,15 +139,12 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>-->
-                <!--<DataGridTextColumn Header="Descripción" Binding="{Binding Description}" />-->
-                <DataGridTextColumn Header="Turno" Binding="{Binding Shift.Name}" Width="*"/>
+                <!--<DataGridTextColumn Header="Descripción" Binding="{Binding Description}" />-->                
                 
-                <DataGridTextColumn Header="Dependiente" Binding="{Binding Employee.Name}" Width="*"/>
-
-                <DataGridTextColumn Header="Personas" Binding="{Binding Persons}" Width="*"/>
+                <DataGridTextColumn Header="Clientes" Binding="{Binding Clients}" Width="*"/>
                 
                 <DataGridTextColumn Header="Importe" Width="*"
-                                            Binding="{Binding Total, StringFormat=c}" >
+                                    Binding="{Binding Total, StringFormat=c}" >
                     <!--<DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Style.Triggers>
@@ -145,7 +186,9 @@
 
         </DataGrid>
 
-        <StackPanel Orientation="Horizontal">
+        
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
             <Button Content="Nueva Venta"
                     Command="{Binding NewSaleCommand}">
@@ -156,20 +199,48 @@
                     Command="{Binding RemoveCommand}">
             </Button>-->
 
-            <Button Command="{Binding ShowLoadReportDialogCommand}"
+            <!--<Button Command="{Binding ShowLoadReportDialogCommand}"
                     Content="Cargar PLU" 
-                    ToolTip="Cargar archivo de reporte de ventas (.csv)">
-            </Button>
+                    ToolTip="Cargar archivo de reporte de ventas PLU (.csv)">
+            </Button>-->
 
-            <Button Command="{Binding Load101Command}"
+            <!--<Button Command="{Binding Load101Command}"
                     Content="Cargar 101" 
                     ToolTip="Cargar reporte 101">
-            </Button>
+            </Button>-->
+
+            <!--<Button Command="{Binding Load103Command}"
+                    Content="Cargar 103" 
+                    ToolTip="Cargar reporte 103">
+            </Button>-->
+
+            <!--<Button Content="Conteo" ToolTip=""
+                    Command="{Binding ShowConteoCommand}"/>-->
 
             <!--<Button Command="{Binding LoadFromRegisterCommand}"
                     Content="Halar Ventas"
                     ToolTip="Halar ventas de Caja Registradora">
             </Button>-->
+
+            <Menu Height="25">
+                <MenuItem Header="Reportes...">
+                    
+                    <MenuItem Header="Cargar PLU"
+                              Command="{Binding LoadPLUCommand}"/>
+                    
+                    <MenuItem Header="Cargar 103"
+                              Command="{Binding Load103Command}"/>
+                    
+                    <Separator/>
+                    
+                    <MenuItem Header="Conteo"
+                              Command="{Binding ShowConteoCommand}"/>
+
+                    <MenuItem Header="Configuración"
+                              Command="{Binding QuorionConfigCommand}"/>
+                </MenuItem>
+            </Menu>
+            
 
         </StackPanel>             
 

@@ -30,19 +30,22 @@
         <!--<conv:NotAorBConverter x:Key="notAorBConverter"/>-->
         <conv:NegativeBooleanConverter x:Key="negativeBooleanConv"/>
 
-        <conv:TableFormatterConverter x:Key="tableFormatter"/>
+        <!--<conv:TableFormatterConverter x:Key="tableFormatter"/>-->
 
-        <conv:NameSubstringConverter x:Key="substringConv"/>
+        <!--<conv:NameSubstringConverter x:Key="substringConv"/>-->
 
         <!--<conv:QuantityConverter x:Key="qttyConverter"/>-->
 
-        <conv:InventoryQuantityConverter x:Key="invQttyConverter"/>
+        <!--<conv:InventoryQuantityConverter x:Key="invQttyConverter"/>-->
 
         <conv:UMFamilyTranslator x:Key="umFamilyTranslator"/>
+        <conv:ProductTypeInSpanishConverter x:Key="ptSpanishConverter"/>
 
         <conv:NullImageConverter x:Key="imageSourceConverter"/>
 
         <conv:NotSetDateConverter x:Key="dateNotSetConverter"/>
+
+        <conv:LevelToIndentConverter x:Key="levelToIndentConverter"/>
 
     </Application.Resources>
 </Application>

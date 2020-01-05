@@ -19,7 +19,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <Utf8Output>true</Utf8Output>
     <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
-    <PublishUrl>F:\DeCamino2\</PublishUrl>
+    <PublishUrl>G:\DeCamino\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -29,7 +29,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>71</ApplicationRevision>
+    <ApplicationRevision>77</ApplicationRevision>
     <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,7 +60,7 @@
     <StartupObject>MiPaladar.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D7C1A687F3E4CAD6BE3054A21AC4C0ABD74B465E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B5D9249DD7865FDD9ADF31B439816D0363DD32B8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>MiPaladar_1_TemporaryKey.pfx</ManifestKeyFile>
@@ -109,116 +109,180 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\WPF Toolkit\v3.5.50211.1\WPFToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CustomizeReportOptions.cs" />
     <Compile Include="Classes\ExtensionMethods.cs" />
+    <Compile Include="Converters\LevelToIndentConverter.cs" />
     <Compile Include="Converters\NotSetDateConverter.cs" />
     <Compile Include="Converters\CursorExtensionConverter.cs" />
-    <Compile Include="MVVM\ActiveCommandViewModel.cs" />
     <Compile Include="MyControls\SearchTextBox.cs" />
-    <Compile Include="PrintControls\DaySalesReport.xaml.cs">
-      <DependentUpon>DaySalesReport.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Services\IReportDefinitionGenerator.cs" />
+    <Compile Include="Services\Reports\ConteoReport.cs" />
+    <Compile Include="Services\Reports\DemandByHourReport.cs" />
+    <Compile Include="Services\Reports\ServiceTimeReport.cs" />
+    <Compile Include="Services\Reports\CostByItemReport.cs" />
+    <Compile Include="Services\Reports\WIPByItemReport.cs" />
+    <Compile Include="Services\Reports\ProductClassesReport.cs" />
+    <Compile Include="Services\Reports\SalesPersonReport.cs" />
+    <Compile Include="Services\Reports\CostProjectionsReport.cs" />
+    <Compile Include="Services\Reports\DayOfWeekSalesReport.cs" />
+    <Compile Include="Services\Reports\SalesByCategoryReport.cs" />
+    <Compile Include="Services\Reports\WIPProjectionsReport.cs" />
+    <Compile Include="Services\Reports\IReportingService.cs" />
+    <Compile Include="Services\Report103Reader.cs" />
     <Compile Include="Services\ICreateFileService.cs" />
-    <Compile Include="Services\IOptimaFileReaderService.cs" />
+    <Compile Include="Services\ReportPLUReader.cs" />
     <Compile Include="Services\ITransactionService.cs" />
     <Compile Include="Services\NativeMethods.cs" />
     <Compile Include="Services\Report101Reader.cs" />
+    <Compile Include="Services\Reports\ProjectionsReport.cs" />
+    <Compile Include="Services\Reports\ReportBase.cs" />
+    <Compile Include="Services\Reports\SalesProjectionsReport.cs" />
     <Compile Include="stuff\InputBindingsManager.cs" />
-    <Compile Include="ToSerialize\TSCompanyInfo.cs" />
-    <Compile Include="ToSerialize\TSPurchaseLineItem.cs" />
-    <Compile Include="ToSerialize\TSAdjustment.cs" />
-    <Compile Include="ToSerialize\TSAdjustmentItem.cs" />
-    <Compile Include="ToSerialize\TSProduction.cs" />
-    <Compile Include="ToSerialize\TSProductionItem.cs" />
-    <Compile Include="ToSerialize\TSRole.cs" />
-    <Compile Include="ToSerialize\TSTransfer.cs" />
-    <Compile Include="ToSerialize\TSTransferItem.cs" />
-    <Compile Include="ToSerialize\TSUnitMeasure.cs" />
-    <Compile Include="ToSerialize\TSUMFamily.cs" />
-    <Compile Include="ToSerialize\TSInventoryAreas.cs" />
+    <Compile Include="stuff\WindowWithClose.cs" />
+    <Compile Include="ViewModels\Dialogs\AddLineDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\CustomDatesDialogViewModel.cs" />
     <Compile Include="ViewModels\Employees\RolesListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\InventoryOperationsListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\InventoryOperationViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\TablesListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\ListsTabViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\ProductsListViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\MainMenuLinkViewModel.cs" />
-    <Compile Include="ViewModels\MiPaladar\ReportsViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\CategoriesListViewModel.cs" />
-    <Compile Include="ViewModels\Products\InventoryAdvancedSearchViewModel.cs" />
-    <Compile Include="ViewModels\ProgressDialogViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\ProductionAreaViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SalesByItemByShiftRowViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SalesByItemByShiftViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SoldProductsByEmployeeItemViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SoldProductsByEmployeeViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SalesChartItemViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SalesChartViewModel.cs" />
-    <Compile Include="ViewModels\Reports\DayAveragesReportViewModel.cs" />
+    <Compile Include="ViewModels\Global\GlobalEventsManager.cs" />
+    <Compile Include="ViewModels\Inventory\CategoryNode.cs" />
+    <Compile Include="ViewModels\Inventory\CategoryRowViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\CostHelperViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\FixProductsCostsViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\OutgredientViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\ProductNode.cs" />
+    <Compile Include="ViewModels\Inventory\InventoryItemRowViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\Inventory\TagViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\TagListViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\InventoryViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\TreeNodeViewModel.cs" />
+    <Compile Include="ViewModels\Global\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Global\MainMenuLinkViewModel.cs" />
+    <Compile Include="ViewModels\Reports\CheckBoxItemViewModel.cs" />
+    <Compile Include="Services\Reports\SalesByItemReport.cs" />
+    <Compile Include="ViewModels\Reports\ConteoReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\DemandByHourReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ReportWithOpenLine.cs" />
+    <Compile Include="ViewModels\Reports\ServiceTimeReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\CostProjectionsReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\SalesProjectionsReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\WIPProjectionsReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ProjectionsReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\CostByItemReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\WIPByItemReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\GlobalSalesReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ProductClassesReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\SalesPersonReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\SalesByCategoryReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\DayOfWeekSalesReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\CustomizeReportViewModel.cs" />
+    <Compile Include="Services\Reports\GlobalSalesReport.cs" />
+    <Compile Include="ViewModels\Reports\ReportsCenterViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\CategoryListViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ProgressDialogViewModel.cs" />
+    <Compile Include="ViewModels\Reports\SalesByItemReportViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ChartItemViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\Sales\OPTIMA\Report103ResultViewModel.cs" />
+    <Compile Include="ViewModels\Sales\SalePreViewModel.cs" />
+    <Compile Include="ViewModels\Sales\ShiftViewModel.cs" />
     <Compile Include="ViewModels\MiPaladar\ImportDialogViewModel.cs" />
-    <Compile Include="ViewModels\MiPaladar\MyCompanyViewModel.cs" />
+    <Compile Include="ViewModels\Sales\OPTIMA\QuorionConfigDialogViewModel.cs" />
     <Compile Include="ViewModels\Sales\OPTIMA\Load101DialogViewModel.cs" />
     <Compile Include="ViewModels\Sales\DiscountOrTaxDialogViewModel.cs" />
     <Compile Include="ViewModels\Sales\OfflineLineItemViewModel.cs" />
     <Compile Include="ViewModels\Sales\OfflineSaleViewModel.cs" />
     <Compile Include="ViewModels\Sales\OPTIMA\LoadFromRegisterDialogViewModel.cs" />
-    <Compile Include="ViewModels\Sales\DayReportViewModel.cs" />
     <Compile Include="ViewModels\Sales\OPTIMA\Report101InfoViewModel.cs" />
-    <Compile Include="ViewModels\Sales\OPTIMA\Report101Operation.cs" />
-    <Compile Include="ViewModels\Sales\TotalsByWaiterViewModel.cs" />
-    <Compile Include="Views\Inventory\InventoryOperationsListView.xaml.cs">
-      <DependentUpon>InventoryOperationsListView.xaml</DependentUpon>
+    <Compile Include="ViewModels\Sales\OPTIMA\LineOfWork.cs" />
+    <Compile Include="ViewModels\Sales\OPTIMA\Report103Line.cs" />
+    <Compile Include="Services\QueryService.cs" />
+    <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
+    <Compile Include="Views\Dialogs\AddLineDialog.xaml.cs">
+      <DependentUpon>AddLineDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\Lists\TablesList.xaml.cs">
-      <DependentUpon>TablesList.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\CustomDatesDialog.xaml.cs">
+      <DependentUpon>CustomDatesDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\Lists\ListsTabView.xaml.cs">
-      <DependentUpon>ListsTabView.xaml</DependentUpon>
+    <Compile Include="Views\Employees\RoleView.xaml.cs">
+      <DependentUpon>RoleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\ProductsListView.xaml.cs">
-      <DependentUpon>ProductsListView.xaml</DependentUpon>
+    <Compile Include="Views\Inventory\CategoryView.xaml.cs">
+      <DependentUpon>CategoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MiPaladar\ReportsView.xaml.cs">
-      <DependentUpon>ReportsView.xaml</DependentUpon>
+    <Compile Include="Views\Inventory\CostHelperView.xaml.cs">
+      <DependentUpon>CostHelperView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\Lists\CategoriesList.xaml.cs">
+    <Compile Include="Views\Inventory\TagView.xaml.cs">
+      <DependentUpon>TagView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\TagsList.xaml.cs">
+      <DependentUpon>TagsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\InventoryView.xaml.cs">
+      <DependentUpon>InventoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\FixProductsCosts.xaml.cs">
+      <DependentUpon>FixProductsCosts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ConteoView.xaml.cs">
+      <DependentUpon>ConteoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DemandByHourReportView.xaml.cs">
+      <DependentUpon>DemandByHourReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ServiceTimeReportView.xaml.cs">
+      <DependentUpon>ServiceTimeReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ProjectionsByItemView.xaml.cs">
+      <DependentUpon>ProjectionsByItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\CostByItemView.xaml.cs">
+      <DependentUpon>CostByItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\WIPByItemView.xaml.cs">
+      <DependentUpon>WIPByItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ProductClassesView.xaml.cs">
+      <DependentUpon>ProductClassesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DayOfWeekSalesView.xaml.cs">
+      <DependentUpon>DayOfWeekSalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\SalesPersonReportView.xaml.cs">
+      <DependentUpon>SalesPersonReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\SalesByCategoryView.xaml.cs">
+      <DependentUpon>SalesByCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\SalesByItemView.xaml.cs">
+      <DependentUpon>SalesByItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\GlobalSalesView.xaml.cs">
+      <DependentUpon>GlobalSalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ReportsCenterView.xaml.cs">
+      <DependentUpon>ReportsCenterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\CategoriesList.xaml.cs">
       <DependentUpon>CategoriesList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\InventoryAdvancedSearchView.xaml.cs">
-      <DependentUpon>InventoryAdvancedSearchView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProgressDialog.xaml.cs">
+    <Compile Include="Views\Dialogs\ProgressDialog.xaml.cs">
       <DependentUpon>ProgressDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\Lists\ProductionAreaView.xaml.cs">
-      <DependentUpon>ProductionAreaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\SalesByItemByShift.xaml.cs">
-      <DependentUpon>SalesByItemByShift.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\SoldProductsByEmployee.xaml.cs">
-      <DependentUpon>SoldProductsByEmployee.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\SalesChart.xaml.cs">
-      <DependentUpon>SalesChart.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\DayAveragesReportView.xaml.cs">
-      <DependentUpon>DayAveragesReportView.xaml</DependentUpon>
+    <Compile Include="Views\Reports\CustomizeReportView.xaml.cs">
+      <DependentUpon>CustomizeReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MiPaladar\ImportDialogView.xaml.cs">
       <DependentUpon>ImportDialogView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MiPaladar\MyCompanyView.xaml.cs">
-      <DependentUpon>MyCompanyView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\OPTIMA\Load101Dialog.xaml.cs">
-      <DependentUpon>Load101Dialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\DiscountOrTaxDialog.xaml.cs">
       <DependentUpon>DiscountOrTaxDialog.xaml</DependentUpon>
@@ -226,29 +290,33 @@
     <Compile Include="Views\Sales\OfflineSaleView.xaml.cs">
       <DependentUpon>OfflineSaleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Sales\DayReportView.xaml.cs">
-      <DependentUpon>DayReportView.xaml</DependentUpon>
+    <Compile Include="Views\Sales\OPTIMA\Report103ResultView.xaml.cs">
+      <DependentUpon>Report103ResultView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\OPTIMA\LoadFromRegister.xaml.cs">
       <DependentUpon>LoadFromRegister.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\OPTIMA\QuorionConfigurationDialog.xaml.cs">
+      <DependentUpon>QuorionConfigurationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\OPTIMA\Report101InfoView.xaml.cs">
       <DependentUpon>Report101InfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Sales\TotalsByWaiterView.xaml.cs">
-      <DependentUpon>TotalsByWaiterView.xaml</DependentUpon>
+    <Compile Include="Views\Global\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\ValeToPrint.xaml.cs">
+      <DependentUpon>ValeToPrint.xaml</DependentUpon>
     </Compile>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Converters\NullImageConverter.cs" />
-    <Compile Include="Converters\UMFamilyTranslator.cs" />
-    <Compile Include="Converters\InventoryQuantityConverter.cs" />
-    <Compile Include="LoadingWindow.xaml.cs">
+    <Compile Include="Converters\SpanishConverters.cs" />
+    <Compile Include="Views\Global\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\ServiceContainer.cs" />
     <Compile Include="SampleData\SampleProduct.cs" />
     <Compile Include="Services\IFileCopyService.cs" />
     <Compile Include="Services\OpenFileService.cs" />
@@ -258,166 +326,44 @@
     <Compile Include="ViewModels\Inventory\Adjustments\AdjustInventoryItemViewModel.cs" />
     <Compile Include="ViewModels\Inventory\Adjustments\AdjustmentViewModel.cs" />
     <Compile Include="ViewModels\Inventory\Adjustments\AdjustmentItemViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Faenas\FaenasListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Faenas\FaenaViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Faenas\FaenaItemViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\ProductRowViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Productions\ProductionItemViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Productions\ProductionsListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Productions\ProductionViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\InventoryAreasListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Transfers\TransferItemViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Transfers\TransfersListViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Transfers\TransferViewModel.cs" />
-    <Compile Include="MVVM\IScreen.cs" />
-    <Compile Include="ViewModels\Reports\AddedProductViewModel.cs" />
-    <Compile Include="ViewModels\Reports\CompareProductsViewModel.cs" />
-    <Compile Include="ViewModels\Reports\FollowProductItemViewModel.cs" />
-    <Compile Include="ViewModels\Reports\FollowProductViewModel.cs" />
-    <Compile Include="ViewModels\Sales\ChargeDialogViewModel.cs" />
     <Compile Include="ViewModels\Sales\OPTIMA\LoadReportDialogViewModel.cs" />
     <Compile Include="ViewModels\Sales\SalesListViewModel.cs" />
     <Compile Include="ViewModels\Inventory\Adjustments\AdjustInventoryViewModel.cs" />
-    <Compile Include="ViewModels\Sales\NewSaleDialogViewModel.cs" />
     <Compile Include="ViewModels\Employees\PermissionViewModel.cs" />
-    <Compile Include="ViewModels\Products\IngredientViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SaleLineItemReportViewModel.cs" />
-    <Compile Include="ViewModels\Reports\OrderReportViewModel.cs" />
-    <Compile Include="ViewModels\Products\ProductIndexViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\IngredientViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ReportLineViewModel.cs" />
     <Compile Include="Classes\ProductQuantityItem.cs" />
-    <Compile Include="Classes\TotalByWaiterByProduct.cs" />
-    <Compile Include="Converters\QuantityConverter.cs" />
     <Compile Include="Converters\LogicExpConverter.cs" />
     <Compile Include="Converters\LogicExpToVisibilityConverter.cs" />
-    <Compile Include="Converters\NameSubstringConverter.cs" />
     <Compile Include="Converters\NegativeBooleanConverter.cs" />
     <Compile Include="Converters\NegativeBooleanToVisibilityConverter.cs" />
-    <Compile Include="Converters\OrderNumberConverter.cs" />
-    <Compile Include="Converters\SumConverter.cs" />
-    <Compile Include="Converters\TableFormatterConverter.cs" />
     <Compile Include="MyControls\AutoCompleteFocusableBox.cs" />
     <Compile Include="MyControls\DateRangePicker.xaml.cs">
       <DependentUpon>DateRangePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="MyControls\DateSelectorViewModel.cs" />
-    <Compile Include="PrintControls\ValeDeCocinaToPrint.xaml.cs">
-      <DependentUpon>ValeDeCocinaToPrint.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SampleData\SampleLineItem.cs" />
     <Compile Include="SampleData\SampleSale.cs" />
-    <Compile Include="Services\Accounter.cs" />
-    <Compile Include="Classes\TotalByCentro.cs" />
-    <Compile Include="Classes\TotalByMesa.cs" />
     <Compile Include="Classes\ProductOperation.cs" />
-    <Compile Include="Classes\TotalByDependiente.cs" />
-    <Compile Include="Classes\TotalByProduct.cs" />
-    <Compile Include="Services\UserManager.cs" />
     <Compile Include="Services\Encrypter.cs" />
-    <Compile Include="Services\ExportToExcelService.cs" />
-    <Compile Include="Services\IXmlSerializerSvc.cs" />
-    <Compile Include="Services\ProductManager.cs" />
+    <Compile Include="Services\Reports\IExcelExporter.cs" />
     <Compile Include="Services\UnitMeasureManager.cs" />
     <Compile Include="stuff\DeferredBinder.cs" />
-    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Services\Confirmator.cs" />
     <Compile Include="Services\BrowseFolderService.cs" />
     <Compile Include="Services\InventoryService.cs" />
-    <Compile Include="Services\MessageBoxService.cs" />
-    <Compile Include="Services\WindowManager.cs" />
-    <Compile Include="PrintControls\AlmacenReport.xaml.cs">
-      <DependentUpon>AlmacenReport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PrintControls\ValeToPrint.xaml.cs">
-      <DependentUpon>ValeToPrint.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\Printer.cs" />
     <Compile Include="stuff\SingleInstance.cs" />
-    <Compile Include="MVVM\CommandViewModel.cs" />
-    <Compile Include="ToSerialize\TSArea.cs" />
-    <Compile Include="ToSerialize\TSCategory.cs" />
-    <Compile Include="ToSerialize\TSEmployee.cs" />
-    <Compile Include="ToSerialize\TSIngredient.cs" />
-    <Compile Include="ToSerialize\TSInventoryItem.cs" />
-    <Compile Include="ToSerialize\TSInventoryTrace.cs" />
-    <Compile Include="ToSerialize\TSSaleLineItem.cs" />
-    <Compile Include="ToSerialize\TSProduct.cs" />
-    <Compile Include="ToSerialize\TSProductIndex.cs" />
-    <Compile Include="ToSerialize\TSProductionArea.cs" />
-    <Compile Include="ToSerialize\TSPurchase.cs" />
-    <Compile Include="ToSerialize\TSSale.cs" />
-    <Compile Include="ToSerialize\TSTable.cs" />
     <Compile Include="Validation\ProductQuantityItemValidationRule.cs" />
-    <Compile Include="ViewModels\Sales\MiniInventoryViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\ProductionAreasListViewModel.cs" />
-    <Compile Include="ViewModels\Sales\MiniMenuViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\InventoryHistoryViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\InventoryItemViewModel.cs" />
-    <Compile Include="ViewModels\Sales\LineItemViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\Employees\EmployeeViewModel.cs" />
-    <Compile Include="ViewModels\Reports\SalesByItemViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\Reports\OrdersViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ReportsWindowViewModel.cs" />
+    <Compile Include="ViewModels\Global\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Employees\PersonalViewModel.cs" />
-    <Compile Include="ViewModels\Inventory\Lists\SaleAreasListViewModel.cs" />
-    <Compile Include="ViewModels\Products\ProductViewModel.cs" />
-    <Compile Include="ViewModels\Purchases\PurchasesListViewModel.cs" />
-    <Compile Include="ViewModels\Purchases\PurchaseLineItemViewModel.cs" />
-    <Compile Include="ViewModels\Purchases\PurchaseViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\ProductViewModel.cs" />
     <Compile Include="ViewModels\Employees\RoleViewModel.cs" />
-    <Compile Include="ViewModels\MiPaladar\TableViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesProductosPorDependienteViewModel.cs" />
-    <Compile Include="ViewModels\Sales\SaleViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesCompraViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesPorCentroViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesPorDependienteViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesPorMesaViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesPorProductoViewModel.cs" />
-    <Compile Include="ViewModels\Reports\TotalesViewModel.cs" />
-    <Compile Include="ViewModels\Sales\PointOfSaleViewModel.cs" />
-    <Compile Include="MVVM\ViewModelBase.cs" />
-    <Compile Include="MVVM\WorkspaceViewModel.cs" />
-    <Compile Include="Views\Inventory\Lists\InventoryAreasList.xaml.cs">
-      <DependentUpon>InventoryAreasList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Adjustments\AdjustInventory.xaml.cs">
-      <DependentUpon>AdjustInventory.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Adjustments\AdjustmentsListView.xaml.cs">
-      <DependentUpon>AdjustmentsListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Adjustments\AdjustmentView.xaml.cs">
-      <DependentUpon>AdjustmentView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Faenas\FaenasList.xaml.cs">
-      <DependentUpon>FaenasList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Faenas\FaenaView.xaml.cs">
-      <DependentUpon>FaenaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Productions\ProductionView.xaml.cs">
-      <DependentUpon>ProductionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Productions\ProductionsList.xaml.cs">
-      <DependentUpon>ProductionsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Transfers\TransfersList.xaml.cs">
-      <DependentUpon>TransfersList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Transfers\TransferView.xaml.cs">
-      <DependentUpon>TransferView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\CompareProducts.xaml.cs">
-      <DependentUpon>CompareProducts.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\FollowProduct.xaml.cs">
-      <DependentUpon>FollowProduct.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\ChargeDialog.xaml.cs">
-      <DependentUpon>ChargeDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Sales\OPTIMA\LoadReportDialog.xaml.cs">
       <DependentUpon>LoadReportDialog.xaml</DependentUpon>
     </Compile>
@@ -427,88 +373,29 @@
     <Compile Include="Views\Employees\RolesListView.xaml.cs">
       <DependentUpon>RolesListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\ProductViewFull.xaml.cs">
-      <DependentUpon>ProductViewFull.xaml</DependentUpon>
+    <Compile Include="Views\Inventory\ProductView.xaml.cs">
+      <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Sales\MiniInventory.xaml.cs">
-      <DependentUpon>MiniInventory.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Lists\ProductionAreasList.xaml.cs">
-      <DependentUpon>ProductionAreasList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\MiniMenu.xaml.cs">
-      <DependentUpon>MiniMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\NotesDialog.xaml.cs">
-      <DependentUpon>NotesDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ChangePasswordView.xaml.cs">
+    <Compile Include="Views\Dialogs\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Purchases\PurchasesList.xaml.cs">
-      <DependentUpon>PurchasesList.xaml</DependentUpon>
+    <Compile Include="Views\Reports\ReportsWindow.xaml.cs">
+      <DependentUpon>ReportsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Purchases\PurchaseView.xaml.cs">
-      <DependentUpon>PurchaseView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\InventoryHistory.xaml.cs">
-      <DependentUpon>InventoryHistory.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\Operations.xaml.cs">
-      <DependentUpon>Operations.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="Views\Global\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Employees\EmployeeView.xaml.cs">
       <DependentUpon>EmployeeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reports\Orders.xaml.cs">
-      <DependentUpon>Orders.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AskPasswordView.xaml.cs">
-      <DependentUpon>AskPasswordView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Employees\Personal.xaml.cs">
       <DependentUpon>Personal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Inventory\Lists\DesignRestaurant.xaml.cs">
-      <DependentUpon>DesignRestaurant.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\NewSaleDialog.xaml.cs">
-      <DependentUpon>NewSaleDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Inventory\Lists\TableView.xaml.cs">
-      <DependentUpon>TableView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\Totales.xaml.cs">
-      <DependentUpon>Totales.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesCompra.xaml.cs">
-      <DependentUpon>TotalesCompra.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesPorCentro.xaml.cs">
-      <DependentUpon>TotalesPorCentro.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesPorDependiente.xaml.cs">
-      <DependentUpon>TotalesPorDependiente.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesPorMesa.xaml.cs">
-      <DependentUpon>TotalesPorMesa.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesPorProducto.xaml.cs">
-      <DependentUpon>TotalesPorProducto.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reports\TotalesProductosPorDependiente.xaml.cs">
-      <DependentUpon>TotalesProductosPorDependiente.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\SaleView.xaml.cs">
-      <DependentUpon>SaleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sales\PointOfSaleView.xaml.cs">
-      <DependentUpon>PointOfSaleView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="LoadingWindow.xaml">
+    <Page Include="Views\Dialogs\AddLineDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Global\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -516,7 +403,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\Global\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -524,18 +411,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\Global\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PrintControls\DaySalesReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PrintControls\ValeDeCocinaToPrint.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="resources\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -548,27 +427,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PrintControls\AlmacenReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PrintControls\ValeToPrint.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="resources\ModernButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="resources\ModernListBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="resources\ProductResources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="resources\TotalesResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -584,121 +447,105 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Inventory\InventoryOperationsListView.xaml">
+    <Page Include="Views\Dialogs\CustomDatesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Inventory\Lists\TablesList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Lists\ListsTabView.xaml">
+    <Page Include="Views\Employees\RoleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Inventory\ProductsListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MiPaladar\ReportsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Lists\CategoriesList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\InventoryAdvancedSearchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProgressDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Lists\InventoryAreasList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Adjustments\AdjustInventory.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Adjustments\AdjustmentsListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Adjustments\AdjustmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Faenas\FaenasList.xaml">
+    <Page Include="Views\Inventory\CategoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Inventory\Faenas\FaenaView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Productions\ProductionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Productions\ProductionsList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Transfers\TransfersList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Transfers\TransferView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Inventory\Lists\ProductionAreaView.xaml">
+    <Page Include="Views\Inventory\CostHelperView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Reports\CompareProducts.xaml">
+    <Page Include="Views\Inventory\TagView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\SalesByItemByShift.xaml">
+    <Page Include="Views\Inventory\TagsList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\SoldProductsByEmployee.xaml">
+    <Page Include="Views\Inventory\InventoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Inventory\FixProductsCosts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\ConteoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\SalesChart.xaml">
+    <Page Include="Views\Reports\DemandByHourReportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\FollowProduct.xaml">
+    <Page Include="Views\Reports\ServiceTimeReportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Reports\DayAveragesReportView.xaml">
+    <Page Include="Views\Reports\ProjectionsByItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\CostByItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\WIPByItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\ProductClassesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\DayOfWeekSalesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\SalesPersonReportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\SalesByCategoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\SalesByItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\GlobalSalesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Reports\ReportsCenterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Inventory\CategoriesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ProgressDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reports\CustomizeReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MiPaladar\ImportDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MiPaladar\MyCompanyView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\ChargeDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\OPTIMA\Load101Dialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Sales\DiscountOrTaxDialog.xaml">
       <SubType>Designer</SubType>
@@ -708,9 +555,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Sales\DayReportView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Sales\OPTIMA\Report103ResultView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Sales\OPTIMA\LoadFromRegister.xaml">
       <SubType>Designer</SubType>
@@ -719,6 +566,10 @@
     <Page Include="Views\Sales\OPTIMA\LoadReportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Sales\OPTIMA\QuorionConfigurationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Sales\OPTIMA\Report101InfoView.xaml">
       <SubType>Designer</SubType>
@@ -732,47 +583,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Inventory\ProductViewFull.xaml">
+    <Page Include="Views\Inventory\ProductView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Sales\MiniInventory.xaml">
+    <Page Include="Views\Dialogs\ChangePasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Inventory\Lists\ProductionAreasList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\MiniMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\NotesDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ChangePasswordView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Purchases\PurchasesList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Purchases\PurchaseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\InventoryHistory.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\Operations.xaml">
+    <Page Include="Views\Reports\ReportsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="Views\Global\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -780,69 +603,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Reports\Orders.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AskPasswordView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Employees\Personal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Inventory\Lists\DesignRestaurant.xaml">
+    <Page Include="Views\Global\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Sales\NewSaleDialog.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\Sales\ValeToPrint.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Inventory\Lists\TableView.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\Totales.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesCompra.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesPorCentro.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesPorDependiente.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesPorMesa.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesPorProducto.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Reports\TotalesProductosPorDependiente.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\SaleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\PointOfSaleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Sales\TotalsByWaiterView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -869,6 +640,7 @@
     <None Include="libraries\ethernet1.cmd" />
     <None Include="MiPaladar_1_TemporaryKey.pfx" />
     <None Include="MiPaladar_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\MiPaladar.ViewModels.SalesByItemLineViewModel.datasource" />
     <None Include="Properties\DataSources\RestaurantDBEntities.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -879,11 +651,25 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
-      <Project>{A93D4557-E93D-402C-AD3D-341C3BF2E438}</Project>
+      <Project>{a93d4557-e93d-402c-ad3d-341c3bf2e438}</Project>
       <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiPaladar.MVVM\MiPaladar.MVVM.csproj">
+      <Project>{f44490fb-5b41-479f-9fde-f93f8cdf99e9}</Project>
+      <Name>MiPaladar.MVVM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiPaladar.Repository\MiPaladar.Repository.csproj">
+      <Project>{f423c4f5-7634-44b9-8c09-cdf513fd8092}</Project>
+      <Name>MiPaladar.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiPaladar.Services\MiPaladar.Services.csproj">
+      <Project>{a8c905d0-b59f-4000-8502-aa97fd06f6fb}</Project>
+      <Name>MiPaladar.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

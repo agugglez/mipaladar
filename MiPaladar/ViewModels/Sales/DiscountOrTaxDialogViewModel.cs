@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MiPaladar.MVVM;
+
 namespace MiPaladar.ViewModels
 {
     public class DiscountOrTaxDialogViewModel : ViewModelBase

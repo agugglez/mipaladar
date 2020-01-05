@@ -8,6 +8,7 @@ using MiPaladar.Entities;
 using MiPaladar.Enums;
 using MiPaladar.Classes;
 using MiPaladar.Extensions;
+using MiPaladar.MVVM;
 
 using System.ComponentModel;
 using System.Data.Objects.DataClasses;
@@ -17,69 +18,104 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Collections;
 using System.Windows;
+using MiPaladar.Repository;
 
 namespace MiPaladar.ViewModels
 {
     public class OfflineSaleViewModel : ViewModelBase, IScreen
     {
-        MainWindowViewModel appvm;
-
         Action<Sale> onCreated;
-        Action<Sale> onAssociationChanged;
-        Action<Sale> onRemoved;
+        Action<int> onModified;
+        Action<int> onRemoved;
 
         bool creating;
 
-        public OfflineSaleViewModel(MainWindowViewModel appvm, Action<Sale> onCreated,
-            Action<Sale> onRemoved, Action<Sale> onAssociationChanged)
+        public OfflineSaleViewModel(MainWindowViewModel appvm, Action<Sale> onCreated, DateTime dateCreated, DateTime workingDate)
         {
-            this.appvm = appvm;
             this.onCreated = onCreated;
-            this.onRemoved = onRemoved;
-            this.onAssociationChanged = onAssociationChanged;
+            this.canRemove = appvm.LoggedInUser.Role.CanRemoveSales;
+            //this.onRemoved = onRemoved;
+            //this.onAssociationChanged = onAssociationChanged;
 
-            dateCreated = DateTime.Now;
-            workingDate = DateTime.Today;
+            this.dateCreated = dateCreated;
+            this.workingDate = workingDate;
 
             creating = true;
 
             HasPendingChanges = true;
+
+            using (var unitOfWork = base.GetNewUnitOfWork())
+            {
+                LoadStuff(unitOfWork);
+            }
         }
 
-        public OfflineSaleViewModel(MainWindowViewModel appvm, Sale sale,
-            Action<Sale> onRemoved, Action<Sale> onAssociationChanged)
+        public OfflineSaleViewModel(MainWindowViewModel appvm, int saleId, Action<int> onRemoved, Action<int> onModified)
         {
-            this.appvm = appvm;
-            this.sale = sale;
+            this.saleId = saleId;
+            this.canRemove = appvm.LoggedInUser.Role.CanRemoveSales;
+            //this.sale = sale;
 
             this.onRemoved = onRemoved;
-            this.onAssociationChanged = onAssociationChanged;
+            this.onModified = onModified;
 
-            dateCreated = sale.DateCreated;
+            int temp = Environment.TickCount;
+            using (var unitOfWork = base.GetNewUnitOfWork())
+            {
+                Sale targetSale = unitOfWork.OrderRepository.GetById(saleId);
+                CopyFromSale(targetSale);
 
-            CopyFromSale();
+                LoadStuff(unitOfWork);
+            }
+
+            temp = Environment.TickCount - temp;
 
             HasPendingChanges = false;
 
             //subTotal = sale.LineItems.Sum(x => ((SaleLineItem)x).Amount);
         }
 
-        Sale sale;
-        public Sale WrappedSale
+        int saleId;
+        public int SaleId { get { return saleId; } }
+
+        //Sale sale;
+        //public Sale WrappedSale
+        //{
+        //    get { return sale; }
+        //}
+
+        //public MainWindowViewModel AppVM { get { return appvm; } }
+
+        bool canRemove;
+        public bool CanRemoveSales
         {
-            get { return sale; }
+            get { return canRemove; }
         }
 
-        public MainWindowViewModel AppVM { get { return appvm; } }
+
+        void LoadStuff(IUnitOfWork unitOfWork)
+        {
+            shifts = unitOfWork.ShiftRepository.Get();
+            waiters = unitOfWork.EmployeeRepository.GetWaiters();
+
+            ventaItems = new ObservableCollection<Product>();
+
+            foreach (var item in unitOfWork.ProductRepository.Get())
+            {
+                if (item.ProductType == ProductType.FinishedGoods || item.ProductType == ProductType.CompraVenta)
+                    ventaItems.Add(item);
+            }
+        }
 
         #region Copy Methods
 
-        void CopyFromSale()
+        void CopyFromSale(Sale sale)
         {
             if (workingDate != sale.Date) WorkingDate = sale.Date;
+            if (dateCreated != sale.DateCreated) dateCreated = sale.DateCreated;
             if (memo != sale.Memo) Memo = sale.Memo;
-            if (waiter != sale.Employee) Waiter = sale.Employee;
-            if (shift != sale.Shift) Shift = sale.Shift;
+            if (waiterId != sale.Employee_Id) WaiterId = sale.Employee_Id;
+            if (shiftId != sale.ShiftId) ShiftId = sale.ShiftId;
 
             //if (dateClosed != sale.DateClosed) DateClosed = sale.DateClosed;
             //if (datePrinted != sale.DatePrinted) DatePrinted = sale.DatePrinted;
@@ -92,9 +128,10 @@ namespace MiPaladar.ViewModels
             //if (cash != sale.Cash) Cash = sale.Cash;
             if (persons != sale.Persons) Persons = sale.Persons;
             //if (paid != sale.Paid) Paid = sale.Paid;
-            //if (number != sale.Number) Number = sale.Number;
+            if (number != sale.Number) Number = sale.Number;
 
             if (subTotal != sale.SubTotal) RawTotal = sale.SubTotal;
+            if (totalCost != sale.TotalCost) TotalCost = sale.TotalCost;
             if (totalPrice != sale.Total) TotalPrice = sale.Total;
 
             //if (closed != sale.Closed) Closed = sale.Closed;
@@ -110,12 +147,12 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        void CopyToSale()
+        void CopyToSale(IUnitOfWork unitOfwork, Sale sale)
         {
             if (workingDate != sale.Date) sale.Date = workingDate;
             if (memo != sale.Memo) sale.Memo = memo;
-            if (waiter != sale.Employee) sale.Employee = waiter;
-            if (shift != sale.Shift) sale.Shift = shift;
+            if (waiterId != sale.Employee_Id) sale.Employee_Id = waiterId;
+            if (shiftId != sale.ShiftId) sale.ShiftId = shiftId;
 
             //if (dateClosed != sale.DateClosed) sale.DateClosed = dateClosed;
             //if (datePrinted != sale.DatePrinted) sale.DatePrinted = datePrinted;
@@ -128,9 +165,10 @@ namespace MiPaladar.ViewModels
             //if (cash != sale.Cash) sale.Cash = Cash;
             if (persons != sale.Persons) sale.Persons = persons;
             //if (paid != sale.Paid) sale.Paid = paid;
-            //if (number != sale.Number) sale.Number = number;
+            if (number != sale.Number) sale.Number = number;
 
             if (subTotal != sale.SubTotal) sale.SubTotal = subTotal;
+            if (totalCost != sale.TotalCost) sale.TotalCost = totalCost;
             if (totalPrice != sale.Total) sale.Total = totalPrice;
 
             //if (closed != sale.Closed) sale.Closed = closed;
@@ -138,23 +176,23 @@ namespace MiPaladar.ViewModels
             //if (table != sale.Table) sale.Table = table;
 
             //when date changes we have to undo all original salelineitems
-            SyncLineItems(workingDate != sale.Date);
+            SyncLineItems(unitOfwork, sale);
         }
 
         /// <summary>
         /// needsUndo is for when date is modified, then we have to undo all original salelineitems
         /// </summary>
         /// <param name="needsUndo"></param>
-        void SyncLineItems(bool needsUndo)
+        void SyncLineItems(IUnitOfWork unitOfwork, Sale sale)
         {
             //check for removed/modified lineitems
-            var ts = base.GetService<ITransactionService>();
+            //var ts = base.GetService<ITransactionService>();
 
             List<SaleLineItem> toRemove = new List<SaleLineItem>();
 
             foreach (SaleLineItem sli in sale.LineItems)
             {
-                bool contains = lineitems.Any(x => x.WrappedLineItem == sli);
+                bool contains = lineitems.Any(x => x.Id == sli.Id);
                 //lineitem was removed
                 if (!contains)
                 {
@@ -164,83 +202,83 @@ namespace MiPaladar.ViewModels
 
             foreach (var item in toRemove)
             {
-                ts.UndoSell(item.Product, item.Quantity, item.Cost, sale.Date);
+                //ts.UndoSell(item.Product, item.Quantity, item.Cost, sale.Date);
 
-                appvm.Context.LineItems.DeleteObject(item);
+                unitOfwork.LineItemRepository.Remove(item);
+                //appvm.Context.LineItems.DeleteObject(item);
             }
-
-            decimal total_cost = 0;
 
             //check for added lineitems
             foreach (var item in lineitems)
             {
                 //it is new
-                if (item.WrappedLineItem == null)
+                if (item.Id == 0)
                 {
                     SaleLineItem new_sli = new SaleLineItem();
                     new_sli.Quantity = item.Quantity;
-                    new_sli.UnitMeasure = appvm.UnitMeasureManager.Unit;
-                    new_sli.Product = item.Product;
+                    new_sli.UnitMeasure = unitOfwork.UMRepository.Unit; //appvm.UnitMeasureManager.Unit;
+                    new_sli.Product_Id = item.ProductId;
                     new_sli.Amount = item.Price;
+                    new_sli.Cost = item.Cost;
 
                     sale.LineItems.Add(new_sli);
-                    item.WrappedLineItem = new_sli;
-
-                    decimal cost = ts.Sell(item.Product, item.Quantity, workingDate);
-
-                    new_sli.Cost = cost;
-
-                    total_cost += cost;
+                    sale.SaleLineItems.Add(new_sli);
+                    //item.WrappedLineItem = new_sli;
                 }
                 //it is not new
                 else
                 {
-                    SaleLineItem original = item.WrappedLineItem;
+                    SaleLineItem original = sale.SaleLineItems.Single(x => x.Id == item.Id);
 
-                    if (needsUndo)
-                    {
-                        ts.UndoSell(original.Product, original.Quantity, original.Cost, sale.Date);
+                    if (item.Quantity != original.Quantity) original.Quantity = item.Quantity;
+                    if (item.Price != original.Amount) original.Amount = item.Price;
+                    if (item.Cost != original.Cost) original.Cost = item.Cost;
 
-                        decimal cost = ts.Sell(item.Product, item.Quantity, workingDate);
 
-                        original.Cost = cost;
+                    //if (needsUndo)
+                    //{
+                    //    //ts.UndoSell(original.Product, original.Quantity, original.Cost, sale.Date);
 
-                        original.Quantity = item.Quantity;
-                        original.Amount = item.Price;
-                    }
-                    else
-                    {
-                        //check if the lineitem was modified
-                        if (item.Quantity != original.Quantity)
-                        {
-                            double diff = item.Quantity - original.Quantity;
+                    //    decimal cost = ts.Sell(item.Product, item.Quantity, workingDate);
 
-                            if (diff > 0)
-                            {
-                                decimal cost = ts.Sell(item.Product, diff, workingDate);
+                    //    original.Cost = cost;
 
-                                original.Cost += cost;
+                    //    original.Quantity = item.Quantity;
+                    //    original.Amount = item.Price;
+                    //}
+                    //else
+                    //{
+                    //    //check if the lineitem was modified
+                    //    if (item.Quantity != original.Quantity)
+                    //    {
+                    //        double diff = item.Quantity - original.Quantity;
 
-                                total_cost += cost;
-                            }
-                            else
-                            //diff < 0, cant be zero
-                            {
-                                diff = -diff;
-                                //-diff
-                                decimal diff_cost = original.Cost * (decimal)diff / (decimal)original.Quantity;
+                    //        if (diff > 0)
+                    //        {
+                    //            decimal cost = ts.Sell(item.Product, diff, workingDate);
 
-                                ts.UndoSell(original.Product, diff, diff_cost, sale.Date);
+                    //            original.Cost += cost;
 
-                                original.Cost -= diff_cost;
+                    //            total_cost += cost;
+                    //        }
+                    //        else
+                    //        //diff < 0, cant be zero
+                    //        {
+                    //            diff = -diff;
+                    //            //-diff
+                    //            decimal diff_cost = original.Cost * (decimal)diff / (decimal)original.Quantity;
 
-                                total_cost -= diff_cost;
-                            }
+                    //            //ts.UndoSell(original.Product, diff, diff_cost, sale.Date);
 
-                            original.Quantity = item.Quantity;
-                            original.Amount = item.Price;
-                        }
-                    }
+                    //            original.Cost -= diff_cost;
+
+                    //            total_cost -= diff_cost;
+                    //        }
+
+                    //        original.Quantity = item.Quantity;
+                    //        original.Amount = item.Price;
+                    //    }
+                    //}
                 }
             }
 
@@ -248,28 +286,37 @@ namespace MiPaladar.ViewModels
 
         #endregion
 
-        public ObservableCollection<Employee> Waiters
+        List<Employee> waiters;
+        public List<Employee> Waiters
         {
-            get { return appvm.CanSellEmployees; }
+            get
+            {
+                return waiters;
+            }
         }
-        public ObservableCollection<Shift> Shifts
+
+        List<Shift> shifts;
+        public List<Shift> Shifts
         {
-            get { return appvm.ShiftsOC; }
+            get
+            {
+                return shifts;
+            }
         }
         //public ObservableCollection<PriceList> PriceLists 
         //{
         //    get { return appvm.PriceListsOC; }
         //}
-        public ObservableCollection<Table> Tables
-        {
-            get { return appvm.TablesOC; }
-        }
+        //public ObservableCollection<Table> Tables
+        //{
+        //    get { return appvm.TablesOC; }
+        //}
 
         //ICollectionView icvVentaItems;
-        //ObservableCollection<Product> ventaItems;
+        ObservableCollection<Product> ventaItems;
         public ObservableCollection<Product> VentaItems
         {
-            get { return appvm.ProductManager.VentaItems; }
+            get { return ventaItems; }
         }
 
         bool hasPendingChanges;
@@ -345,6 +392,17 @@ namespace MiPaladar.ViewModels
             {
                 totalPrice = value;
                 OnPropertyChanged("TotalPrice");
+            }
+        }
+
+        decimal totalCost;
+        public decimal TotalCost
+        {
+            get { return totalCost; }
+            set
+            {
+                totalCost = value;
+                OnPropertyChanged("TotalCost");
             }
         }
 
@@ -481,48 +539,51 @@ namespace MiPaladar.ViewModels
             set
             {
                 taxInPercent = value;
+
                 OnPropertyChanged("TaxInPercent");
+                OnPropertyChanged("TieneGravamen");
+                OnPropertyChanged("TaxToMoney");
 
                 UpdateTotalPrice();
             }
         }
 
-        Employee waiter;
-        public Employee Waiter
+        int? waiterId;
+        public int? WaiterId
         {
-            get { return waiter; }
+            get { return waiterId; }
             set
             {
-                waiter = value;
-                OnPropertyChanged("Waiter");
+                waiterId = value;
+                OnPropertyChanged("WaiterId");
 
                 HasPendingChanges = true;
             }
         }
 
-        Shift shift;
-        public Shift Shift
+        int? shiftId;
+        public int? ShiftId
         {
-            get { return shift; }
+            get { return shiftId; }
             set
             {
-                shift = value;
-                OnPropertyChanged("Shift");
+                shiftId = value;
+                OnPropertyChanged("ShiftId");
 
                 HasPendingChanges = true;
             }
         }
 
-        //int? number;
-        //public int? Number
-        //{
-        //    get { return number; }
-        //    set
-        //    {
-        //        number = value;
-        //        OnPropertyChanged("Number");
-        //    }
-        //}
+        int? number;
+        public int? Number
+        {
+            get { return number; }
+            set
+            {
+                number = value;
+                OnPropertyChanged("Number");
+            }
+        }
 
         //Table table;
         //public Table Table
@@ -568,32 +629,32 @@ namespace MiPaladar.ViewModels
 
         #endregion
 
-        #region Print Command
+        //#region Print Command
 
-        RelayCommand printCommand;
-        public ICommand PrintCommand
-        {
-            get
-            {
-                if (printCommand == null)
-                    printCommand = new RelayCommand(x => this.Print());
-                return printCommand;
-            }
-        }
+        //RelayCommand printCommand;
+        //public ICommand PrintCommand
+        //{
+        //    get
+        //    {
+        //        if (printCommand == null)
+        //            printCommand = new RelayCommand(x => this.Print());
+        //        return printCommand;
+        //    }
+        //}
 
-        void Print()
-        {
-            Printer.PrintVale(this);
-            //if ()
-            //{
-            //    //save first date only
-            //    if (datePrinted == null) DatePrinted = DateTime.Now;
+        //void Print()
+        //{
+        //    Printer.PrintVale(this);
+        //    //if ()
+        //    //{
+        //    //    //save first date only
+        //    //    if (datePrinted == null) DatePrinted = DateTime.Now;
 
-            //    Close();
-            //}
-        }
+        //    //    Close();
+        //    //}
+        //}
 
-        #endregion
+        //#endregion
 
         #region Print Document
 
@@ -770,7 +831,7 @@ namespace MiPaladar.ViewModels
             windowManager.Close(pdvm);
 
             //let parent remove it
-            if (onRemoved != null) onRemoved(sale);
+            if (onRemoved != null) onRemoved(saleId);
 
             //close this window
             windowManager.Close(this);
@@ -781,24 +842,43 @@ namespace MiPaladar.ViewModels
             int total_lines = lineitems.Count;
             int count = 0;
 
-            List<LineItem> lineitems_toRemove = new List<LineItem>(sale.LineItems);
-            foreach (SaleLineItem item in lineitems_toRemove)
-            {
-                var ts = base.GetService<ITransactionService>();
+            //List<LineItem> lineitems_toRemove = new List<LineItem>(sale.LineItems);
+            //foreach (SaleLineItem item in lineitems_toRemove)
+            //{
+            //    //var ts = base.GetService<ITransactionService>();
 
-                ts.UndoSell(item.Product, item.Quantity, item.Cost, WorkingDate);
+            //    //ts.UndoSell(item.Product, item.Quantity, item.Cost, WorkingDate);
 
-                appvm.Context.LineItems.DeleteObject(item);
+            //    //appvm.Context.LineItems.DeleteObject(item);
 
-                appvm.SaveChanges();
+            //    //appvm.SaveChanges();
 
-                removeWorker.ReportProgress(++count * 100 / total_lines);
-            }
+            //    removeWorker.ReportProgress(++count * 100 / total_lines);
+            //}
 
             //remove from database
-            appvm.Context.Orders.DeleteObject(sale);
+            using (var unitOfWork = base.GetNewUnitOfWork())
+            {
+                Sale sale = unitOfWork.OrderRepository.GetById(saleId);
 
-            appvm.SaveChanges();
+                //List<SaleLineItem> list = sale.SaleLineItems.ToList();
+
+                foreach (var item in lineitems)
+                {
+                    if (item.Id != 0) unitOfWork.LineItemRepository.Remove(item.Id);
+
+                    unitOfWork.SaveChanges();
+
+                    removeWorker.ReportProgress(++count * 100 / total_lines);
+                }
+
+                unitOfWork.OrderRepository.Remove(saleId);
+
+                unitOfWork.SaveChanges();
+
+                //appvm.Context.Orders.DeleteObject(sale);
+                //appvm.SaveChanges();
+            }            
         }
 
         #endregion
@@ -897,19 +977,22 @@ namespace MiPaladar.ViewModels
             //newLineItem.Quantity = qtty_to_add;
             //newLineItem.Product = product_to_add;
             //newLineItem.UnitMeasure = appvm.UnitMeasureManager.Unit;
-            UnitMeasure um = appvm.UnitMeasureManager.Unit;
+            //UnitMeasure um = appvm.UnitMeasureManager.Unit;
             decimal amount = (decimal)qtty_to_add * product_to_add.SalePrice;
 
             //Action onQuantityUpdated = () => RefreshTotal();
+            var invSVC = base.GetService<IInventoryService>();
+
+            decimal cost = invSVC.GetProductCost(product_to_add, qtty_to_add, null);
 
             OfflineLineItemViewModel newLineItemViewModel =
-                new OfflineLineItemViewModel(product_to_add, quantityToAdd, um, amount, OnQuantityChanged, OnPriceChanged);
+                new OfflineLineItemViewModel(product_to_add, qtty_to_add, amount, cost, OnQuantityChanged, OnPriceChanged);
 
             lineitems.Add(newLineItemViewModel);
 
             //sale.LineItems.Add(newLineItem);
 
-            CheckProductIsAvailable(product_to_add, qtty_to_add);
+            //CheckProductIsAvailable(product_to_add, qtty_to_add);
 
             //var ts = base.GetService<ITransactionService>();
             //decimal cost = ts.Sell(product_to_add, qtty_to_add, WorkingDate);
@@ -957,52 +1040,54 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        #region Is Product Available Message
+        //#region Is Product Available Message
 
-        void CheckProductIsAvailable(Product prod, double quantity)
-        {
-            if (appvm.InventoryAreasOC.Count > 0)
-            {
-                Inventory pisoInventory = appvm.InventoryAreasOC.Single(x => x.IsFloor);
+        //void CheckProductIsAvailable(Product prod, double quantity)
+        //{
+        //    if (appvm.InventoryAreasOC.Count > 0)
+        //    {
+        //        Inventory pisoInventory = appvm.InventoryAreasOC.Single(x => x.IsFloor);
 
-                //trying to sell quantity items
-                List<InventoryItem> missingItems = appvm.InventoryService.CheckAvailability(pisoInventory, prod, quantity);
+        //        //trying to sell quantity items
+        //        List<InventoryItem> missingItems = appvm.InventoryService.CheckAvailability(pisoInventory, prod, quantity);
 
-                //there are items missing
-                if (missingItems.Count > 0)
-                {
-                    var msgBox = base.GetService<IMessageBoxService>();
+        //        //there are items missing
+        //        if (missingItems.Count > 0)
+        //        {
+        //            var msgBox = base.GetService<IMessageBoxService>();
 
-                    msgBox.ShowMessage(BuildProductsUnavailableMessage(missingItems));
-                }
-            }
-        }
+        //            msgBox.ShowMessage(BuildProductsUnavailableMessage(missingItems));
+        //        }
+        //    }
+        //}
 
-        string BuildProductsUnavailableMessage(List<InventoryItem> missingItems)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("No tiene suficiente ");
-            foreach (var item in missingItems)
-            {
-                if (item.Product != null)
-                {
-                    sb.Append(string.Format("{0}({1}), ", item.Product.Name, item.Quantity));
-                }
-            }
+        //string BuildProductsUnavailableMessage(List<InventoryItem> missingItems)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("No tiene suficiente ");
+        //    foreach (var item in missingItems)
+        //    {
+        //        if (item.Product != null)
+        //        {
+        //            sb.Append(string.Format("{0}({1}), ", item.Product.Name, item.Quantity));
+        //        }
+        //    }
 
-            sb.Remove(sb.Length - 2, 2);
-            sb.Append(".");
+        //    sb.Remove(sb.Length - 2, 2);
+        //    sb.Append(".");
 
-            return sb.ToString();
-        }
+        //    return sb.ToString();
+        //}
 
-        #endregion
+        //#endregion
 
         #endregion
 
         private void ReCalculate()
         {
             RawTotal = lineitems.Sum(x => x.Price);
+
+            TotalCost = lineitems.Sum(x => x.Cost);
 
             UpdateTotalPrice();
         }
@@ -1154,9 +1239,11 @@ namespace MiPaladar.ViewModels
         {
             get
             {
+                var waiter = waiters.FirstOrDefault(x => x.Id == waiterId);
+
                 if (waiter == null) return string.Empty;
 
-                return waiter.Name.Length > 3 ? Waiter.Name.Substring(0, 3) : waiter.Name;
+                return waiter.Name.Length > 3 ? waiter.Name.Substring(0, 3) : waiter.Name;
             }
         }
 
@@ -1229,7 +1316,6 @@ namespace MiPaladar.ViewModels
                             select new
                             {
                                 Quantity = groupingByProduct.Sum(x => x.Quantity),
-                                UnitMeasure = appvm.UnitMeasureManager.Unit,
                                 Product = groupingByProduct.Key,
                                 Price = groupingByProduct.Sum(x => x.Price)
                             };
@@ -1350,20 +1436,24 @@ namespace MiPaladar.ViewModels
 
         void Cancel()
         {
-            if (creating)
-            {
-                //close this window
-                var windowManager = base.GetService<IWindowManager>();
+            CloseMe();
 
-                windowManager.Close(this);
-            }
-            //saving changes
-            else
-            {
-                CopyFromSale();
-                HasPendingChanges = false;
-            }
+            //if (creating)
+            //{
+            //    //close this window
+            //    var windowManager = base.GetService<IWindowManager>();
+            //    selfClosing = true;
+            //    windowManager.Close(this);
+            //}
+            ////saving changes
+            //else
+            //{
+            //    CopyFromSale();
+            //    HasPendingChanges = false;
+            //}
         }
+
+        
 
         #endregion
 
@@ -1375,36 +1465,68 @@ namespace MiPaladar.ViewModels
             get
             {
                 if (saveCommand == null)
-                    saveCommand = new RelayCommand(x => this.Save());
+                    saveCommand = new RelayCommand(x => this.SaveAndClose());
                 return saveCommand;
             }
         }
 
         void Save()
         {
-            if (creating)
+            if (hasPendingChanges) 
             {
-                sale = new Sale();
-                sale.Date = workingDate;
-                sale.DateCreated = dateCreated;
-                appvm.Context.Orders.AddObject(sale);
-            }
-            else if (onAssociationChanged != null) onAssociationChanged(sale);
+                using (var unitOfWork = base.GetNewUnitOfWork())
+                {
+                    Sale sale;
 
-            CopyToSale();
+                    if (creating)
+                    {
+                        sale = new Sale();
+                        sale.DateCreated = dateCreated;
 
-            appvm.SaveChanges();
+                        unitOfWork.OrderRepository.Add(sale);
+                    }
+                    else
+                    {
+                        sale = unitOfWork.OrderRepository.GetById(saleId);
+                    }
 
-            HasPendingChanges = false;
+                    CopyToSale(unitOfWork, sale);
 
-            if (creating)
-            {
-                onCreated(sale);
-                creating = false;
-            }
+                    unitOfWork.SaveChanges();
+
+                    HasPendingChanges = false;
+
+                    if (creating)
+                    {
+                        creating = false;
+                        onCreated(sale);
+                    }
+                    else if (onModified != null) onModified(saleId);
+                }                
+            }                      
+        }
+
+        void SaveAndClose()
+        {
+            Save();
+            CloseMe(); 
         }
 
         #endregion
+
+        private void CloseMe()
+        {
+            var windowManager = base.GetService<IWindowManager>();
+            selfClosing = true;
+            windowManager.Close(this);
+        }
+
+        bool selfClosing = false;
+
+        bool IScreen.IsSelfClosing()
+        {
+            return selfClosing;
+        }
 
         bool IScreen.TryToClose()
         {

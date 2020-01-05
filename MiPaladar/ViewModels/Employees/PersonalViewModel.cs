@@ -6,6 +6,7 @@ using System.Text;
 using MiPaladar.Entities;
 using MiPaladar.Views;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -17,12 +18,12 @@ namespace MiPaladar.ViewModels
     public class PersonalViewModel : ViewModelBase
     {
         MainWindowViewModel appvm;
-        IConfirmator confirmator;
+        //IConfirmator confirmator;
 
         public PersonalViewModel(MainWindowViewModel appvm)
         {
             this.appvm = appvm;
-            this.confirmator = appvm.Confirmator;
+            //this.confirmator = appvm.Confirmator;
 
             //this.RequestClose += new EventHandler(PersonalViewModel_RequestClose);
 
@@ -92,36 +93,46 @@ namespace MiPaladar.ViewModels
 
                 EmployeeViewModel svm = (EmployeeViewModel)wsvm;
 
-                return svm.WrappedEmployee == toExpand;
+                return svm.EmployeeId == toExpand.Id;
             };
 
             if (windowManager.Exists(predicate)) windowManager.Activate(predicate);
             else
             {
-                EmployeeViewModel avm = new EmployeeViewModel(appvm, toExpand, OnAssociationChanged);
+                EmployeeViewModel avm = new EmployeeViewModel(appvm, toExpand, OnModified, OnEmployeeRemoved);
 
-                windowManager.ShowChildWindow(avm, appvm);
+                windowManager.ShowDialog(avm, appvm);
             }
         }
 
-        void OnAssociationChanged(Employee emp)
+        void OnEmployeeRemoved(int empId) 
         {
-            int index = employees_filtered.IndexOf(emp);
+            var emp = employees_source.Single(x => x.Id == empId);
 
-            if (index >= 0)
+            employees_source.Remove(emp);
+            employees_filtered.Remove(emp);
+        }
+
+        void OnModified(Employee emp)
+        {
+            var target = employees_filtered.FirstOrDefault(x => x.Id == emp.Id);
+
+            if (target != null)
             {
+                int index = employees_filtered.IndexOf(target);
+
                 employees_filtered.RemoveAt(index);
                 employees_filtered.Insert(index, emp);
 
                 SelectedEmployee = emp;
-            }
+            }            
         }
 
         #endregion
 
         #region Filter
 
-        ObservableCollection<Employee> employees_source;
+        List<Employee> employees_source;
         //public ObservableCollection<InventoryItemViewModel> ItemsList
         //{
         //    get { return sourceList; }
@@ -134,7 +145,7 @@ namespace MiPaladar.ViewModels
             {
                 if (employees_filtered == null)
                 {
-                    employees_source = new ObservableCollection<Employee>(appvm.EmployeesOC);
+                    employees_source = base.GetNewUnitOfWork().EmployeeRepository.Get();
                     employees_filtered = new ObservableCollection<Employee>();
 
                     RefreshItems();
@@ -146,7 +157,7 @@ namespace MiPaladar.ViewModels
 
         private void RefreshItems()
         {
-            List<InventoryItemViewModel> toRemove = new List<InventoryItemViewModel>();
+            //List<InventoryItemViewModel> toRemove = new List<InventoryItemViewModel>();
 
             employees_filtered.Clear();
 
@@ -278,10 +289,10 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        public bool ThereAreNoEmployees
-        {
-            get { return appvm.EmployeesOC.Count == 0; }
-        }
+        //public bool ThereAreNoEmployees
+        //{
+        //    get { return appvm.EmployeesOC.Count == 0; }
+        //}
 
         //bool employeeDataVisible;
         //public bool EmployeeDataVisible 
@@ -334,7 +345,7 @@ namespace MiPaladar.ViewModels
 
         void Add()
         {
-            EmployeeViewModel nevm = new EmployeeViewModel(appvm, OnCreated, OnAssociationChanged);
+            EmployeeViewModel nevm = new EmployeeViewModel(appvm, OnCreated);
 
             var windowManager = base.GetService<IWindowManager>();
 
@@ -408,48 +419,7 @@ namespace MiPaladar.ViewModels
 
         //#endregion
 
-        #region Delete Command
-
-        RelayCommand deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get
-            {
-                if (deleteCommand == null)
-                {
-                    deleteCommand = new RelayCommand(x => this.Delete(selectedEmployee));
-                }
-
-                return deleteCommand;
-            }
-        }
-
-        bool CanDelete
-        {
-            get
-            {
-                return selectedEmployee != null;
-                    //&& selectedEmployeeViewModel != null && selectedEmployeeViewModel.WrappedEmployee != null;
-            }
-        }
-
-        void Delete(Employee emp)
-        {
-            if (!confirmator.AskForConfirmation("Está seguro que desea eliminar a " + emp.Name + " ?")) return;
-
-            employees_source.Remove(emp);
-            employees_filtered.Remove(emp);
-
-            appvm.CanSellEmployees.Remove(emp);
-            appvm.CanPurchaseEmployees.Remove(emp);          
-
-            appvm.EmployeesOC.Remove(emp);
-
-            appvm.Context.Employees.DeleteObject(emp);
-            appvm.SaveChanges();
-        }
-
-        #endregion
+        
 
     }
 }

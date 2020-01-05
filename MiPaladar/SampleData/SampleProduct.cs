@@ -18,6 +18,7 @@ namespace MiPaladar.SampleData
             get;
             set;
         }
+        public string PrintString { get; set; }
 
         public double SalePrice
         {
@@ -25,56 +26,64 @@ namespace MiPaladar.SampleData
             set;
         }
 
-        public bool IsPurchasable
+        public decimal ComponentsCost { get; set; }
+        public decimal ArbitraryCost { get; set; }
+        public decimal TotalCost { get; set; }
+
+        public decimal CostToPriceRatio { get; set; }
+        public decimal ProfitToPriceRatio { get; set; }
+        public decimal Profit { get; set; }
+        
+        //public bool IsPurchasable
+        //{
+        //    get;
+        //    set;
+        //}
+
+        //public bool IsIngredient
+        //{
+        //    get;
+        //    set;
+        //}
+
+        public bool IsAssembly
         {
             get;
             set;
         }
 
-        public bool IsIngredient
-        {
-            get;
-            set;
-        }
+        //public bool IsStorable
+        //{
+        //    get;
+        //    set;
+        //}
 
-        public bool IsRecipe
-        {
-            get;
-            set;
-        }
-
-        public bool IsStorable
-        {
-            get;
-            set;
-        }
-
-        public bool NotInMenu
-        {
-            get;
-            set;
-        }
-
-
-        public ProductionArea ProductionArea
-        {
-            get;
-            set;
-        }
-
-
-        public bool IsProduced
+        public bool IsInMenu
         {
             get;
             set;
         }
 
 
-        public bool IsEntrant
-        {
-            get;
-            set;
-        }
+        //public ProductionArea ProductionArea
+        //{
+        //    get;
+        //    set;
+        //}
+
+
+        //public bool IsProduced
+        //{
+        //    get;
+        //    set;
+        //}
+
+
+        //public bool IsEntrant
+        //{
+        //    get;
+        //    set;
+        //}
 
 
         public UMFamily UMFamily
@@ -83,7 +92,7 @@ namespace MiPaladar.SampleData
             set;
         }
 
-        public bool HasDifferentFormats { get; set; }
+        //public bool HasDifferentFormats { get; set; }
 
         #endregion
 
@@ -135,11 +144,11 @@ namespace MiPaladar.SampleData
 
         #endregion       
 
-        ObservableCollection<ProductIndexViewModel> relatedCategories = new ObservableCollection<ProductIndexViewModel>();
-        public ObservableCollection<ProductIndexViewModel> RelatedCategories
-        {
-            get { return relatedCategories; }
-        }
+        //ObservableCollection<ProductIndexViewModel> relatedCategories = new ObservableCollection<ProductIndexViewModel>();
+        //public ObservableCollection<ProductIndexViewModel> RelatedCategories
+        //{
+        //    get { return relatedCategories; }
+        //}
 
         ObservableCollection<IngredientViewModel> ingredients = new ObservableCollection<IngredientViewModel>();
         public ObservableCollection<IngredientViewModel> Ingredients
@@ -147,10 +156,10 @@ namespace MiPaladar.SampleData
             get { return ingredients; }
         }
 
-        public bool HasCategories
-        {
-            get { return relatedCategories.Count > 0; }
-        }
+        //public bool HasCategories
+        //{
+        //    get { return relatedCategories.Count > 0; }
+        //}
 
 
         

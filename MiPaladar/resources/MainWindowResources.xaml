@@ -3,21 +3,25 @@
                     xmlns:views="clr-namespace:MiPaladar.Views"
                     xmlns:viewmodels="clr-namespace:MiPaladar.ViewModels">
 
+    <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
+        <views:Dashboard />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
         <views:Login />
     </DataTemplate>
     
-    <DataTemplate DataType="{x:Type viewmodels:PointOfSaleViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:PointOfSaleViewModel}">
         <views:Ventas />
-    </DataTemplate>
+    </DataTemplate>-->
 
     <DataTemplate DataType="{x:Type viewmodels:SalesListViewModel}">
         <views:SalesListView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodels:PurchasesListViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:PurchasesListViewModel}">
         <views:PurchasesList />
-    </DataTemplate>
+    </DataTemplate>-->
 
     <!--
 
@@ -39,52 +43,52 @@
         <views:RolesListView />
     </DataTemplate>       
 
-    <DataTemplate DataType="{x:Type viewmodels:ProductsListViewModel}">
-        <views:ProductListView />
+    <DataTemplate DataType="{x:Type viewmodels:InventoryViewModel}">
+        <views:InventoryView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodels:InventoryOperationsListViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:InventoryOperationsListViewModel}">
         <views:InventoryOperationsListView />
-    </DataTemplate>
+    </DataTemplate>-->
 
     <!--LISTS-->
     
-    <DataTemplate DataType="{x:Type viewmodels:ListsTabViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:ListsTabViewModel}">
         <views:ListsTabView />
-    </DataTemplate>
+    </DataTemplate>-->
 
-    <DataTemplate DataType="{x:Type viewmodels:SaleAreasListViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:SaleAreasListViewModel}">
         <views:DesignRestaurant />
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type viewmodels:TablesListViewModel}">
         <views:TablesList />
-    </DataTemplate>
+    </DataTemplate>-->
 
-    <DataTemplate DataType="{x:Type viewmodels:ProductionAreasListViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:ProductionAreasListViewModel}">
         <views:ProductionAreasList />
-    </DataTemplate>
+    </DataTemplate>-->
 
-    <DataTemplate DataType="{x:Type viewmodels:InventoryAreasListViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:InventoryAreasListViewModel}">
         <views:InventoryAreasList />
+    </DataTemplate>-->
+
+    <DataTemplate DataType="{x:Type viewmodels:CategoryListViewModel}">
+        <views:CategoriesList />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodels:CategoriesListViewModel}">
-        <views:CategoriesList />
+    <DataTemplate DataType="{x:Type viewmodels:TagListViewModel}">
+        <views:TagsList />
     </DataTemplate>
 
     <!--LISTS-->
 
-    <DataTemplate DataType="{x:Type viewmodels:InventoryAdvancedSearchViewModel}">
+    <!--<DataTemplate DataType="{x:Type viewmodels:InventoryAdvancedSearchViewModel}">
         <views:InventoryAdvancedSearchView />
-    </DataTemplate>
+    </DataTemplate>-->
 
-    <DataTemplate DataType="{x:Type viewmodels:ReportsViewModel}">
-        <views:ReportsView />
-    </DataTemplate>
-    
-    <DataTemplate DataType="{x:Type viewmodels:MyCompanyViewModel}">
-        <views:MyCompanyView />
+    <DataTemplate DataType="{x:Type viewmodels:ReportsCenterViewModel}">
+        <views:ReportsCenterView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type viewmodels:ImportDialogViewModel}">

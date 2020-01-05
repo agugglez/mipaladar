@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 
 using MiPaladar.Classes;
 using MiPaladar.ViewModels;
+using MiPaladar.MVVM;
+using MiPaladar.Entities;
 
 namespace MiPaladar.Services
 {
@@ -18,13 +20,10 @@ namespace MiPaladar.Services
     }
     public class Report101Reader : IReport101Reader
     {
-        //lines of work keyed by tablenumber
-        Dictionary<int, LineOfWork> activeLinesOfWork;
+        Dictionary<int, LineOfWork> activeLinesOfWork; //lines of work keyed by tablenumber
         List<LineOfWork> shiftLinesOfWork;
 
         int abrir_cajon_counter = 0;
-
-        #region Build lines of work list
 
         public Report101InfoViewModel Load101Report(string filepath, BackgroundWorker load101Worker)
         {
@@ -34,7 +33,7 @@ namespace MiPaladar.Services
             //int total_facturas = HowManyInvoices(lines);
             //int loaded_facturas = 0;
 
-            //nonuseful lines always there
+            //at least 5 lines always there
             if (lines.Count <= 5) throw new Exception("El reporte está vacío.");
 
             //make sure first line says "Electronic Journal"
@@ -109,7 +108,7 @@ namespace MiPaladar.Services
                     }
                 }
 
-                load101Worker.ReportProgress(++count * 100 / lines.Count);
+                load101Worker.ReportProgress(++count * 100 / shiftLinesOfWork.Count);
             }
 
             //service time data
@@ -140,15 +139,16 @@ namespace MiPaladar.Services
             //query
             //group by flat hour
             var querySortedEnd = from low in shiftLinesOfWork
-                                 where low.FacturaDate.Year > 1
-                                 orderby low.FacturaDate
-                                 group low by low.FacturaDate.AddMinutes(-low.FacturaDate.Minute);
+                                 where low.StartDate.Year > 1
+                                 orderby low.StartDate
+                                 group low by low.StartDate.AddMinutes(-low.StartDate.Minute);
 
             foreach (var group in querySortedEnd)
             {
                 ClientsByHour cbh = new ClientsByHour();
-                cbh.Hour = string.Format("{0:h:mm tt}", group.Key);
-                cbh.Clients = group.Count();
+                cbh.Hour = string.Format("{0:h:mm tt}", group.Key); 
+
+                cbh.Clients = group.Sum(x => x.Clients);
 
                 result.ClientsByHourTotals.Add(cbh);
             }
@@ -405,7 +405,5 @@ namespace MiPaladar.Services
 
             return new DateTime(year, month, day, hour, minutes, 0);
         }
-
-        #endregion
     }
 }

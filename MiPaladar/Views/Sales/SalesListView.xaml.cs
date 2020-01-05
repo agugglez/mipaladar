@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using MiPaladar.ViewModels;
+using MiPaladar.Enums;
 
 namespace MiPaladar.Views
 {
@@ -19,14 +20,24 @@ namespace MiPaladar.Views
             InitializeComponent(); 
         }
 
-        private void DatePicker_KeyUp(object sender, KeyEventArgs e)
+        private void TextBlock_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                SalesListViewModel slvm = (SalesListViewModel)this.DataContext;
+            SalesListViewModel wvm = (SalesListViewModel)DataContext;
 
-                slvm.FindSales();
-            }
-        }        
+            //var adasd = dateOptionCbx.SelectedItem;
+
+            DateOption newValue = (DateOption)(sender as TextBlock).DataContext;
+            wvm.SetDateOption(newValue);
+        }
+
+        //private void DatePicker_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Return)
+        //    {
+        //        SalesListViewModel slvm = (SalesListViewModel)this.DataContext;
+
+        //        slvm.FindSales();
+        //    }
+        //}        
     }
 }

@@ -6,8 +6,8 @@
              
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              
-             mc:Ignorable="d" Title="Cargar Reporte" UseLayoutRounding="True"
-             Height="200" Width="350">
+             mc:Ignorable="d" Title="{Binding DisplayName}" UseLayoutRounding="True"
+             Height="230" Width="360">
 
     <Window.Resources>
 
@@ -46,17 +46,19 @@
             
         </StackPanel>
 
+        <!--Date-->
         <TextBlock Text="Fecha" Grid.Row="1" />
 
         <DatePicker Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"
                     SelectedDate="{Binding SelectedDate}"/>
 
-        <!--<TextBlock Text="Turno" Grid.Row="2"/>        
+        <!--Shift-->
+        <TextBlock Text="Turno" Grid.Row="2"/>        
 
-        <ComboBox Grid.Row="2" Grid.Column="1" DisplayMemberPath="Name"      
+        <ComboBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left"
+                  DisplayMemberPath="Name"      
                   SelectedItem="{Binding SelectedShift}" 
-                  IsSynchronizedWithCurrentItem="False"
-                  ItemsSource="{Binding Shifts}" /> -->      
+                  ItemsSource="{Binding Shifts}" />       
             
         <TextBlock Text="Archivo" />
 

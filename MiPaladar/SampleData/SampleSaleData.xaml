@@ -10,22 +10,22 @@
         <ent:Employee Name="Daimy"/>
     </local:SampleSale.Waiter>
     
-    <local:SampleSale.Table>
+    <!--<local:SampleSale.Table>
         <ent:Table Number="13" IsBar="False">
             <ent:Table.PriceList>
                 <ent:PriceList Name="Restaurant"/>
             </ent:Table.PriceList>
         </ent:Table>
-    </local:SampleSale.Table>
+    </local:SampleSale.Table>-->
     
     <local:SampleSale.OrderItems>
 
         <local:SampleLineItem Quantity="1" Price="3.5" IsEntrant="True" ToSpecify="true">
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="TRell. Jamon" Name="TRell. Jamon" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="TRell. Jamon">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Caliente"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -35,10 +35,10 @@
         
         <local:SampleLineItem Quantity="2" Price="7">
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Uruguayo" Name="Uruguayo" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Uruguayo">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Elaboración"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -48,10 +48,10 @@
 
         <local:SampleLineItem Quantity="1" Price="8" ToSpecify="true">
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Piz. Bacura" Name="Piz. Bacura" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Piz. Bacura">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Elaboración"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -61,10 +61,10 @@
 
         <local:SampleLineItem Quantity="1" Price="4" IsEntrant="True">
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Solom. Cerdo Haw." Name="Solom. Cerdo Haw." IsProduced="True" >
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Solom. Cerdo Haw." >
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Caliente"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -74,10 +74,10 @@
 
         <local:SampleLineItem Quantity="1" Price="1.5" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Agr. Chorizo" Name="Agr. Chorizo" IsProduced="False">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Agr. Chorizo">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Elaboración"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -87,10 +87,10 @@
 
         <local:SampleLineItem Quantity="1" Price="8" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Cordon Bleu / JamPierna" Name="Cordon Bleu / JamPierna" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Cordon Bleu / JamPierna">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Caliente"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -100,10 +100,10 @@
 
         <local:SampleLineItem Quantity="1" Price="8" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Montetoro" Name="Montetoro" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Montetoro">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Caliente"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -113,7 +113,7 @@
 
         <local:SampleLineItem Quantity="5" Price="5" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Arroz Blanco" Name="Arroz Blanco" IsProduced="False"/>
+                <ent:Product PrintString="Arroz Blanco"/>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>
@@ -122,10 +122,10 @@
 
         <local:SampleLineItem Quantity="2" Price="3" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Ensa. Mixta" Name="Ensa. Mixta" IsProduced="True">
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Ensa. Mixta">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Frío"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -135,10 +135,10 @@
 
         <local:SampleLineItem Quantity="4" Price="6" IsEntrant="True" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Yucas" Name="Yucas" IsProduced="True" >
-                    <ent:Product.ProductionArea>
+                <ent:Product PrintString="Yucas">
+                    <!--<ent:Product.ProductionArea>
                         <ent:ProductionArea Name="Caliente"/>
-                    </ent:Product.ProductionArea>
+                    </ent:Product.ProductionArea>-->
                 </ent:Product>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
@@ -148,7 +148,7 @@
 
         <local:SampleLineItem Quantity="6" Price="15" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="C.Corona" Name="C.Corona" IsProduced="False"/>
+                <ent:Product PrintString="C.Corona"/>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>
@@ -157,7 +157,7 @@
 
         <local:SampleLineItem Quantity="11" Price="16.5" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="C.Cristal" Name="C.Cristal" IsProduced="False"/>
+                <ent:Product PrintString="C.Cristal"/>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>
@@ -166,7 +166,7 @@
 
         <local:SampleLineItem Quantity="1" Price="1" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Cig. Popular" Name="Cig. Popular" IsProduced="False"/>
+                <ent:Product PrintString="Cig. Popular"/>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>
@@ -175,7 +175,7 @@
 
         <local:SampleLineItem Quantity="4" Price="2" >
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Termopack" Name="Termopack" IsProduced="False"/>
+                <ent:Product PrintString="Termopack" />
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>
@@ -184,7 +184,7 @@
 
         <local:SampleLineItem Quantity="2" Price="3" ToSpecify="true">
             <local:SampleLineItem.Product>
-                <ent:Product PrintString="Jugo Trop." Name="Jugo Trop." IsProduced="False"/>
+                <ent:Product PrintString="Jugo Trop."/>
             </local:SampleLineItem.Product>
             <local:SampleLineItem.UnitMeasure>
                 <ent:UnitMeasure Caption=""/>

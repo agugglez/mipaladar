@@ -6,13 +6,14 @@ using System.Text;
 using MiPaladar.Entities;
 using MiPaladar.Services;
 using MiPaladar.Classes;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 
 namespace MiPaladar.ViewModels
 {
-    public class OfflineLineItemViewModel : ProductQuantityViewModel
+    public class OfflineLineItemViewModel : ViewModelBase
     {
         //MainWindowViewModel appvm;
 
@@ -21,47 +22,85 @@ namespace MiPaladar.ViewModels
 
         //public LineItemViewModel() { }
 
-        public OfflineLineItemViewModel(Product prod, double qtty, UnitMeasure um, decimal amount,
+        public OfflineLineItemViewModel(Product prod, double qtty, decimal amount, decimal cost,
             Action onQuantityChanged, Action onPriceChanged)
-            : base(prod, qtty, um)
         {
             //this.appvm = appvm;
+            this.quantity = qtty;
+            this.product = prod;
             this.amount = amount;
+            this.cost = cost;
 
             this.onQuantityChanged = onQuantityChanged;
             this.onPriceChanged = onPriceChanged;
         }
 
-        public OfflineLineItemViewModel(SaleLineItem li, Action onQuantityChanged, Action onPriceChanged)
-            : base(li.Product, li.Quantity, li.UnitMeasure)
+        public OfflineLineItemViewModel(SaleLineItem li, Action onQuantityChanged, Action onPriceChanged) :
+            this(li.Product, li.Quantity, li.Amount, li.Cost, onQuantityChanged, onPriceChanged)
         {
-            this.sli = li;
-
-            this.amount = li.Amount;
-
-            this.onQuantityChanged = onQuantityChanged;
-            this.onPriceChanged = onPriceChanged;
+            this.liId = li.Id;
         }
 
-        protected override void OnQuantityChanged()
+        protected void OnQuantityChanged()
         {
             if (onQuantityChanged != null) onQuantityChanged();
 
             //this saves changes
             Price = (decimal)Quantity * Product.SalePrice;
 
+            var invSVC = base.GetService<IInventoryService>();
+            Cost = invSVC.GetProductCost(Product, Quantity, null);
+
             if (onPriceChanged != null) onPriceChanged();
         }
 
-        bool printed;
-        public bool Printed
+        //bool printed;
+        //public bool Printed
+        //{
+        //    get { return printed; }
+        //    set 
+        //    {
+        //        printed = value;
+        //        OnPropertyChanged("Printed");
+        //    }
+        //}
+
+        double quantity;
+        public double Quantity
         {
-            get { return printed; }
-            set 
+            get { return quantity; }
+            set
             {
-                printed = value;
-                OnPropertyChanged("Printed");
+                if (quantity != value)
+                {
+                    quantity = value;
+                    OnPropertyChanged("Quantity");
+                    OnQuantityChanged();
+                }
             }
+        }
+
+        Product product;
+        public Product Product
+        {
+            get { return product; }
+            set
+            {
+                if (product != value)
+                {
+                    //OnProductChanging();
+                    product = value;
+                    OnPropertyChanged("Product");
+                    //if (product != null) umFamily = product.UMFamily;
+                    //ParseQuantityExpression(quantityExpression);
+                    //OnProductChanged();
+                }
+            }
+        }
+
+        public int ProductId
+        {
+            get { return product.Id; }
         }
 
         decimal amount;
@@ -75,11 +114,21 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        SaleLineItem sli;
-        public SaleLineItem WrappedLineItem 
+        decimal cost;
+        public decimal Cost
         {
-            get { return sli; }
-            set { sli = value; }
+            get { return cost; }
+            set
+            {
+                cost = value;
+                OnPropertyChanged("Cost");
+            }
+        }
+
+        int liId;
+        public int Id
+        {
+            get { return liId; }
         }
     }
 }

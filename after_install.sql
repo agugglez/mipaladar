@@ -1,4 +1,4 @@
-USE [DeCaminoDB]
+USE [LaDivinaPastora]
 GO
 
 --Unit Measurre Families
@@ -8,6 +8,18 @@ GO
 
 INSERT INTO [dbo].[UMFamilies] ([Name])
      VALUES (N'Weight')
+GO
+
+INSERT INTO [dbo].[UMFamilies]
+           ([Name])
+     VALUES
+           ('Volume')
+GO
+
+INSERT INTO [dbo].[UMFamilies]
+           ([Name])
+     VALUES
+           ('Length')
 GO
 
 -- Inserting values into 'UnitMeasures'
@@ -25,12 +37,6 @@ GO
 INSERT INTO [dbo].[UnitMeasures]
            ([Caption],[UMFamilyId],[IsFamilyBase],[ToBaseConversion],[Name])
      VALUES (N'kg',2,0,1000,N'Kg')
-GO
-
-INSERT INTO [dbo].[UMFamilies]
-           ([Name])
-     VALUES
-           ('Volume')
 GO
 
 INSERT INTO [dbo].[UnitMeasures]
@@ -75,43 +81,67 @@ INSERT INTO [dbo].[UnitMeasures]
            ,'L')
 GO
 
-INSERT INTO [dbo].[Inventories]
-           ([Name]
-           ,[IsFloor])
+INSERT INTO [dbo].[UnitMeasures]
+           ([Caption]
+           ,[UMFamilyId]
+           ,[IsFamilyBase]
+           ,[ToBaseConversion]
+           ,[Name])
      VALUES
-           (N'Piso'
-           ,1)
+           ('mm'
+           ,4
+           ,1
+           ,1
+           ,'mm')
 GO
 
-INSERT INTO [dbo].[Inventories]
-           ([Name]
-           ,[IsFloor])
+INSERT INTO [dbo].[UnitMeasures]
+           ([Caption]
+           ,[UMFamilyId]
+           ,[IsFamilyBase]
+           ,[ToBaseConversion]
+           ,[Name])
      VALUES
-           (N'Almacen'
-           ,0)
+           ('cm'
+           ,4
+           ,0
+           ,10
+           ,'cm')
+GO
+
+INSERT INTO [dbo].[UnitMeasures]
+           ([Caption]
+           ,[UMFamilyId]
+           ,[IsFamilyBase]
+           ,[ToBaseConversion]
+           ,[Name])
+     VALUES
+           ('m'
+           ,4
+           ,0
+           ,1000
+           ,'m')
 GO
 
 --admin role
 INSERT INTO [dbo].[Roles]           
      VALUES
-           (N'Administrador',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+           ('Administrador',1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
 GO
 
 --cashier role
 INSERT INTO [dbo].[Roles]           
      VALUES
-           (N'Cajero',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+           (N'Cajero',1,1,0,0,0,0,0,0,0,0,0,0,0,0,0)
 GO
 
 INSERT INTO [dbo].[Employees]
            ([Name]
            ,[IsActive]
-           ,[CanPurchase]
            ,[CanSell]
            ,[Role_Id])
      VALUES
            ('admin'
-           ,1
            ,1
            ,1
            ,1)
@@ -131,36 +161,4 @@ GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		agugglez
--- Create date: 6-23-2013
--- Description:	
--- =============================================
-CREATE PROCEDURE delete_stuff 
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	
-	TRUNCATE TABLE [dbo].[InventoryTraces]
-
-    -- Insert statements for procedure here
-	TRUNCATE TABLE LineItems_AdjustmentItem
-    TRUNCATE TABLE LineItems_TransferItem
-    TRUNCATE TABLE LineItems_ProductionItem
-    TRUNCATE TABLE LineItems_SaleLineItem
-    TRUNCATE TABLE LineItems_PurchaseLineItem
-    
-    DELETE FROM [dbo].[LineItems]
-    
-    DELETE FROM [dbo].[Orders_Adjustment]
-    DELETE FROM [dbo].[Orders_Transfer]
-    DELETE FROM [dbo].[Orders_Production]
-    DELETE FROM [dbo].[Orders_Sale]
-    DELETE FROM [dbo].[Orders_Purchase]
-    
-    DELETE FROM [dbo].[Orders]    
-END
 GO

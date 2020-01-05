@@ -47,9 +47,7 @@
                     ToolTip="Crear nuevo empleado"
                     Visibility="{Binding AppVM.LoggedInUser.Role.CanCreateEmployees,Converter={StaticResource btvConverter}}"/>
 
-            <Button Grid.Column="1" Content="Eliminar"
-                    Command="{Binding DeleteCommand}" ToolTip="Crear nuevo empleado"
-                    Visibility="{Binding AppVM.LoggedInUser.Role.CanRemoveEmployees,Converter={StaticResource btvConverter}}"/>
+            
         </StackPanel>
         
         <!--<ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -113,7 +111,7 @@
                 <DataGridTextColumn Header="Rol" Binding="{Binding Role.Name}" Width="*"/>
                 <DataGridCheckBoxColumn Header="Activo" Binding="{Binding IsActive}"/>
                 <DataGridCheckBoxColumn Header="Vende" Binding="{Binding CanSell}"/>
-                <DataGridCheckBoxColumn Header="Compra" Binding="{Binding CanPurchase}"/>
+                <!--<DataGridCheckBoxColumn Header="Compra" Binding="{Binding CanPurchase}"/>-->
                 
             </DataGrid.Columns>
         </DataGrid>

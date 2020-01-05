@@ -5,6 +5,7 @@ using System.Windows;
 using System.ComponentModel;
 
 using MiPaladar.ViewModels;
+using MiPaladar.MVVM;
 
 namespace MiPaladar.Views
 {
@@ -34,16 +35,16 @@ namespace MiPaladar.Views
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is PurchaseViewModel)
-            {
-                PurchaseViewModel viewmodel = (PurchaseViewModel)e.NewValue;
-                viewmodel.LineItemAdded += new EventHandler(viewmodel_LineItemAdded);
-            }
-            else if (e.OldValue is PurchaseViewModel)
-            {
-                PurchaseViewModel viewmodel = (PurchaseViewModel)e.OldValue;
-                viewmodel.LineItemAdded -= viewmodel_LineItemAdded;
-            }
+            //if (e.NewValue is PurchaseViewModel)
+            //{
+            //    PurchaseViewModel viewmodel = (PurchaseViewModel)e.NewValue;
+            //    viewmodel.LineItemAdded += new EventHandler(viewmodel_LineItemAdded);
+            //}
+            //else if (e.OldValue is PurchaseViewModel)
+            //{
+            //    PurchaseViewModel viewmodel = (PurchaseViewModel)e.OldValue;
+            //    viewmodel.LineItemAdded -= viewmodel_LineItemAdded;
+            //}
         }
 
         void viewmodel_LineItemAdded(object sender, EventArgs e)
@@ -72,7 +73,7 @@ namespace MiPaladar.Views
                 quantityDown = false;
                 acbProduct.Focus();
             }
-        } 
+        }
 
         private void AutoCompleteBox_KeyUp(object sender, KeyEventArgs e)
         {

@@ -2,6 +2,7 @@
 
 using MiPaladar.Entities;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 using System.Collections.ObjectModel;

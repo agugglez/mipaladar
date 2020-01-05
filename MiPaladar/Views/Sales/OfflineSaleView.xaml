@@ -15,7 +15,7 @@
         UseLayoutRounding="True"
              
              mc:Ignorable="d"
-             Height="480" Width="640" Title="Ventas">
+             Height="480" Width="640" Title="{Binding Number,StringFormat=Factura {0}}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -38,19 +38,6 @@
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
 
-            <CollectionViewSource x:Key="cvsKitchenItems" Source="{Binding OrderItems}"
-                                  Filter="KitchenProductsFilter">
-
-                <CollectionViewSource.SortDescriptions>
-                    <scm:SortDescription PropertyName="Product.IsEntrant" Direction="Descending" />
-                </CollectionViewSource.SortDescriptions>
-
-                <CollectionViewSource.GroupDescriptions>
-                    <PropertyGroupDescription PropertyName="Product.ProductionArea.Name"/>
-                </CollectionViewSource.GroupDescriptions>
-
-            </CollectionViewSource>
-
         </ResourceDictionary>
 
     </Window.Resources>
@@ -70,20 +57,20 @@
             <!--<Button Content="Marchar" Command="{Binding PrintProductionCommand}"
                     ToolTip="Imprimir vale de concina"/>-->            
             <!--<Button Content="Descuento" />-->
-            <Button Content="Imprimir" Command="{Binding PrintCommand}"
-                    ToolTip="Imprimir cuenta para entregar al cliente"/>
+            <!--<Button Content="Imprimir" Command="{Binding PrintCommand}"
+                    ToolTip="Imprimir cuenta para entregar al cliente"/>-->
             <!--<Button Content="Cobrar" Command="{Binding ShowChargeDialogCommand}"/>            
             <Button Content="{Binding OpenOrCloseContent}" Command="{Binding ToggleCloseCommand}"/>-->
             <!--<Button Content="Notas" Command="{Binding ToggleNotesVisibility}"/>-->
 
             <Button Content="Eliminar" Command="{Binding RemoveCommand}"
-                    Visibility="{Binding AppVM.LoggedInUser.Role.CanRemoveSales,Converter={StaticResource btvConverter}}"/>
+                    Visibility="{Binding CanRemoveSales,Converter={StaticResource btvConverter}}"/>
             
             <Button Content="Aplicar Descuento" Command="{Binding ApplyDiscountCommand}"/>
 
             <Button Content="Aplicar Recargo" Command="{Binding ApplyTaxCommand}"/>
 
-            <!--<Button Content="Imp. Doc" Command="{Binding PrintDocumentCommand}"/>-->
+            <Button Content="Imprimir" Command="{Binding PrintDocumentCommand}" Click="Button_Click_1"/>
             
             <!--<StackPanel>
                 <TextBlock Text="Descuento:" />
@@ -163,18 +150,23 @@
             <TextBlock Text="Dependiente" Grid.Column="1"/>
 
             <ComboBox Grid.Row="1" Grid.Column="1"
+                      ItemsSource="{Binding Waiters}"
                       DisplayMemberPath="Name"      
-                      SelectedItem="{Binding Waiter}" IsSynchronizedWithCurrentItem="False"
-                      ItemsSource="{Binding Waiters}" />
+                      SelectedValuePath="Id"
+                      SelectedValue="{Binding WaiterId}" IsSynchronizedWithCurrentItem="False"/>
 
             <TextBlock Text="Turno" Grid.Column="2"/>
 
             <ComboBox Grid.Row="1" Grid.Column="2"
-                      DisplayMemberPath="Name"      
-                      SelectedItem="{Binding Shift}" IsSynchronizedWithCurrentItem="False"
-                      ItemsSource="{Binding Shifts}" />
+                      ItemsSource="{Binding Shifts}"
+                      DisplayMemberPath="Name"   
+                      SelectedValuePath="Id"
+                      SelectedValue="{Binding ShiftId}" 
+                      IsSynchronizedWithCurrentItem="False"/>
 
             <TextBlock Text="Fecha" Grid.Column="4"/>
+
+            <!--<TextBlock Text="{Binding WorkingDate,StringFormat=d/M/yyy}" Grid.Column="4" HorizontalAlignment="Right"/>-->
 
             <DatePicker Grid.Row="1" Grid.Column="4"
                         SelectedDate="{Binding WorkingDate}"/>

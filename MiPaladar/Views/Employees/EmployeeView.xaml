@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       
              mc:Ignorable="d" Title="{Binding DisplayName}"
-             Height="490" Width="600">
+             Height="230" Width="300">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -51,21 +51,14 @@
 
         <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <!--margin-->
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <Grid Margin="5">
+            <!--<Grid Margin="5">
                 <Image Source="{Binding ImageFullPath, Converter={StaticResource imageSourceConverter}}"/>
 
-                <Border BorderBrush="Black" BorderThickness="2" Background="Transparent"
+                <Border BorderBrush="Gray" BorderThickness="2" Background="Transparent"
                                 Visibility="{Binding NoPicture,Converter={StaticResource btvConverter}}">
 
                     <Viewbox>
-                        <TextBlock Text="Sin Imagen" RenderTransformOrigin="0.5,0.5" />
+                        <TextBlock Text="Sin Imagen" Foreground="Gray" RenderTransformOrigin="0.5,0.5" />
                     </Viewbox>
 
                 </Border>
@@ -73,13 +66,6 @@
                 <Button HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="0"
                                 Name="changeImageButton"
                                 Content="Cambiar" Command="{Binding SelectImageCommand}">
-                    <!--<Button.Visibility>
-                    <MultiBinding Converter="{StaticResource logicExptvConverter}"
-                                      ConverterParameter="v1ov2">
-                        <Binding Path="Creating"/>
-                        <Binding Path="Editing"/>
-                    </MultiBinding>
-                </Button.Visibility>-->
                 </Button>
 
                 <Grid.Triggers>
@@ -104,9 +90,9 @@
                     </EventTrigger>
                 </Grid.Triggers>
 
-            </Grid>
+            </Grid>-->
 
-            <Grid Grid.Column="2">
+            <Grid >
 
                 <Grid >
                     <Grid.RowDefinitions>
@@ -129,7 +115,8 @@
                     <TextBlock Text="Rol" Grid.Row="1"/>
                     <ComboBox Grid.Row="1" Grid.Column="1"
                               ItemsSource="{Binding Source={StaticResource cvsRoles}}"
-                              SelectedItem="{Binding Role}"
+                              SelectedValue="{Binding RoleId}"
+                              SelectedValuePath="Id"
                               DisplayMemberPath="Name"/>
 
                     <TextBlock Grid.Row="2" Text="Activo"/>
@@ -138,8 +125,8 @@
                     <TextBlock Grid.Row="3" Text="Vende"/>
                     <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding CanSell}"/>
 
-                    <TextBlock Grid.Row="4" Text="Compra"/>
-                    <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding CanPurchase}"/>
+                    <!--<TextBlock Grid.Row="4" Text="Compra"/>
+                    <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding CanPurchase}"/>-->
 
                     <!--<TextBlock Grid.Row="4" Grid.Column="1">
                         <Hyperlink Command="{Binding ShowRolesCommand}">
@@ -161,18 +148,25 @@
 
         </Grid>
 
-        <Border Grid.Row="1" Visibility="{Binding AppVM.LoggedInUser.Role.CanEditEmployees,Converter={StaticResource btvConverter}}">
+        <Button Grid.Row="1" Content="Eliminar" HorizontalAlignment="Left"
+                Command="{Binding DeleteCommand}"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancelar" IsCancel="True"/>
+
+            <Button Content="Guardar" Command="{Binding SaveCommand}" IsDefault="True"/>
+        </StackPanel>
+
+        <!--<Border Grid.Row="1" Visibility="{Binding AppVM.LoggedInUser.Role.CanEditEmployees,Converter={StaticResource btvConverter}}">
             <DockPanel Background="#FFF0F0F0" LastChildFill="False"
                        Visibility="{Binding HasPendingChanges,Converter={StaticResource btvConverter}}">
 
                 <Border DockPanel.Dock="Top" BorderThickness="0,1,0,0" BorderBrush="LightGray"/>
 
-                <Button Content="Cancelar" Command="{Binding CancelCommand}" DockPanel.Dock="Right"/>
-
-                <Button Content="Guardar" Command="{Binding SaveCommand}" DockPanel.Dock="Right"/>
+                
 
             </DockPanel>
-        </Border>
+        </Border>-->
 
 
 

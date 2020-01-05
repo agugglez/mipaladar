@@ -1,305 +1,305 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
 
-using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.ComponentModel;
-using System.Collections.Specialized;
-using System.Windows.Input;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Windows;
+//using System.Collections.ObjectModel;
+//using System.Windows.Data;
+//using System.ComponentModel;
+//using System.Collections.Specialized;
+//using System.Windows.Input;
+//using Excel = Microsoft.Office.Interop.Excel;
+//using System.Windows;
 
-using MiPaladar.Classes;
-using MiPaladar.Services;
-using MiPaladar.Entities;
-using MiPaladar.Converters;
+//using MiPaladar.Classes;
+//using MiPaladar.Services;
+//using MiPaladar.Entities;
+//using MiPaladar.Converters;
 
-namespace MiPaladar.ViewModels
-{
-    public class MiniInventoryViewModel : ViewModelBase
-    {
-        MainWindowViewModel appvm;
+//namespace MiPaladar.ViewModels
+//{
+//    public class MiniInventoryViewModel : ViewModelBase
+//    {
+//        MainWindowViewModel appvm;
 
-        public MiniInventoryViewModel(MainWindowViewModel appvm)
-        {
-            this.appvm = appvm;
+//        public MiniInventoryViewModel(MainWindowViewModel appvm)
+//        {
+//            this.appvm = appvm;
 
-            filteringByName = true;
+//            filteringByName = true;
 
-            sourceList = new ObservableCollection<InventoryItem>(appvm.InventoryItemsOC);
+//            sourceList = new ObservableCollection<InventoryItem>(appvm.InventoryItemsOC);
 
-            RefreshItems();
+//            RefreshItems();
 
-            appvm.InventoryItemsOC.CollectionChanged +=
-                new NotifyCollectionChangedEventHandler(InventoryItemsOC_CollectionChanged);
+//            appvm.InventoryItemsOC.CollectionChanged +=
+//                new NotifyCollectionChangedEventHandler(InventoryItemsOC_CollectionChanged);
 
-            //base.RequestClose += new EventHandler(AlmacenViewModel_RequestClose);
-        }
+//            //base.RequestClose += new EventHandler(AlmacenViewModel_RequestClose);
+//        }
 
-        protected override void OnDispose()
-        {
-            appvm.InventoryItemsOC.CollectionChanged -= InventoryItemsOC_CollectionChanged;
-        }
+//        protected override void OnDispose()
+//        {
+//            appvm.InventoryItemsOC.CollectionChanged -= InventoryItemsOC_CollectionChanged;
+//        }
 
-        #region Event Handlers
+//        #region Event Handlers
 
-        //void AlmacenViewModel_RequestClose(object sender, EventArgs e)
-        //{
-        //    appvm.InventoryItemsOC.CollectionChanged -= InventoryItemsOC_CollectionChanged;
-        //}
+//        //void AlmacenViewModel_RequestClose(object sender, EventArgs e)
+//        //{
+//        //    appvm.InventoryItemsOC.CollectionChanged -= InventoryItemsOC_CollectionChanged;
+//        //}
 
-        void InventoryItemsOC_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                InventoryItem ce = e.NewItems[0] as InventoryItem;
+//        void InventoryItemsOC_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+//        {
+//            if (e.Action == NotifyCollectionChangedAction.Add)
+//            {
+//                InventoryItem ce = e.NewItems[0] as InventoryItem;
 
-                sourceList.Add(ce);
+//                sourceList.Add(ce);
 
-                if (PassesFilter(ce)) filteredItems.Add(ce);
+//                if (PassesFilter(ce)) filteredItems.Add(ce);
 
-                //ce.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
-            }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                InventoryItem olditem = e.OldItems[0] as InventoryItem;
+//                //ce.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+//            }
+//            else if (e.Action == NotifyCollectionChangedAction.Remove)
+//            {
+//                InventoryItem olditem = e.OldItems[0] as InventoryItem;
 
-                sourceList.Remove(olditem);
-                filteredItems.Remove(olditem);
-            }
-        }
+//                sourceList.Remove(olditem);
+//                filteredItems.Remove(olditem);
+//            }
+//        }
 
-        #endregion
+//        #endregion
 
-        public override string DisplayName
-        {
-            get { return "Almacén"; }
-        }  
+//        public override string DisplayName
+//        {
+//            get { return "Almacén"; }
+//        }  
 
-        public ObservableCollection<Category> Categories 
-        {
-            get { return appvm.CategoriesOC; } 
-        }
+//        public ObservableCollection<Category> Categories 
+//        {
+//            get { return appvm.CategoriesOC; } 
+//        }
 
-        #region Filter
+//        #region Filter
 
-        ObservableCollection<InventoryItem> sourceList;
-        public ObservableCollection<InventoryItem> ItemsList
-        {
-            get { return sourceList; }
-        }
+//        ObservableCollection<InventoryItem> sourceList;
+//        public ObservableCollection<InventoryItem> ItemsList
+//        {
+//            get { return sourceList; }
+//        }
 
-        ObservableCollection<InventoryItem> filteredItems = new ObservableCollection<InventoryItem>();
-        public ObservableCollection<InventoryItem> FilteredItems
-        {
-            get { return filteredItems; }
-        }
+//        ObservableCollection<InventoryItem> filteredItems = new ObservableCollection<InventoryItem>();
+//        public ObservableCollection<InventoryItem> FilteredItems
+//        {
+//            get { return filteredItems; }
+//        }
 
-        private void RefreshItems()
-        {
-            List<InventoryItem> toRemove = new List<InventoryItem>();
+//        private void RefreshItems()
+//        {
+//            List<InventoryItem> toRemove = new List<InventoryItem>();
 
-            //remove those that don't pass the filter
-            foreach (var item in filteredItems)
-            {
-                if (!PassesFilter(item)) toRemove.Add(item);
-            }
+//            //remove those that don't pass the filter
+//            foreach (var item in filteredItems)
+//            {
+//                if (!PassesFilter(item)) toRemove.Add(item);
+//            }
 
-            foreach (var item in toRemove)
-            {
-                filteredItems.Remove(item);
-            }
+//            foreach (var item in toRemove)
+//            {
+//                filteredItems.Remove(item);
+//            }
 
-            //add those that pass the filter
-            foreach (var item in sourceList)
-            {
-                if (PassesFilter(item))
-                {
-                    if (!filteredItems.Contains(item)) filteredItems.Add(item);
-                }
-            }
-        }
+//            //add those that pass the filter
+//            foreach (var item in sourceList)
+//            {
+//                if (PassesFilter(item))
+//                {
+//                    if (!filteredItems.Contains(item)) filteredItems.Add(item);
+//                }
+//            }
+//        }
 
-        public bool PassesFilter(InventoryItem ce)
-        {
-            //InventoryItem ce = b as InventoryItem;
+//        public bool PassesFilter(InventoryItem ce)
+//        {
+//            //InventoryItem ce = b as InventoryItem;
 
-            if (!ce.Product.IsStorable) return false;
+//            if (!ce.Product.IsStorable) return false;
 
-            if (!ce.Inventory.IsFloor) return false;
+//            if (!ce.Inventory.IsFloor) return false;
 
-            //text
-            if (filteringByName)
-            {
-                if (string.IsNullOrWhiteSpace(FindText)) return true;
+//            //text
+//            if (filteringByName)
+//            {
+//                if (string.IsNullOrWhiteSpace(FindText)) return true;
 
-                //there is some text to find
-                string prefix = FindText.Trim();
+//                //there is some text to find
+//                string prefix = FindText.Trim();
 
-                if (ce.Product != null && ce.Product.Name != null)
-                    return ce.Product.Name.IndexOf(prefix, StringComparison.OrdinalIgnoreCase) >= 0;
+//                if (ce.Product != null && ce.Product.Name != null)
+//                    return ce.Product.Name.IndexOf(prefix, StringComparison.OrdinalIgnoreCase) >= 0;
 
-                return false;
-            }
+//                return false;
+//            }
 
-            //product lists
-            if (filteringByCategory)
-            {
-                foreach (ProductIndex item in ce.Product.RelatedCategories)
-                {
-                    if (item.Category == selectedCategory) return true;
-                }
+//            //product lists
+//            if (filteringByCategory)
+//            {
+//                foreach (ProductIndex item in ce.Product.RelatedCategories)
+//                {
+//                    if (item.Category == selectedCategory) return true;
+//                }
 
-                return false;
-            }
+//                return false;
+//            }
 
-            //never reach this point
-            return true;
-        }
+//            //never reach this point
+//            return true;
+//        }
 
-        #endregion        
+//        #endregion        
 
-        //CollectionView cvTotals;
-        //public CollectionView TotalsAlmacen
-        //{
-        //    get
-        //    {
-        //        if (cvTotals == null)                 
-        //        {
-        //            CollectionViewSource myCVS = new CollectionViewSource();
-        //            myCVS.Source = new ObservableCollection<InventoryItem>(appvm.Context.InventoryItems);
-        //            cvTotals = (CollectionView)myCVS.View;
+//        //CollectionView cvTotals;
+//        //public CollectionView TotalsAlmacen
+//        //{
+//        //    get
+//        //    {
+//        //        if (cvTotals == null)                 
+//        //        {
+//        //            CollectionViewSource myCVS = new CollectionViewSource();
+//        //            myCVS.Source = new ObservableCollection<InventoryItem>(appvm.Context.InventoryItems);
+//        //            cvTotals = (CollectionView)myCVS.View;
 
-        //            //filter
-        //            cvTotals.Filter = new Predicate<object>(FilterPredicate);
+//        //            //filter
+//        //            cvTotals.Filter = new Predicate<object>(FilterPredicate);
 
-        //            //sort
-        //            cvTotals.SortDescriptions.Add(new SortDescription("Product.Name", ListSortDirection.Ascending));
+//        //            //sort
+//        //            cvTotals.SortDescriptions.Add(new SortDescription("Product.Name", ListSortDirection.Ascending));
 
-        //            PropertyGroupDescription pgd = new PropertyGroupDescription("Category.Name");
-        //            cvTotals.GroupDescriptions.Add(pgd);
-        //        }
+//        //            PropertyGroupDescription pgd = new PropertyGroupDescription("Category.Name");
+//        //            cvTotals.GroupDescriptions.Add(pgd);
+//        //        }
                 
-        //        return cvTotals;
-        //    }
-        //}
+//        //        return cvTotals;
+//        //    }
+//        //}
 
-        string findText;
-        public string FindText
-        {
-            get { return findText; }
-            set
-            {
-                if (findText != value)
-                {
-                    findText = value;
-                    if (filteringByName) RefreshItems();
-                }
-            }
-        }
+//        string findText;
+//        public string FindText
+//        {
+//            get { return findText; }
+//            set
+//            {
+//                if (findText != value)
+//                {
+//                    findText = value;
+//                    if (filteringByName) RefreshItems();
+//                }
+//            }
+//        }
 
-        bool filteringByName;
-        public bool FilteringByName
-        {
-            get { return filteringByName; }
-            set
-            {
-                filteringByName = value;
-                OnPropertyChanged("FilteringByName");
-            }
-        }
+//        bool filteringByName;
+//        public bool FilteringByName
+//        {
+//            get { return filteringByName; }
+//            set
+//            {
+//                filteringByName = value;
+//                OnPropertyChanged("FilteringByName");
+//            }
+//        }
 
-        bool filteringByCategory;
-        public bool FilteringByCategory
-        {
-            get { return filteringByCategory; }
-            set
-            {
-                filteringByCategory = value;
-                OnPropertyChanged("FilteringByCategory");
-            }
-        }
+//        bool filteringByCategory;
+//        public bool FilteringByCategory
+//        {
+//            get { return filteringByCategory; }
+//            set
+//            {
+//                filteringByCategory = value;
+//                OnPropertyChanged("FilteringByCategory");
+//            }
+//        }
 
-        Category selectedCategory;
-        public Category SelectedCategory
-        {
-            get { return selectedCategory; }
-            set
-            {
-                selectedCategory = value;
+//        Category selectedCategory;
+//        public Category SelectedCategory
+//        {
+//            get { return selectedCategory; }
+//            set
+//            {
+//                selectedCategory = value;
 
-                if (filteringByCategory) RefreshItems();
-            }
-        }
+//                if (filteringByCategory) RefreshItems();
+//            }
+//        }
 
-        #region Filter by Category Command
+//        #region Filter by Category Command
 
-        RelayCommand filterByCategoryCommand;
-        public ICommand FilterByCategoryCommand
-        {
-            get
-            {
-                if (filterByCategoryCommand == null)
-                    filterByCategoryCommand = new RelayCommand(x => FilterByCategory());
-                return filterByCategoryCommand;
-            }
-        }
+//        RelayCommand filterByCategoryCommand;
+//        public ICommand FilterByCategoryCommand
+//        {
+//            get
+//            {
+//                if (filterByCategoryCommand == null)
+//                    filterByCategoryCommand = new RelayCommand(x => FilterByCategory());
+//                return filterByCategoryCommand;
+//            }
+//        }
 
-        void FilterByCategory()
-        {
-            FilteringByName = false;
-            FilteringByCategory = true;
+//        void FilterByCategory()
+//        {
+//            FilteringByName = false;
+//            FilteringByCategory = true;
 
-            RefreshItems();
-        }
+//            RefreshItems();
+//        }
 
-        #endregion        
+//        #endregion        
 
-        #region Filter by Name Command
+//        #region Filter by Name Command
 
-        RelayCommand filterByNameCommand;
-        public ICommand FilterByNameCommand
-        {
-            get
-            {
-                if (filterByNameCommand == null)
-                    filterByNameCommand = new RelayCommand(x => FilterByName());
-                return filterByNameCommand;
-            }
-        }
+//        RelayCommand filterByNameCommand;
+//        public ICommand FilterByNameCommand
+//        {
+//            get
+//            {
+//                if (filterByNameCommand == null)
+//                    filterByNameCommand = new RelayCommand(x => FilterByName());
+//                return filterByNameCommand;
+//            }
+//        }
 
-        void FilterByName()
-        {
-            FilteringByName = true;
-            FilteringByCategory = false;
+//        void FilterByName()
+//        {
+//            FilteringByName = true;
+//            FilteringByCategory = false;
 
-            RefreshItems();
-        }
+//            RefreshItems();
+//        }
 
-        #endregion 
+//        #endregion 
 
-        #region Print IPV Command
+//        #region Print IPV Command
 
-        RelayCommand printIpvCommand;
-        public ICommand PrintIPVCommand
-        {
-            get
-            {
-                if (printIpvCommand == null)
-                    printIpvCommand = new RelayCommand(x => PrintIPV());
-                return printIpvCommand;
-            }
-        }
+//        RelayCommand printIpvCommand;
+//        public ICommand PrintIPVCommand
+//        {
+//            get
+//            {
+//                if (printIpvCommand == null)
+//                    printIpvCommand = new RelayCommand(x => PrintIPV());
+//                return printIpvCommand;
+//            }
+//        }
 
-        bool CanPrintIPV { get { return filteredItems.Count > 0; } }
+//        bool CanPrintIPV { get { return filteredItems.Count > 0; } }
 
-        void PrintIPV()
-        {
-            Printer.PrintAlmacen(filteredItems);
-        }
+//        void PrintIPV()
+//        {
+//            Printer.PrintAlmacen(filteredItems);
+//        }
 
-        #endregion
-    }
-}
+//        #endregion
+//    }
+//}

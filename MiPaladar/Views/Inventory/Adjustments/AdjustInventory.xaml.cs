@@ -23,13 +23,13 @@ namespace MiPaladar.Views
 
         void HandleClosing(object sender, CancelEventArgs e)
         {
-            var aivm = base.DataContext as AdjustInventoryViewModel;
-            if (aivm != null && !aivm.SelfClosing)
-            {
-                var screen = base.DataContext as IScreen;
-                if (screen != null) 
-                    e.Cancel = !screen.TryToClose();
-            }
+            //var aivm = base.DataContext as AdjustInventoryViewModel;
+            //if (aivm != null && !aivm.SelfClosing)
+            //{
+            //    var screen = base.DataContext as IScreen;
+            //    if (screen != null) 
+            //        e.Cancel = !screen.TryToClose();
+            //}
         }
 
         #endregion

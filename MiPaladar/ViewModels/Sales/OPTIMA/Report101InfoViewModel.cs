@@ -9,6 +9,7 @@ using System.Windows.Input;
 
 using MiPaladar.Classes;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 namespace MiPaladar.ViewModels
 {
@@ -82,7 +83,7 @@ namespace MiPaladar.ViewModels
         void excelWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var excelExporter = base.GetService<IExcelExporter>();
-            excelExporter.Export101ReportInfo(lows, excelWorker);
+            //excelExporter.Export101ReportInfo(lows, excelWorker);
         }
 
         void excelWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)

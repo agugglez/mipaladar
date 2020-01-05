@@ -84,7 +84,7 @@ namespace MiPaladar.SampleData
 
         public int Number { get; set; }
 
-        public Table Table { get; set; }
+        //public Table Table { get; set; }
 
         public DateTime WorkingDate { get; set; }
 
@@ -106,13 +106,13 @@ namespace MiPaladar.SampleData
             }
         }
 
-        public string ShortID
-        {
-            get 
-            {
-                return Table.PriceList.Name.Substring(0, 3) + Number.ToString().PadLeft(3, '0');
-            }
-        }
+        //public string ShortID
+        //{
+        //    get 
+        //    {
+        //        return Table.PriceList.Name.Substring(0, 3) + Number.ToString().PadLeft(3, '0');
+        //    }
+        //}
 
         //public string MonthSpanish
         //{

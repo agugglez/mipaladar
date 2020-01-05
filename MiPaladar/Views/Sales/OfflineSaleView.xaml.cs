@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using MiPaladar.ViewModels;
+using MiPaladar.MVVM;
+
 using System.ComponentModel;
 
 namespace MiPaladar.Views
@@ -26,7 +28,7 @@ namespace MiPaladar.Views
         {
             InitializeComponent();
 
-            this.DataContextChanged += UserControl_DataContextChanged; 
+            this.DataContextChanged += UserControl_DataContextChanged;
             this.Closing += this.HandleClosing;
         }
 
@@ -35,22 +37,22 @@ namespace MiPaladar.Views
         void HandleClosing(object sender, CancelEventArgs e)
         {
             var screen = base.DataContext as IScreen;
-            if (screen != null)
+            if (screen != null && !screen.IsSelfClosing())
                 e.Cancel = !screen.TryToClose();
         }
 
         #endregion
 
-        #region Filter
+        //#region Filter
 
-        private void KitchenProductsFilter(object sender, FilterEventArgs e)
-        {
-            OfflineLineItemViewModel lineitem = (OfflineLineItemViewModel)e.Item;
+        //private void KitchenProductsFilter(object sender, FilterEventArgs e)
+        //{
+        //    OfflineLineItemViewModel lineitem = (OfflineLineItemViewModel)e.Item;
 
-            e.Accepted = lineitem.Product.IsProduced;          
-        }
+        //    e.Accepted = lineitem.Product.IsProduced;          
+        //}
 
-        #endregion
+        //#endregion
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -71,9 +73,9 @@ namespace MiPaladar.Views
             //Keyboard.Focus(tbQuantity);            
             tbQuantity.SelectAll();
             tbQuantity.Focus();
-            
+
             acbProduct.Text = string.Empty;
-        }        
+        }
 
         bool quantityDown;
 
@@ -101,6 +103,45 @@ namespace MiPaladar.Views
                 //Keyboard.Focus(btnAdd);
                 btnAdd.Focus();
             }
-        }             
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            OfflineSaleViewModel vale = (OfflineSaleViewModel)this.DataContext;
+            PrintVale(vale);
+        }
+
+        public bool PrintVale(OfflineSaleViewModel vale)
+        {
+            PrintDialog pDialog = new PrintDialog();
+            pDialog.UserPageRangeEnabled = false;
+
+            // Display the dialog. This returns true if the user presses the Print button.
+            Nullable<Boolean> print = pDialog.ShowDialog();
+            if (print == true)
+            {
+                ValeToPrint control = new ValeToPrint();
+                control.DataContext = vale;
+
+                Size sz = new Size(pDialog.PrintableAreaWidth, pDialog.PrintableAreaHeight);
+
+                // arrange
+                control.Measure(sz);
+                control.Arrange(new Rect(sz));
+                control.UpdateLayout();
+
+                Size finalSize = new Size(control.DesiredSize.Width, control.DesiredSize.Height);
+
+                control.Measure(finalSize);
+                control.Arrange(new Rect(finalSize));
+                control.UpdateLayout();
+
+                pDialog.PrintVisual(control, "Imprimiendo vale");
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

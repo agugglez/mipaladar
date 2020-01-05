@@ -5,23 +5,145 @@ using System.Text;
 
 using MiPaladar.Entities;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 
 namespace MiPaladar.ViewModels
 {
-    public class RoleViewModel :  ViewModelBase
+    public class RoleViewModel :  ViewModelWithClose
     {
-        Action onFieldChanged;
+        //Action onFieldChanged;
 
-        public RoleViewModel(Action onFieldChanged)
+        MainWindowViewModel appvm;
+        bool creating;
+
+        Action<int> onRoleRemoved;
+        Action<int> onRoleModified;
+
+        //Role role;
+        bool isAdmin; 
+        int roleId;
+
+        public RoleViewModel(MainWindowViewModel appvm)
         {
-            this.onFieldChanged = onFieldChanged;
+            this.appvm = appvm;
+            creating = true;
+            HasPendingChanges = true;
         }
 
-        public bool Creating { get; set; }
+        public RoleViewModel(MainWindowViewModel appvm, int roleId, Action<int> onRoleRemoved, Action<int> onRoleModified)
+        {
+            this.appvm = appvm;
+            this.onRoleRemoved = onRoleRemoved;
+            this.onRoleModified = onRoleModified;
+            this.roleId = roleId;
 
-        public Role WrappedRole { get; set; }               
+            using (var unitOfWork = base.GetNewUnitOfWork())
+            {
+                var role = unitOfWork.RoleRepository.GetById(roleId);
+
+                CopyFromRole(role);
+            }            
+
+            isAdmin = roleId == 1; //role.Name == "Administrador";
+
+            HasPendingChanges = false;
+        }
+
+        public int RoleId
+        {
+            get { return roleId; }
+        }
+
+        #region Copy Methods
+
+        private void CopyFromRole(Role role)
+        {
+            Name = role.Name;
+
+            //permissions
+            CanLogin = role.CanLogin;
+            CanSeeDashboard = role.CanSeeDashboard;
+            CanSeeSales = role.CanSeeSales;
+            CanRemoveSales = role.CanRemoveSales;
+            //targetVM.CanSeeOldSales = role.CanSeeOldSales;
+
+            //targetVM.CanSeePurchases = role.CanSeePurchases;
+            //targetVM.CanRemovePurchases = role.CanRemovePurchases;
+            //targetVM.CanSeeOldPurchases = role.CanSeeOldPurchases;
+
+            CanSeeInventory = role.CanSeeInventory;
+            CanCreateProducts = role.CanCreateProducts;
+            CanEditProducts = role.CanEditProducts;
+            CanRemoveProducts = role.CanRemoveProducts;
+
+            CanSeeEmployees = role.CanSeeEmployees;
+            CanSeeRoles = role.CanSeeRoles;
+            CanCreateEmployees = role.CanCreateEmployees;
+            CanEditEmployees = role.CanEditEmployees;
+            CanRemoveEmployees = role.CanRemoveEmployees;
+
+            //targetVM.CanSeeMiPaladar = role.CanSeeMiPaladar;
+            CanExportImport = role.CanExportImport;
+            //targetVM.CanDesignRestaurant = role.CanDesignRestaurant;
+
+            CanSeeReports = role.CanSeeReports;
+            //targetVM.CanSeeSalesReport = role.CanSeeSalesReport;
+            //targetVM.CanSeeSalesByItemReport = role.CanSeeSalesByItemReport;
+            //targetVM.CanSeeFollowProductReport = role.CanSeeFollowProductReport;
+            //targetVM.CanSeeDayAveragesReport = role.CanSeeDayAveragesReport;
+        }
+
+        void CopyToRole(Role role)
+        {
+            if (role.Name != name) role.Name = name;
+
+            //permissions
+            if (role.CanLogin != canLogin) role.CanLogin = canLogin;
+            if (role.CanSeeDashboard != canSeeDashboard) role.CanSeeDashboard = canSeeDashboard;
+            if (role.CanSeeSales != canSeeSales) role.CanSeeSales = canSeeSales;
+            if (role.CanRemoveSales != canRemoveSales) role.CanRemoveSales = canRemoveSales;
+            //if (role.CanSeeOldSales != sourceVM.CanSeeOldSales) role.CanSeeOldSales = sourceVM.CanSeeOldSales;
+
+            //if (role.CanSeePurchases != sourceVM.CanSeePurchases) role.CanSeePurchases = sourceVM.CanSeePurchases;
+            //if (role.CanRemovePurchases != sourceVM.CanRemovePurchases) role.CanRemovePurchases = sourceVM.CanRemovePurchases;
+            //if (role.CanSeeOldPurchases != sourceVM.CanSeeOldPurchases) role.CanSeeOldPurchases = sourceVM.CanSeeOldPurchases;
+
+            if (role.CanSeeInventory != canSeeInventory) role.CanSeeInventory = canSeeInventory;
+            if (role.CanCreateProducts != canCreateProducts) role.CanCreateProducts = canCreateProducts;
+            if (role.CanEditProducts != canEditProducts) role.CanEditProducts = canEditProducts;
+            if (role.CanRemoveProducts != canRemoveProducts) role.CanRemoveProducts = canRemoveProducts;
+
+            if (role.CanSeeEmployees != canSeeEmployees) role.CanSeeEmployees = canSeeEmployees;
+            if (role.CanSeeRoles != canSeeRoles) role.CanSeeRoles = canSeeRoles;
+            if (role.CanCreateEmployees != canCreateEmployees) role.CanCreateEmployees = canCreateEmployees;
+            if (role.CanEditEmployees != canEditEmployees) role.CanEditEmployees = canEditEmployees;
+            if (role.CanRemoveEmployees != canRemoveEmployees) role.CanRemoveEmployees = canRemoveEmployees;
+            
+            if (role.CanExportImport != canExportImport) role.CanExportImport = canExportImport;            
+
+            if (role.CanSeeReports != canSeeReports) role.CanSeeReports = canSeeReports;
+            //if (role.CanSeeSalesReport != sourceVM.CanSeeSalesReport) role.CanSeeSalesReport = sourceVM.CanSeeSalesReport;
+            //if (role.CanSeeSalesByItemReport != sourceVM.CanSeeSalesByItemReport) role.CanSeeSalesByItemReport = sourceVM.CanSeeSalesByItemReport;
+            //if (role.CanSeeFollowProductReport != sourceVM.CanSeeFollowProductReport) role.CanSeeFollowProductReport = sourceVM.CanSeeFollowProductReport;
+            //if (role.CanSeeDayAveragesReport != sourceVM.CanSeeDayAveragesReport) role.CanSeeDayAveragesReport = sourceVM.CanSeeDayAveragesReport;
+        }
+
+        #endregion 
+
+        //bool hasPendingChanges;
+
+        //public bool HasPendingChanges
+        //{
+        //    get { return hasPendingChanges; }
+        //    set
+        //    {
+        //        hasPendingChanges = value;
+        //        OnPropertyChanged("HasPendingChanges");
+        //    }
+        //}
+
 
         string name;
         public string Name
@@ -30,13 +152,12 @@ namespace MiPaladar.ViewModels
             set
             {
                 name = value;
-                OnPropertyChanged("Name");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("Name");
             }
         }
-
-        #region Permissions
 
         bool canLogin;
         public bool CanLogin
@@ -45,9 +166,24 @@ namespace MiPaladar.ViewModels
             set
             {
                 canLogin = value;
-                OnPropertyChanged("CanLogin");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanLogin");
+            }
+        }
+
+        bool canSeeDashboard;
+        public bool CanSeeDashboard
+        {
+            get { return canSeeDashboard; }
+            set
+            {
+                canSeeDashboard = value;
+
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanSeeDashboard");
             }
         }
 
@@ -60,9 +196,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canSeeSales = value;
-                OnPropertyChanged("CanSeeSales");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanSeeSales");
             }
         }
 
@@ -73,69 +210,70 @@ namespace MiPaladar.ViewModels
             set
             {
                 canRemoveSales = value;
+
+                HasPendingChanges = true;
+
                 OnPropertyChanged("CanRemoveSales");
-
-                if (onFieldChanged != null) onFieldChanged();
             }
         }
 
-        bool canSeeOldSales;
-        public bool CanSeeOldSales
-        {
-            get { return canSeeOldSales; }
-            set
-            {
-                canSeeOldSales = value;
-                OnPropertyChanged("CanSeeOldSales");
+        //bool canSeeOldSales;
+        //public bool CanSeeOldSales
+        //{
+        //    get { return canSeeOldSales; }
+        //    set
+        //    {
+        //        canSeeOldSales = value;
+        //        OnPropertyChanged("CanSeeOldSales");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
         #endregion
 
-        #region Purchases
+        //#region Purchases
 
-        bool canSeePurchases;
-        public bool CanSeePurchases
-        {
-            get { return canSeePurchases; }
-            set
-            {
-                canSeePurchases = value;
-                OnPropertyChanged("CanSeePurchases");
+        //bool canSeePurchases;
+        //public bool CanSeePurchases
+        //{
+        //    get { return canSeePurchases; }
+        //    set
+        //    {
+        //        canSeePurchases = value;
+        //        OnPropertyChanged("CanSeePurchases");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
-        bool canRemovePurchases;
-        public bool CanRemovePurchases
-        {
-            get { return canRemovePurchases; }
-            set
-            {
-                canRemovePurchases = value;
-                OnPropertyChanged("CanRemovePurchases");
+        //bool canRemovePurchases;
+        //public bool CanRemovePurchases
+        //{
+        //    get { return canRemovePurchases; }
+        //    set
+        //    {
+        //        canRemovePurchases = value;
+        //        OnPropertyChanged("CanRemovePurchases");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
-        bool canSeeOldPurchases;
-        public bool CanSeeOldPurchases
-        {
-            get { return canSeeOldPurchases; }
-            set
-            {
-                canSeeOldPurchases = value;
-                OnPropertyChanged("CanSeeOldPurchases");
+        //bool canSeeOldPurchases;
+        //public bool CanSeeOldPurchases
+        //{
+        //    get { return canSeeOldPurchases; }
+        //    set
+        //    {
+        //        canSeeOldPurchases = value;
+        //        OnPropertyChanged("CanSeeOldPurchases");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Inventory
 
@@ -147,9 +285,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canSeeInventory = value;
-                OnPropertyChanged("CanSeeInventory");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanSeeInventory");
             }
         }
 
@@ -160,9 +299,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canCreateProducts = value;
-                OnPropertyChanged("CanCreateProducts");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanCreateProducts");
             }
         }
 
@@ -173,9 +313,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canEditProducts = value;
-                OnPropertyChanged("CanEditProducts");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanEditProducts");
             }
         }
 
@@ -186,9 +327,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canRemoveProducts = value;
-                OnPropertyChanged("CanRemoveProducts");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanRemoveProducts");
             }
         }
 
@@ -202,11 +344,12 @@ namespace MiPaladar.ViewModels
         {
             get { return canSeeEmployees; }
             set
-            {
+            {                
                 canSeeEmployees = value;
-                OnPropertyChanged("CanSeeEmployees");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanSeeEmployees");
             }
         }
 
@@ -218,6 +361,9 @@ namespace MiPaladar.ViewModels
             set 
             {
                 canSeeRoles = value;
+
+                HasPendingChanges = true;
+
                 OnPropertyChanged("CanSeeRoles");
             }
         }
@@ -229,9 +375,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canCreateEmployees = value;
-                OnPropertyChanged("CanCreateEmployees");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanCreateEmployees");
             }
         }
 
@@ -242,9 +389,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canEditEmployees = value;
-                OnPropertyChanged("CanEditEmployees");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanEditEmployees");
             }
         }
 
@@ -255,9 +403,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canRemoveEmployees = value;
-                OnPropertyChanged("CanRemoveEmployees");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanRemoveEmployees");
             }
         }
 
@@ -265,18 +414,18 @@ namespace MiPaladar.ViewModels
 
         #region MiPaladar
 
-        bool canSeeMiPaladar;
-        public bool CanSeeMiPaladar
-        {
-            get { return canSeeMiPaladar; }
-            set
-            {
-                canSeeMiPaladar = value;
-                OnPropertyChanged("CanSeeMiPaladar");
+        //bool canSeeMiPaladar;
+        //public bool CanSeeMiPaladar
+        //{
+        //    get { return canSeeMiPaladar; }
+        //    set
+        //    {
+        //        canSeeMiPaladar = value;
+        //        OnPropertyChanged("CanSeeMiPaladar");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
         bool canExportImport;
         public bool CanExportImport
@@ -285,9 +434,10 @@ namespace MiPaladar.ViewModels
             set
             {
                 canExportImport = value;
-                OnPropertyChanged("CanExportImport");
 
-                if (onFieldChanged != null) onFieldChanged();
+                HasPendingChanges = true;
+
+                OnPropertyChanged("CanExportImport");
             }
         }
 
@@ -317,39 +467,39 @@ namespace MiPaladar.ViewModels
             {
                 canSeeReports = value;
 
-                OnPropertyChanged("CanSeeSalesReport");
+                HasPendingChanges = true;
 
-                if (onFieldChanged != null) onFieldChanged();
+                OnPropertyChanged("CanSeeReports");
             }
         }
 
-        bool canSeeSalesReport;
+        //bool canSeeSalesReport;
 
-        public bool CanSeeSalesReport
-        {
-            get { return canSeeSalesReport; }
-            set
-            {
-                canSeeSalesReport = value;
-                OnPropertyChanged("CanSeeSalesReport");
+        //public bool CanSeeSalesReport
+        //{
+        //    get { return canSeeSalesReport; }
+        //    set
+        //    {
+        //        canSeeSalesReport = value;
+        //        OnPropertyChanged("CanSeeSalesReport");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
-        bool canSeeSalesByItemReport;
+        //bool canSeeSalesByItemReport;
 
-        public bool CanSeeSalesByItemReport
-        {
-            get { return canSeeSalesByItemReport; }
-            set
-            {
-                canSeeSalesByItemReport = value;
-                OnPropertyChanged("CanSeeSalesByItemReport");
+        //public bool CanSeeSalesByItemReport
+        //{
+        //    get { return canSeeSalesByItemReport; }
+        //    set
+        //    {
+        //        canSeeSalesByItemReport = value;
+        //        OnPropertyChanged("CanSeeSalesByItemReport");
 
-                if (onFieldChanged != null) onFieldChanged();
-            }
-        }
+        //        if (onFieldChanged != null) onFieldChanged();
+        //    }
+        //}
 
         //bool canSeeFollowProductReport;
 
@@ -378,11 +528,147 @@ namespace MiPaladar.ViewModels
         //        if (onFieldChanged != null) onFieldChanged();
         //    }
         //}
+        
+        #endregion
+
+        #region Remove Command
+
+        RelayCommand removeCommand;
+        public ICommand RemoveCommand
+        {
+            get
+            {
+                if (removeCommand == null)
+                {
+                    removeCommand = new RelayCommand(x => RemoveRole(), x => CanRemove);
+                }
+
+                return removeCommand;
+            }
+        }
+
+        bool CanRemove
+        {
+            get { return !creating && !isAdmin; }
+        }
+
+        void RemoveRole()
+        {
+            string message = "Está seguro que desea eliminar el rol \'" + name + "\' ?";
+
+            var msgBox = base.GetService<IMessageBoxService>();
+
+            if (msgBox.ShowYesNoDialog(message) != true) return;
+
+            using (var unitOfWork = base.GetNewUnitOfWork())
+            {
+                Role role = unitOfWork.RoleRepository.GetById(roleId);
+
+                //check is someone is using this role
+                foreach (var emp in unitOfWork.EmployeeRepository.Get())
+                {
+                    if (emp.Role.Id == role.Id)
+                    {
+                        msgBox.ShowMessage("Hay usuarios asignados a este rol");
+                        return;
+                    }
+                }
+
+                unitOfWork.RoleRepository.Remove(role.Id);
+                unitOfWork.SaveChanges();
+            }
+
+            if (onRoleRemoved != null) onRoleRemoved(roleId);
+        }
 
         #endregion
 
+
+        #region Save Command
+
+        RelayCommand saveCommand;
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (saveCommand == null)
+                    saveCommand = new RelayCommand(x => SaveAndClose(), x => CanSave);
+                return saveCommand;
+            }
+        }
+
+        protected override bool CanSave { get { return !isAdmin; } }
+
+        protected override void Save()
+        {
+            if (HasPendingChanges)
+            {
+                using (var unitOfWork = base.GetNewUnitOfWork())
+                {
+                    Role role;
+                    if (creating)
+                    {
+                        role = new Role();
+                        unitOfWork.RoleRepository.Add(role);
+                    }
+                    else
+                    {
+                        role = unitOfWork.RoleRepository.GetById(roleId);
+                    }
+
+                    CopyToRole(role);
+
+                    unitOfWork.SaveChanges();
+
+                    if (creating)
+                    {
+                        roleId = role.Id;
+                    }
+                    else
+                    {
+                        onRoleModified(roleId);
+                    }
+                }
+
+                HasPendingChanges = false;
+            }
+        }
+
+        void SaveAndClose()
+        {
+            Save();
+            CloseMe();
+        }
+
         #endregion
 
+        #region Cancel Command
+
+        RelayCommand cancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                if (cancelCommand == null)
+                    cancelCommand = new RelayCommand(x => Cancel());
+                return cancelCommand;
+            }
+        }
+
+        void Cancel()
+        {
+            CloseMe();
+        }
+
+        #endregion
+
+        //void CloseMe()
+        //{
+        //    selfClosing = true;
+
+        //    var windowManager = base.GetService<IWindowManager>();            
+        //    windowManager.Close(this);
+        //}
         
     }
 }

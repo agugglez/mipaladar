@@ -6,6 +6,7 @@ using System.Windows;
 using MiPaladar.ViewModels;
 using MiPaladar.Services;
 using MiPaladar.Views;
+using MiPaladar.MVVM;
 
 using Microsoft.Shell;
 using MiPaladar.Stuff;
@@ -100,87 +101,121 @@ namespace MiPaladar
             ServiceContainer.AddService<IFileReaderService>(new FileReaderService());
             ServiceContainer.AddService<IBrowseFolderService>(new BrowseFolderService());
             ServiceContainer.AddService<IEncrypter>(new Encrypter());
-            ServiceContainer.AddService<IExcelExporter>(new ExportToExcelService());
-            ServiceContainer.AddService<IXmlSerializationSvc>(new XmlSerializerSvc());
+            //ServiceContainer.AddService<IExcelExporter>(new ExportToExcelService());
             ServiceContainer.AddService<ICreateFileService>(new CreateFileService());
             ServiceContainer.AddService<IFileCopyService>(new FileCopyService());
-            ServiceContainer.AddService<IReport101Reader>(new Report101Reader());
+            //ServiceContainer.AddService<IReport101Reader>(new Report101Reader());
+            ServiceContainer.AddService<IReportPLUReader>(new ReportPLUReader());
+            ServiceContainer.AddService<IReport103Reader>(new Report103Reader());
+            ServiceContainer.AddService<IInventoryService>(new InventoryService());
+            ServiceContainer.AddService<IQueryService>(new QueryService());
+
+            //ServiceContainer.AddService<IReportingService>(new ReportingService());
+            //reports
+            ServiceContainer.AddService<IGlobalSalesRS>(new GlobalSalesReport());            
+            ServiceContainer.AddService<ISalesByItemRS>(new SalesByItemReport());
+            ServiceContainer.AddService<IConteoRS>(new ConteoReport());
+            ServiceContainer.AddService<ISalesByCategoryRS>(new SalesByCategoryReport());
+            ServiceContainer.AddService<ISalesPersonRS>(new SalesPersonReport());
+            ServiceContainer.AddService<IDayOfWeekSalesRS>(new DayOfWeekSalesReport());
+            ServiceContainer.AddService<IProductClassesRS>(new ProductClassesReport());
+            ServiceContainer.AddService<IWIPByItemRS>(new WIPByItemReport());
+            ServiceContainer.AddService<ICostByItemRS>(new CostByItemReport());
+            ServiceContainer.AddService<ISalesProjectionsRS>(new SalesProjectionsReport());
+            ServiceContainer.AddService<IWIPProjectionsRS>(new WIPProjectionsReport());
+            ServiceContainer.AddService<ICostProjectionsRS>(new CostProjectionsReport());
+            ServiceContainer.AddService<IServiceTimeRS>(new ServiceTimeReport());
+            ServiceContainer.AddService<IDemandByHourRS>(new DemandByHourReport());
+
+            ServiceContainer.AddService<IGlobalSalesEE>(new GlobalSalesReport());
+            ServiceContainer.AddService<ISalesByItemEE>(new SalesByItemReport());
+            ServiceContainer.AddService<IConteoEE>(new ConteoReport());
+            ServiceContainer.AddService<ISalesByCategoryEE>(new SalesByCategoryReport());
+            ServiceContainer.AddService<ISalesPersonEE>(new SalesPersonReport());
+            ServiceContainer.AddService<IDayOfWeekSalesEE>(new DayOfWeekSalesReport());
+            ServiceContainer.AddService<IProductClassesEE>(new ProductClassesReport());
+            ServiceContainer.AddService<IWIPByItemEE>(new WIPByItemReport());
+            ServiceContainer.AddService<ICostByItemEE>(new CostByItemReport());
+            ServiceContainer.AddService<IProjectionsEE>(new SalesProjectionsReport());
+            ServiceContainer.AddService<IDemandByHourEE>(new DemandByHourReport());
         }
 
         void RegisterViews(IWindowManager windowManager)
         {
             windowManager.Associate<ChangePasswordViewModel, ChangePasswordView>();
             windowManager.Associate<ProgressDialogViewModel, ProgressDialog>();
+            windowManager.Associate<CustomDatesDialogViewModel, CustomDatesDialog>();
+            windowManager.Associate<AddLineDialogViewModel, AddLineDialog>();
+            windowManager.Associate<CustomizeReportViewModel, CustomizeReportView>();
 
             //sales
-            windowManager.Associate<NewSaleDialogViewModel, NewSaleDialog>();
+            //windowManager.Associate<NewSaleDialogViewModel, NewSaleDialog>();
             windowManager.Associate<LoadReportDialogViewModel, LoadReportDialog>();
             windowManager.Associate<LoadFromRegisterDialogViewModel, LoadFromRegister>();
             //windowManager.Associate<UnknownProductDialogViewModel, UnknownProductDialog>();
-            windowManager.Associate<Load101DialogViewModel, Load101Dialog>();
+            //windowManager.Associate<Load101DialogViewModel, Load101Dialog>();
             windowManager.Associate<Report101InfoViewModel, Report101InfoView>();
+            windowManager.Associate<Report103ResultViewModel, Report103ResultView>();
+            windowManager.Associate<QuorionConfigDialogViewModel, QuorionConfigDialog>();
             
-            windowManager.Associate<SaleViewModel, ValeView>();
+            
+            //windowManager.Associate<SaleViewModel, ValeView>();
             windowManager.Associate<OfflineSaleViewModel, OfflineSaleView>();
-            windowManager.Associate<ChargeDialogViewModel, ChargeDialog>();
-            windowManager.Associate<DayReportViewModel, DayReportView>();
+            //windowManager.Associate<ChargeDialogViewModel, ChargeDialog>();
+            //windowManager.Associate<DayReportViewModel, DayReportView>();
             windowManager.Associate<DiscountOrTaxDialogViewModel, DiscountOrTaxDialog>();
             //windowManager.Associate<ShiftsListViewModel, ShiftsList>();
             //windowManager.Associate<ShiftViewModel, ShiftView>();
 
             //purchases
-            windowManager.Associate<PurchaseViewModel, PurchaseView>();
+            //windowManager.Associate<PurchaseViewModel, PurchaseView>();
             //windowManager.Associate<ComprasViewModel, Compras>();
 
             //inventory
-            windowManager.Associate<InventoryHistoryViewModel, InventoryHistory>();
+            //windowManager.Associate<InventoryHistoryViewModel, InventoryHistory>();
             //windowManager.Associate<InventoryDetailedViewModel, InventoryDetailed>();
             //windowManager.Associate<InventoryViewModel, InventoryView>();
             //windowManager.Associate<InventoryAreasListViewModel, InventoryAreasList>();
             //windowManager.Associate<CostTracesListViewModel, CostTracesList>();
 
-            windowManager.Associate<AdjustmentsListViewModel, AdjustmentsListView>();
+            //windowManager.Associate<AdjustmentsListViewModel, AdjustmentsListView>();
             //windowManager.Associate<NewAdjustmentDialogViewModel, NewAdjustmentDialog>();
-            windowManager.Associate<AdjustInventoryViewModel, AdjustInventory>();
-            windowManager.Associate<AdjustmentViewModel, AdjustmentView>();
-
-            windowManager.Associate<ProductionsListViewModel, ProductionsList>();
-            windowManager.Associate<ProductionViewModel, ProductionView>();
-
-            //windowManager.Associate<FaenasListViewModel, FaenasList>();
-            //windowManager.Associate<FaenaViewModel, FaenaView>();
-
-            windowManager.Associate<TransfersListViewModel, TransfersList>();
-            windowManager.Associate<TransferViewModel, TransferView>();
+            //windowManager.Associate<AdjustInventoryViewModel, AdjustInventory>();
+            //windowManager.Associate<AdjustmentViewModel, AdjustmentView>();
 
             //products
-            windowManager.Associate<ProductViewModel, ProductViewFull>();
-            //windowManager.Associate<ProductTemplatesViewModel, ProductTemplatesView>();
-            //windowManager.Associate<ProductionAreaViewModel, ProductionAreaView>();
-            //windowManager.Associate<ProductionAreasListViewModel, ProductionAreasList>();
-            //windowManager.Associate<FilterProductViewModel, FilterProductView>();
+            windowManager.Associate<ProductViewModel, ProductView>();
+            windowManager.Associate<CostHelperViewModel, CostHelperView>();
+            windowManager.Associate<CategoryViewModel, CategoryView>();
+            windowManager.Associate<TagViewModel, TagView>();
+            windowManager.Associate<FixProductsCostsViewModel, FixProductsCosts>();
 
             //employees
             //windowManager.Associate<PersonalViewModel, Personal>();
             windowManager.Associate<EmployeeViewModel, EmployeeView>();
+            windowManager.Associate<RoleViewModel, RoleView>();
 
             //table
-            windowManager.Associate<TableViewModel, TableView>();
+            //windowManager.Associate<TableViewModel, TableView>();
 
-            //reports
-            windowManager.Associate<TotalesViewModel, Totales>();
-            windowManager.Associate<OrdersViewModel, Orders>();
-            windowManager.Associate<SalesChartViewModel, SalesChart>();
-
-            windowManager.Associate<SalesByItemViewModel, Operations>();
-            windowManager.Associate<SoldProductsByEmployeeViewModel, SoldProductsByEmployee>();
-            windowManager.Associate<SalesByItemByShiftViewModel, SalesByItemByShift>();
-            //windowManager.Associate<CompareProductsViewModel, CompareProducts>();
-            windowManager.Associate<FollowProductViewModel, FollowProduct>();
-            windowManager.Associate<DayAveragesReportViewModel, DayAveragesReportView>();
+            windowManager.Associate<GlobalSalesReportViewModel, GlobalSalesView>();
+            windowManager.Associate<SalesByItemReportViewModel, SalesByItemView>();
+            windowManager.Associate<ConteoReportViewModel, ConteoView>();
+            windowManager.Associate<SalesByCategoryReportViewModel, SalesByCategoryView>();
+            windowManager.Associate<SalesPersonReportViewModel, SalesPersonReportView>();
+            windowManager.Associate<DayOfWeekSalesReportViewModel, DayOfWeekSalesView>();
+            windowManager.Associate<ProductClassesReportViewModel, ProductClassesView>();
+            windowManager.Associate<WIPByItemReportViewModel, WIPByItemView>();
+            windowManager.Associate<CostByItemReportViewModel, CostByItemView>();
+            windowManager.Associate<SalesProjectionsReportViewModel, ProjectionsByItemView>();
+            windowManager.Associate<WIPProjectionsReportViewModel, ProjectionsByItemView>();
+            windowManager.Associate<CostProjectionsReportViewModel, ProjectionsByItemView>();
+            windowManager.Associate<ServiceTimeReportViewModel, ServiceTimeReportView>();
+            windowManager.Associate<DemandByHourReportViewModel, DemandByHourReportView>();
 
             //mainwindow
             windowManager.Associate<MainWindowViewModel, MainWindow>();
         } 
     }
 }
+

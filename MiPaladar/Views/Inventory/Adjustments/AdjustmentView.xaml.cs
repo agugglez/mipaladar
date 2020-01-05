@@ -38,11 +38,11 @@ namespace MiPaladar.Views
 
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue is AdjustmentViewModel)
-            {
-                AdjustmentViewModel viewmodel = (AdjustmentViewModel)e.NewValue;
-                viewmodel.NewItemAdded += new EventHandler(viewmodel_NewItemAdded);
-            }
+            //if (e.NewValue is AdjustmentViewModel)
+            //{
+            //    AdjustmentViewModel viewmodel = (AdjustmentViewModel)e.NewValue;
+            //    viewmodel.NewItemAdded += new EventHandler(viewmodel_NewItemAdded);
+            //}
             //if (e.OldValue is AdjustmentViewModel)
             //{
             //    AdjustmentViewModel viewmodel = (AdjustmentViewModel)e.OldValue;

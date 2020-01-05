@@ -1,4 +1,4 @@
-USE [RestaurantDB]
+USE [DeCaminoDB]
 GO
 SELECT DATEPART(Year ,Date) Año, DATENAME(Month,Date) Mes, ROUND(SUM(Total),2) Venta 
 FROM ([dbo].[Orders] AS o

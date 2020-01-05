@@ -19,12 +19,12 @@ namespace MiPaladar.Views
 
         private void DatePicker_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                InventoryHistoryViewModel cpvm = (InventoryHistoryViewModel)this.DataContext;
+            //if (e.Key == Key.Return)
+            //{
+            //    InventoryHistoryViewModel cpvm = (InventoryHistoryViewModel)this.DataContext;
 
-                cpvm.UpdateSearch();
-            }
+            //    cpvm.UpdateSearch();
+            //}
         }
     }
 }

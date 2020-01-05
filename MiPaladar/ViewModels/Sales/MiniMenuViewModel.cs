@@ -13,6 +13,7 @@ using MiPaladar.Entities;
 using MiPaladar.Views;
 using MiPaladar.Enums;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 namespace MiPaladar.ViewModels
 {
@@ -97,7 +98,7 @@ namespace MiPaladar.ViewModels
         private bool PassesFilter(Product p)
         {
             //show visible items only
-            if (p.NotInMenu) return false;
+            if (!p.IsInMenu) return false;
 
             bool cond1 = false;
 

@@ -108,6 +108,9 @@
                     <DataGridTextColumn Header="# Factura" Width="*"
                                         Binding="{Binding FacturaNumber}" />
 
+                    <DataGridTextColumn Header="Clientes" Width="*"
+                                        Binding="{Binding Clients}" />
+
                     <DataGridTextColumn Header="Inicio" Width="*"
                                         Binding="{Binding StartDate, StringFormat=d/MMM h:mm tt}" />
                     

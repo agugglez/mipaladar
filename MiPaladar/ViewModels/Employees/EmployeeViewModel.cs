@@ -6,12 +6,14 @@ using System.Text;
 using MiPaladar.Entities;
 using MiPaladar.Classes;
 using MiPaladar.Services;
+using MiPaladar.MVVM;
 
 using System.Windows.Input;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
+using MiPaladar.Repository;
 
 namespace MiPaladar.ViewModels
 {
@@ -21,28 +23,31 @@ namespace MiPaladar.ViewModels
 
         //Action showRoles;
 
-        Employee employee;
+        //Employee employee;
+
+        int empId;
 
         Action<Employee> onCreated;
-        Action<Employee> onAssociationChanged;
+        Action<Employee> onModified;
+        Action<int> onRemoved;
 
-        public EmployeeViewModel(MainWindowViewModel appvm, Action<Employee> onCreated, Action<Employee> onAssociationChanged)
+        public EmployeeViewModel(MainWindowViewModel appvm, Action<Employee> onCreated)
         {
             this.appvm = appvm;
             this.onCreated = onCreated;
-            this.onAssociationChanged = onAssociationChanged;
 
             creating = true;
 
             HasPendingChanges = true;
         }
-        public EmployeeViewModel(MainWindowViewModel appvm, Employee employee, Action<Employee> onAssociationChanged)
+        public EmployeeViewModel(MainWindowViewModel appvm, Employee employee, Action<Employee> onModified, Action<int> onRemoved)
         {
             this.appvm = appvm;
             //this.showRoles = showRoles;
-            this.onAssociationChanged = onAssociationChanged;
+            this.onModified = onModified;
+            this.onRemoved = onRemoved;
 
-            this.employee = employee;
+            this.empId = employee.Id;
 
             CopyFromEmployee(employee);
 
@@ -54,16 +59,18 @@ namespace MiPaladar.ViewModels
             get { return creating ? "Nuevo Empleado" : "Personal : " + name; }
         }
 
-        public Employee WrappedEmployee 
-        {
-            get { return employee; }
-        }
+        public int EmployeeId { get { return empId; } }
+
+        //public Employee WrappedEmployee 
+        //{
+        //    get { return employee; }
+        //}
 
         public MainWindowViewModel AppVM { get { return appvm; } }
 
-        public ObservableCollection<Role> Roles 
+        public List<Role> Roles 
         {
-            get { return appvm.RolesOC; }
+            get { return base.GetNewUnitOfWork().RoleRepository.Get(); }
         }
 
         #region Properties
@@ -80,14 +87,14 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        Role role;
-        public Role Role
+        int roleId;
+        public int RoleId
         {
-            get { return role; }
+            get { return roleId; }
             set 
             {
-                role = value;
-                OnPropertyChanged("Role");
+                roleId = value;
+                OnPropertyChanged("RoleId");
 
                 HasPendingChanges = true;
             }
@@ -127,45 +134,45 @@ namespace MiPaladar.ViewModels
             }
         }
 
-        bool canPurchase;
-        public bool CanPurchase
-        {
-            get { return canPurchase; }
-            set
-            {
-                canPurchase = value;
-                OnPropertyChanged("CanPurchase");
-                HasPendingChanges = true;
-            }
-        }
+        //bool canPurchase;
+        //public bool CanPurchase
+        //{
+        //    get { return canPurchase; }
+        //    set
+        //    {
+        //        canPurchase = value;
+        //        OnPropertyChanged("CanPurchase");
+        //        HasPendingChanges = true;
+        //    }
+        //}
 
-        string imageFileName;
-        public string ImageFileName
-        {
-            get { return imageFileName; }
-            set
-            {
-                imageFileName = value;
-                OnPropertyChanged("ImageFileName");
-            }
-        }
+        //string imageFileName;
+        //public string ImageFileName
+        //{
+        //    get { return imageFileName; }
+        //    set
+        //    {
+        //        imageFileName = value;
+        //        OnPropertyChanged("ImageFileName");
+        //    }
+        //}
 
-        string fullImagePath;
-        public string ImageFullPath
-        {
-            get { return fullImagePath; }
-            set
-            {
-                fullImagePath = value;
-                OnPropertyChanged("ImageFullPath");
-                OnPropertyChanged("NoPicture");
-            }
-        }
+        //string fullImagePath;
+        //public string ImageFullPath
+        //{
+        //    get { return fullImagePath; }
+        //    set
+        //    {
+        //        fullImagePath = value;
+        //        OnPropertyChanged("ImageFullPath");
+        //        OnPropertyChanged("NoPicture");
+        //    }
+        //}
 
-        public bool NoPicture
-        {
-            get { return string.IsNullOrEmpty(fullImagePath); }
-        }
+        //public bool NoPicture
+        //{
+        //    get { return string.IsNullOrEmpty(fullImagePath); }
+        //}
 
         //ObservableCollection<PermissionViewModel> permissions = new ObservableCollection<PermissionViewModel>();
         //public ObservableCollection<PermissionViewModel> UserPermissions 
@@ -202,45 +209,14 @@ namespace MiPaladar.ViewModels
         private void CopyFromEmployee(Employee emp)
         {
             Name = emp.Name;
-            Role = emp.Role;
+            RoleId = emp.Role_Id;
             IsActive = emp.IsActive;
             CanSell = emp.CanSell;
-            CanPurchase = emp.CanPurchase;
+            //CanPurchase = emp.CanPurchase;
 
             //image
-            ImageFileName = emp.ImageFileName;
-            BuildImageFullPath();
-
-            //permissions
-            //CanLogin = emp.Permissions.CanLogin;
-            //CanSeeSales = emp.Permissions.CanSeeSales;
-            //CanRemoveSales = emp.Permissions.CanRemoveSales;
-            //CanSeeOldSales = emp.Permissions.CanSeeOldSales;
-
-            //CanSeePurchases = emp.Permissions.CanSeePurchases;
-            //CanRemovePurchases = emp.Permissions.CanRemovePurchases;
-            //CanSeeOldPurchases = emp.Permissions.CanSeeOldPurchases;
-
-            //CanSeeInventory = emp.Permissions.CanSeeInventory;
-            //CanCreateProducts = emp.Permissions.CanCreateProducts;
-            //CanEditProducts = emp.Permissions.CanEditProducts;
-            //CanRemoveProducts = emp.Permissions.CanRemoveProducts;
-
-            //CanSeeEmployees = emp.Permissions.CanSeeEmployees;
-            //CanCreateEmployees = emp.Permissions.CanCreateEmployees;
-            //CanEditEmployees = emp.Permissions.CanEditEmployees;
-            //CanRemoveEmployees = emp.Permissions.CanRemoveEmployees;
-
-            //CanSeeMiPaladar = emp.Permissions.CanSeeMiPaladar;
-            //CanExportImport = emp.Permissions.CanExportImport;
-            //CanDesignRestaurant = emp.Permissions.CanDesignRestaurant;
-
-            //CanSeeSalesReport = emp.Permissions.CanSeeSalesReport;
-            //CanSeeSalesByItemReport = emp.Permissions.CanSeeSalesByItemReport;
-            //CanSeeFollowProductReport = emp.Permissions.CanSeeFollowProductReport;
-            //CanSeeDayAveragesReport = emp.Permissions.CanSeeDayAveragesReport;
-
-            //permissions.Clear();
+            //ImageFileName = emp.ImageFileName;
+            //BuildImageFullPath();
 
             //foreach (var perm in appvm.Context.Permissions)
             //{
@@ -258,79 +234,26 @@ namespace MiPaladar.ViewModels
             //}
         }
 
-        private void BuildImageFullPath()
-        {
-            if (string.IsNullOrWhiteSpace(imageFileName)) return;
+        //private void BuildImageFullPath()
+        //{
+        //    if (string.IsNullOrWhiteSpace(imageFileName)) return;
 
-            string tempFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                App.ApplicationFolderName);
-            tempFolder = Path.Combine(tempFolder, App.AppEmployeesFolderName);
+        //    string tempFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        //        App.ApplicationFolderName);
+        //    tempFolder = Path.Combine(tempFolder, App.AppEmployeesFolderName);
 
-            ImageFullPath = Path.Combine(tempFolder, imageFileName);
-        }
+        //    ImageFullPath = Path.Combine(tempFolder, imageFileName);
+        //}
 
         void CopyToEmployee(Employee emp)
         {
             if (emp.Name != name) emp.Name = Name;
-            if (emp.Role != role) emp.Role = role;
+            if (emp.Role_Id != roleId) emp.Role_Id = roleId;
             if (emp.IsActive != isActive) emp.IsActive = isActive;
             if (emp.CanSell != canSell) emp.CanSell = canSell;
-            if (emp.CanPurchase != canPurchase) emp.CanPurchase = canPurchase;
+            //if (emp.CanPurchase != canPurchase) emp.CanPurchase = canPurchase;
             //image
-            if (emp.ImageFileName != imageFileName) emp.ImageFileName = imageFileName;      
-      
-            //permissions
-            //if (emp.Permissions.CanLogin != canLogin) emp.Permissions.CanLogin = canLogin;
-            //if (emp.Permissions.CanSeeSales != canSeeSales) emp.Permissions.CanSeeSales = canSeeSales;
-            //if (emp.Permissions.CanRemoveSales != canRemoveSales) emp.Permissions.CanRemoveSales = canRemoveSales;
-            //if (emp.Permissions.CanSeeOldSales != canSeeOldSales) emp.Permissions.CanSeeOldSales = canSeeOldSales;
-
-            //if (emp.Permissions.CanSeePurchases != canSeePurchases) emp.Permissions.CanSeePurchases = canSeePurchases;
-            //if (emp.Permissions.CanRemovePurchases != canRemovePurchases) emp.Permissions.CanRemovePurchases = canRemovePurchases;
-            //if (emp.Permissions.CanSeeOldPurchases != canSeeOldPurchases) emp.Permissions.CanSeeOldPurchases = canSeeOldPurchases;
-
-            //if (emp.Permissions.CanSeeInventory != canSeeInventory) emp.Permissions.CanSeeInventory = canSeeInventory;
-            //if (emp.Permissions.CanCreateProducts != canCreateProducts) emp.Permissions.CanCreateProducts = canCreateProducts;
-            //if (emp.Permissions.CanEditProducts != canEditProducts) emp.Permissions.CanEditProducts = canEditProducts;
-            //if (emp.Permissions.CanRemoveProducts != canRemoveProducts) emp.Permissions.CanRemoveProducts = canRemoveProducts;
-
-            //if (emp.Permissions.CanSeeEmployees != canSeeEmployees) emp.Permissions.CanSeeEmployees = canSeeEmployees;
-            //if (emp.Permissions.CanCreateEmployees != canCreateEmployees) emp.Permissions.CanCreateEmployees = canCreateEmployees;
-            //if (emp.Permissions.CanEditEmployees != canEditEmployees) emp.Permissions.CanEditEmployees = canEditEmployees;
-            //if (emp.Permissions.CanRemoveEmployees != canRemoveEmployees) emp.Permissions.CanRemoveEmployees = canRemoveEmployees;
-
-            //if (emp.Permissions.CanSeeMiPaladar != canSeeMiPaladar) emp.Permissions.CanSeeMiPaladar = canSeeMiPaladar;
-            //if (emp.Permissions.CanExportImport != canExportImport) emp.Permissions.CanExportImport = canExportImport;
-            //if (emp.Permissions.CanDesignRestaurant != canDesignRestaurant) emp.Permissions.CanDesignRestaurant = canDesignRestaurant;
-
-            //if (emp.Permissions.CanSeeSalesReport != canSeeSalesReport) emp.Permissions.CanSeeSalesReport = canSeeSalesReport;
-            //if (emp.Permissions.CanSeeSalesByItemReport != canSeeSalesByItemReport) emp.Permissions.CanSeeSalesByItemReport = canSeeSalesByItemReport;
-            //if (emp.Permissions.CanSeeFollowProductReport != canSeeFollowProductReport) emp.Permissions.CanSeeFollowProductReport = canSeeFollowProductReport;
-            //if (emp.Permissions.CanSeeDayAveragesReport != canSeeDayAveragesReport) emp.Permissions.CanSeeDayAveragesReport = canSeeDayAveragesReport;
-
-            //remove permissions not present
-            //List<Permission> toRemove = new List<Permission>();
-            //foreach (var item in emp.Permissions)
-            //{
-            //    bool contains = permissions.Where(x => x.Allowed && x.WrappedPermission == item).Count() > 0;
-                
-            //    if (!contains) toRemove.Add(item);
-            //}
-            //foreach (var item in toRemove)
-            //{
-            //    emp.Permissions.Remove(item);                    
-            //}
-
-            ////add new permissions
-            //foreach (var item in permissions)
-            //{    
-            //    //if it's allowed, check if emp didnt have it already
-            //    if (item.Allowed)
-            //    {
-            //        bool contains = emp.Permissions.Where(x => x == item.WrappedPermission).Count() > 0;
-            //        if(!contains) emp.Permissions.Add(item.WrappedPermission);
-            //    }
-            //}
+            //if (emp.ImageFileName != imageFileName) emp.ImageFileName = imageFileName;
 
             ////clear roles
             //while (emp.Roles.Count > 0) 
@@ -392,124 +315,192 @@ namespace MiPaladar.ViewModels
 
         void Save()
         {
-            if (creating)
+            if (hasPendingChanges)
             {
-                employee = new Employee();
+                using (var unitOfWork = base.GetNewUnitOfWork())
+                {
+                    Employee employee;
 
-                appvm.Context.Employees.AddObject(employee);
+                    if (creating)
+                    {
+                        employee = new Employee();
 
-                appvm.EmployeesOC.Add(employee);
-            }
-            
-            CopyToEmployee(employee);                
+                        unitOfWork.EmployeeRepository.Add(employee);
+                    }
+                    else
+                    {
+                        employee = unitOfWork.EmployeeRepository.GetById(empId);
+                    }
 
-                //personnelManager.ThisGuyChanged(employee);
-            
-            //Employee emp = appvm.EmployeesOC.Single(x => x.Id == employeeId);
+                    CopyToEmployee(employee);
 
-            appvm.SaveChanges();
+                    //personnelManager.ThisGuyChanged(employee);
 
-            if (creating)
-            {
-                creating = false;
+                    //Employee emp = appvm.EmployeesOC.Single(x => x.Id == employeeId);
 
-                if (onCreated != null) onCreated(employee);
+                    unitOfWork.SaveChanges();
+
+                    var temp = employee.Role;
+
+                    if (creating)
+                    {
+                        creating = false;
+
+                        if (onCreated != null) onCreated(employee);
+
+                    }
+                    else if (onModified != null) onModified(employee);
+
+                    //if (employee.CanSell && !appvm.CanSellEmployees.Contains(employee))
+                    //    appvm.CanSellEmployees.Add(employee);
+
+                    //if (employee.CanPurchase && !appvm.CanPurchaseEmployees.Contains(employee))
+                    //    appvm.CanPurchaseEmployees.Add(employee);
+
+                    //if (!employee.CanSell) appvm.CanSellEmployees.Remove(employee);
+
+                    //if (!employee.CanPurchase) appvm.CanPurchaseEmployees.Remove(employee);            
+
+                    //HasPendingChanges = false;
+                }
                 
             }
-            else if (onAssociationChanged != null) onAssociationChanged(employee);
 
-            if (employee.CanSell && !appvm.CanSellEmployees.Contains(employee))
-                appvm.CanSellEmployees.Add(employee);
-
-            if (employee.CanPurchase && !appvm.CanPurchaseEmployees.Contains(employee))
-                appvm.CanPurchaseEmployees.Add(employee);
-
-            if (!employee.CanSell) appvm.CanSellEmployees.Remove(employee);
-
-            if (!employee.CanPurchase) appvm.CanPurchaseEmployees.Remove(employee);            
-
-            HasPendingChanges = false;
+            Close();
         }
 
         #endregion
 
-        #region Cancel Command
+        //#region Cancel Command
 
-        RelayCommand cancelCommand;
-        public ICommand CancelCommand
+        //RelayCommand cancelCommand;
+        //public ICommand CancelCommand
+        //{
+        //    get
+        //    {
+        //        if (cancelCommand == null)
+        //            cancelCommand = new RelayCommand(x => Cancel());
+        //        return cancelCommand;
+        //    }
+        //}
+
+        //void Cancel()
+        //{
+        //    if (creating)
+        //    {
+        //        var windowManager = base.GetService<IWindowManager>();
+        //        windowManager.Close(this);
+
+        //        //if (appvm.EmployeesOC.Count > 0)
+        //        //    CopyFromEmployee(appvm.EmployeesOC[0]);
+
+        //        //creating = false;
+        //    }
+        //    else 
+        //    {
+        //        //Employee prod = appvm.EmployeesOC.Single(x => x.Id == employeeId);
+        //        CopyFromEmployee(employee);
+
+        //        //ResetAllRoles();
+        //    }
+
+        //    HasPendingChanges = false;
+        //}
+
+        //#endregion
+
+        //#region Select Image Command
+
+        //RelayCommand selectImageCommand;
+        //public ICommand SelectImageCommand
+        //{
+        //    get
+        //    {
+        //        if (selectImageCommand == null)
+        //            selectImageCommand = new RelayCommand(x => SelectImage());
+        //        return selectImageCommand;
+        //    }
+        //}
+
+        //void SelectImage()
+        //{
+        //    var open_file_dialog =  base.GetService<IOpenFileDialogService>();
+        //    string title = "Seleccione una imagen";
+        //    string filter = "Imágenes|*.bmp;*.gif;*.ico;*.jpg;*.png;*.wdp;*.tiff";
+            
+        //    if (open_file_dialog.ShowDialog(title, filter) == true) 
+        //    {
+        //        string path_to_file = open_file_dialog.FileName;
+
+        //        ImageFullPath = path_to_file;
+
+        //        ImageFileName = Path.GetFileName(path_to_file);
+
+        //        var copySvc = base.GetService<IFileCopyService>();
+
+        //        copySvc.CopyImage(path_to_file, App.AppEmployeesFolderName);
+
+        //        HasPendingChanges = true;
+        //    }
+            
+        //}
+
+        //#endregion
+
+        #region Delete Command
+
+        RelayCommand deleteCommand;
+        public ICommand DeleteCommand
         {
             get
             {
-                if (cancelCommand == null)
-                    cancelCommand = new RelayCommand(x => Cancel());
-                return cancelCommand;
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new RelayCommand(x => this.Delete());
+                }
+
+                return deleteCommand;
             }
         }
 
-        void Cancel()
+        bool CanDelete
         {
-            if (creating)
+            get
             {
-                var windowManager = base.GetService<IWindowManager>();
-                windowManager.Close(this);
-
-                //if (appvm.EmployeesOC.Count > 0)
-                //    CopyFromEmployee(appvm.EmployeesOC[0]);
-
-                //creating = false;
+                return !creating && appvm.LoggedInUser.Role.CanRemoveEmployees;
             }
-            else 
+        }
+
+        void Delete()
+        {
+            var msgBox = base.GetService<IMessageBoxService>();
+            bool? result = msgBox.ShowYesNoDialog("Está seguro que desea eliminar este empleado?");
+
+            //if (!confirmator.AskForConfirmation("Está seguro que desea eliminar a " + emp.Name + " ?")) return;
+
+            if (result == true)
             {
-                //Employee prod = appvm.EmployeesOC.Single(x => x.Id == employeeId);
-                CopyFromEmployee(employee);
+                using (var unitOfWork = base.GetNewUnitOfWork())
+                {
+                    unitOfWork.EmployeeRepository.Remove(empId);
+                    unitOfWork.SaveChanges();
+                }                
 
-                //ResetAllRoles();
+                if (onRemoved != null) onRemoved(empId);
+
+                Close();
             }
-
-            HasPendingChanges = false;
         }
 
         #endregion
 
-        #region Select Image Command
-
-        RelayCommand selectImageCommand;
-        public ICommand SelectImageCommand
+        void Close()        
         {
-            get
-            {
-                if (selectImageCommand == null)
-                    selectImageCommand = new RelayCommand(x => SelectImage());
-                return selectImageCommand;
-            }
+            var windowManager = base.GetService<IWindowManager>();
+            windowManager.Close(this);
         }
 
-        void SelectImage()
-        {
-            var open_file_dialog =  base.GetService<IOpenFileDialogService>();
-            string title = "Seleccione una imagen";
-            string filter = "Imágenes|*.bmp;*.gif;*.ico;*.jpg;*.png;*.wdp;*.tiff";
-            
-            if (open_file_dialog.ShowDialog(title, filter) == true) 
-            {
-                string path_to_file = open_file_dialog.FileName;
-
-                ImageFullPath = path_to_file;
-
-                ImageFileName = Path.GetFileName(path_to_file);
-
-                var copySvc = base.GetService<IFileCopyService>();
-
-                copySvc.CopyImage(path_to_file, App.AppEmployeesFolderName);
-
-                HasPendingChanges = true;
-            }
-            
-        }
-
-        #endregion        
-
-        bool creating; 
+        bool creating;
 
         bool hasPendingChanges;
         public bool HasPendingChanges 

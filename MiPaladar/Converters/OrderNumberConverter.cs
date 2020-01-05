@@ -24,26 +24,26 @@ namespace MiPaladar.Converters
                 Sale s = (Sale)value;
                 return "Vale " + s.Number;
             }
-            else if (value is Purchase)
-            {
-                Purchase p = (Purchase)value;
-                return "Compra>> ";
-            }
-            else if (value is Adjustment)
-            {
-                Adjustment p = (Adjustment)value;
-                return "Ajuste>>";
-            }
-            else if (value is Transfer)
-            {
-                Transfer p = (Transfer)value;
-                return "Transferencia>>";
-            }
-            else if (value is Production)
-            {
-                Production p = (Production)value;
-                return "Producción>>";
-            }
+            //else if (value is Purchase)
+            //{
+            //    Purchase p = (Purchase)value;
+            //    return "Compra>> ";
+            //}
+            //else if (value is Adjustment)
+            //{
+            //    Adjustment p = (Adjustment)value;
+            //    return "Ajuste>>";
+            //}
+            //else if (value is Transfer)
+            //{
+            //    Transfer p = (Transfer)value;
+            //    return "Transferencia>>";
+            //}
+            //else if (value is Production)
+            //{
+            //    Production p = (Production)value;
+            //    return "Producción>>";
+            //}
             //else if (value is Faena)
             //{
             //    Faena p = (Faena)value;

@@ -1,0 +1,100 @@
+﻿<Window x:Class="MiPaladar.Views.RoleView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        Title="Crear Nuevo Rol" 
+        
+        Height="480" Width="640">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/resources/MergedResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Eliminar" Command="{Binding RemoveCommand}" 
+                HorizontalAlignment="Right" Grid.Column="1"/>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Nombre:" />
+            <TextBox Grid.Column="1" Width="150"
+                 Text="{Binding Name}"/>
+        </StackPanel>            
+
+        <StackPanel Grid.Row="1">
+
+            <CheckBox IsChecked="{Binding CanLogin}"
+                          Content="Acceso al programa"/>
+
+            <TextBlock Text="Inicio"/>
+            <CheckBox IsChecked="{Binding CanSeeDashboard}">Acceso a Inicio</CheckBox>
+
+            <TextBlock Text="Quorion"/>
+            <CheckBox IsChecked="{Binding CanSeeSales}">Acceso a Quorion</CheckBox>
+            <CheckBox IsChecked="{Binding CanRemoveSales}">Eliminar ventas</CheckBox>
+            <!--<CheckBox IsChecked="{Binding SelectedRole.CanSeeOldSales}">Ver ventas anteriores</CheckBox>-->
+
+            <!--<TextBlock Text="Compras"/>
+                <CheckBox IsChecked="{Binding SelectedRole.CanSeePurchases}">Acceso a compras</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanRemovePurchases}">Eliminar compras</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanSeeOldPurchases}">Ver compras anteriores</CheckBox>-->
+
+            <TextBlock Text="Inventario"/>
+            <CheckBox IsChecked="{Binding CanSeeInventory}">Acceso a inventario</CheckBox>
+            <CheckBox IsChecked="{Binding CanCreateProducts}">Crear productos</CheckBox>
+            <CheckBox IsChecked="{Binding CanEditProducts}">Editar productos</CheckBox>
+            <CheckBox IsChecked="{Binding CanRemoveProducts}">Eliminar productos</CheckBox>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+
+            <TextBlock Text="Personal"/>
+            <CheckBox IsChecked="{Binding CanSeeEmployees}">Acceso a personal</CheckBox>
+            <CheckBox IsChecked="{Binding CanCreateEmployees}">Crear empleados</CheckBox>
+            <CheckBox IsChecked="{Binding CanEditEmployees}">Editar empleados</CheckBox>
+            <CheckBox IsChecked="{Binding CanRemoveEmployees}">Eliminar empleados</CheckBox>
+            <CheckBox IsChecked="{Binding CanSeeRoles}">Acceso a Roles y Permisos</CheckBox>
+
+            <!--<TextBlock Text="MiPaladar"/>
+                <CheckBox IsChecked="{Binding SelectedRole.CanSeeMiPaladar}">Acceso a MiPaladar</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanExportImport}">Exportar - Importar</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanDesignRestaurant}">Diseñar Restaurant</CheckBox>-->
+
+            <TextBlock Text="Reportes"/>
+            <CheckBox IsChecked="{Binding CanSeeReports}">Acceso a Reportes</CheckBox>
+            <!--<CheckBox IsChecked="{Binding SelectedRole.CanSeeSalesReport}">Ventas</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanSeeSalesByItemReport}">Ventas por producto</CheckBox>-->
+            <!--<CheckBox IsChecked="{Binding SelectedRole.CanSeeFollowProductReport}">Seguir producto</CheckBox>
+                <CheckBox IsChecked="{Binding SelectedRole.CanSeeDayAveragesReport}">Promedios diarios</CheckBox>-->
+
+        </StackPanel>
+
+        <DockPanel Background="#FFF0F0F0" LastChildFill="False" 
+                   Grid.Row="2" Grid.ColumnSpan="2">
+
+            <Border DockPanel.Dock="Top" BorderThickness="0,1,0,0" BorderBrush="LightGray"/>
+
+            <Button Content="Cancelar" Command="{Binding CancelCommand}" DockPanel.Dock="Right"/>
+
+            <Button Content="Guardar" Command="{Binding SaveCommand}" DockPanel.Dock="Right"/>
+
+        </DockPanel>
+        
+    </Grid>
+</Window>
